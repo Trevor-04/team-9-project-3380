@@ -80,12 +80,14 @@ app.use("/inventory", inventoryRoutes);
 app.use("/donations", donationRoutes);
 
 
-const serverPort = environment === 'production' ? process.env.PORT : port;
-app.listen(serverPort, async () => {
-  console.log(`Server is running on ${url} and port ${serverPort}`);
-});
-
-// // Start the server
-// app.listen(port, async () => {
-//   console.log(`Server is running on ${url}`);
+// const serverPort = environment === 'production' ? process.env.PORT : port;
+// app.listen(serverPort, async () => {
+//   console.log(`Server is running on ${url} and port ${serverPort}`);
 // });
+
+const PORT = process.env.PORT || 3000; 
+
+// Start the server
+app.listen(PORT, async () => {
+  console.log(`Server is running on ${process.env.PORT}`);
+});
