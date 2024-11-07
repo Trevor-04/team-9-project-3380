@@ -3,7 +3,7 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 require("dotenv").config();
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
-const database = require("./database");
+const database = require("../backend/functions/database");
 
 /*
 const { url, port } = require("../src/config.json");
