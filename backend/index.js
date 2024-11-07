@@ -102,9 +102,6 @@ const connection = mysql.createConnection({
 });
 
 console.log('Attempting to connect to the database with the following configuration:');
-console.log(`Host: ${process.env.DB_HOST}`);
-console.log(`User: ${process.env.DB_USER}`);
-console.log(`Database: ${process.env.DB_NAME}`);
 
 connection.connect((err) => {
     if (err) {
