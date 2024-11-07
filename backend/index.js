@@ -25,6 +25,7 @@ const employeeRoutes = require('./routes/employeeRoutes');
 const app = express();
 
 // Middleware
+app.use(cors({ origin: 'https://glowing-tiramisu-2436aa.netlify.app' }));
 app.use(cors()); // Handle CORS
 
 // app.use(cors({ 
@@ -94,11 +95,16 @@ app.use("/donations", donationRoutes);
 
 const mysql = require('mysql2');
 const connection = mysql.createConnection({
-    host: process.env.DB_HOST || '127.0.0.1',
+    host: process.env.DB_HOST ,
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME
 });
+
+console.log('Attempting to connect to the database with the following configuration:');
+console.log(`Host: ${process.env.DB_HOST}`);
+console.log(`User: ${process.env.DB_USER}`);
+console.log(`Database: ${process.env.DB_NAME}`);
 
 connection.connect((err) => {
     if (err) {
