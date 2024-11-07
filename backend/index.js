@@ -3,7 +3,7 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 require("dotenv").config();
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
-const database = require("../backend/functions/database");
+const database = require("./functions/database");
 
 /*
 const { url, port } = require("../src/config.json");
@@ -29,9 +29,10 @@ const app = express();
 
 // Middleware
 app.use(cors({
-    origin: ['https://glowing-tiramisu-2436aa.netlify.app'],
+    origin: ['http://localhost:3000', process.env.REACT_APP_URL],
     credentials: true
 }));
+
 
 /*app.use(cors({ 
 	origin: [config.development.url, config.production.url, `http://localhost:${Number(config.development.port)+1}`],
@@ -57,7 +58,7 @@ app.post("/payment", cors(), async (req, res) => {
 				enabled: true,
 				allow_redirects: "never"
 			},
-			return_url:`${url}/donations`
+			return_url:`${process.env.REACT_APP_URL}/donations`
 		})
 		console.log("Payment", payment)
 		res.json({
