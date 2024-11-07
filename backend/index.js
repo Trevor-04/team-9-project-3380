@@ -3,11 +3,14 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 require("dotenv").config();
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
-// const { url, port } = require("../src/config.json");
-//const config = require("../src/config.json");
-//const environment = process.env.NODE_ENV || 'development';
-//const { url, port } = config[process.env.NODE_ENV];
+const database = require("./database");
 
+/*
+const { url, port } = require("../src/config.json");
+const config = require("../src/config.json");
+const environment = process.env.NODE_ENV || 'development';
+const { url, port } = config[process.env.NODE_ENV];
+*/
 
 // Routes
 const animalRoutes = require("./routes/animals");
@@ -25,13 +28,15 @@ const employeeRoutes = require('./routes/employeeRoutes');
 const app = express();
 
 // Middleware
-app.use(cors({ origin: 'https://glowing-tiramisu-2436aa.netlify.app' }));
-app.use(cors()); // Handle CORS
+app.use(cors({
+    origin: ['https://glowing-tiramisu-2436aa.netlify.app'],
+    credentials: true
+}));
 
-// app.use(cors({ 
-// 	origin: [config.development.url, config.production.url, `http://localhost:${Number(config.development.port)+1}`],
-// 	credentials: true
-// }));
+/*app.use(cors({ 
+	origin: [config.development.url, config.production.url, `http://localhost:${Number(config.development.port)+1}`],
+	credentials: true
+}));*/
 
 app.use(express.json()); // Handle JSON payloads
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -80,18 +85,43 @@ app.use("/tickets", ticketsRoutes);
 app.use("/inventory", inventoryRoutes);
 app.use("/donations", donationRoutes);
 
-
-// const serverPort = environment === 'production' ? process.env.PORT : port;
-// app.listen(serverPort, async () => {
-//   console.log(`Server is running on ${url} and port ${serverPort}`);
-// });
-
-
 // Start the server
-// const PORT = process.env.PORT || 3000;
-// app.listen(PORT, () => {
-//     console.log(`Server is running on port ${PORT}`);
-// });
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, async () => {
+    try {
+        // Test database connection on startup
+        await database.checkConnection();
+        console.log(`Server is running on port ${PORT}`);
+    } catch (err) {
+        console.error('Failed to connect to database:', err);
+        // Don't exit the process, as Railway will restart it
+        // Just log the error and continue running the server
+    }
+});
+
+// Graceful shutdown
+process.on('SIGTERM', async () => {
+    console.log('SIGTERM received. Shutting down gracefully...');
+    try {
+        await database.disconnect();
+        process.exit(0);
+    } catch (err) {
+        console.error('Error during shutdown:', err);
+        process.exit(1);
+    }
+});
+
+/*const serverPort = environment === 'production' ? process.env.PORT : port;
+app.listen(serverPort, async () => {
+  console.log(`Server is running on ${url} and port ${serverPort}`);
+});
+
+
+Start the server
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+});
 
 const mysql = require('mysql2');
 const connection = mysql.createConnection({
@@ -109,4 +139,4 @@ connection.connect((err) => {
         return;
     }
     console.log('Connected to the database');
-});
+});*/
