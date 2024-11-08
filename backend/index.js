@@ -30,8 +30,6 @@ const app = express();
 // Middleware
 app.use(cors({ origin: 'https://672d5d775e81d6982bc414bf--glowing-tiramisu-2436aa.netlify.app' }));
 
-app.use(cors(corsOptions));
-
 /*app.use(cors({ 
 	origin: [config.development.url, config.production.url, `http://localhost:${Number(config.development.port)+1}`],
 	credentials: true
