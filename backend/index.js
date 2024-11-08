@@ -28,10 +28,7 @@ const employeeRoutes = require('./routes/employeeRoutes');
 const app = express();
 
 // Middleware
-const corsOptions = {
-    origin: ['https://glowing-tiramisu-2436aa.netlify.app'],
-    credentials: true
-};
+app.use(cors({ origin: 'https://672d5d775e81d6982bc414bf--glowing-tiramisu-2436aa.netlify.app' }));
 
 app.use(cors(corsOptions));
 
