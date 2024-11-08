@@ -28,11 +28,12 @@ const employeeRoutes = require('./routes/employeeRoutes');
 const app = express();
 
 // Middleware
-app.use(cors({
-    origin: ['http://localhost:3000', process.env.REACT_APP_URL],
+const corsOptions = {
+    origin: ['https://glowing-tiramisu-2436aa.netlify.app'],
     credentials: true
-}));
+};
 
+app.use(cors(corsOptions));
 
 /*app.use(cors({ 
 	origin: [config.development.url, config.production.url, `http://localhost:${Number(config.development.port)+1}`],
