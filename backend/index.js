@@ -6,10 +6,22 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 const mysql = require("mysql2");
 const db = require('./functions/database'); 
 
+// Routes
+const animalRoutes = require("./routes/animals");
+const eventsRoutes = require("./routes/events");
+const loginRoutes = require("./routes/login");
+const exhibitsRoutes = require("./routes/exhibits");
+const membersRoutes = require("./routes/members");
+const reportsRoutes = require("./routes/reports");
+const ticketsRoutes = require("./routes/tickets");
+const inventoryRoutes = require("./routes/inventory");
+const donationRoutes = require("./routes/donations");
+const employeeRoutes = require('./routes/employeeRoutes');
+
 // Initialize express
 const app = express();
 
-// Database Connection
+/*Database Connection
 const connection = mysql.createConnection({
   host: process.env.DB_HOST,
   port: process.env.DB_PORT,
@@ -24,12 +36,12 @@ connection.connect((err) => {
   } else {
     console.log("Connected to the database");
   }
-});
+});*/
 
 // CORS Configuration
-const allowedOrigins = [
-	'https://uma-test-production.up.railway.app', 
-];
+app.use(cors({ origin: 'https://672d5d775e81d6982bc414bf--glowing-tiramisu-2436aa.netlify.app' }));
+
+/*const allowedOrigins = ['https://uma-test-production.up.railway.app', ];
 
   app.use((req, res, next) => {
 	console.log({
@@ -54,7 +66,7 @@ app.use(cors({
 
 const corsOptions = {
 	origin: (origin, callback) => {
-	  // Allow requests with no origin (like curl requests or same-origin requests)
+	  Allow requests with no origin (like curl requests or same-origin requests)
 	  if (!origin || allowedOrigins.includes(origin)) {
 		callback(null, true);
 	  } else {
@@ -74,7 +86,7 @@ app.use((err, req, res, next) => {
       message: "An error occurred on the server",
       error: err.message
     });
-});  
+});  */
 
 app.use(express.json()); // Handle JSON payloads
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -110,17 +122,6 @@ app.post("/payment", async (req, res) => {
   }
 });
 
-// Routes
-const animalRoutes = require("./routes/animals");
-const eventsRoutes = require("./routes/events");
-const loginRoutes = require("./routes/login");
-const exhibitsRoutes = require("./routes/exhibits");
-const membersRoutes = require("./routes/members");
-const reportsRoutes = require("./routes/reports");
-const ticketsRoutes = require("./routes/tickets");
-const inventoryRoutes = require("./routes/inventory");
-const donationRoutes = require("./routes/donations");
-const employeeRoutes = require('./routes/employeeRoutes');
 
 app.use("/animals", animalRoutes);
 app.use("/events", eventsRoutes);
@@ -133,10 +134,18 @@ app.use("/tickets", ticketsRoutes);
 app.use("/inventory", inventoryRoutes);
 app.use("/donations", donationRoutes);
 
-//Start the server
+// Start the server
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+app.listen(PORT, async () => {
+    try {
+        // Test database connection on startup
+        await db.checkConnection();
+        console.log(`Server is running on port ${PORT}`);
+    } catch (err) {
+        console.error('Failed to connect to database:', err);
+        // Don't exit the process, as Railway will restart it
+        // Just log the error and continue running the server
+    }
 });
 
 // Database Connection
