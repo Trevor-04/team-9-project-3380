@@ -39,7 +39,25 @@ connection.connect((err) => {
 });*/
 
 // CORS Configuration
-app.use(cors({ origin: 'https://672d5d775e81d6982bc414bf--glowing-tiramisu-2436aa.netlify.app' }));
+//app.use(cors({ origin: 'https://672d5d775e81d6982bc414bf--glowing-tiramisu-2436aa.netlify.app' }));
+const allowedOrigins = [
+	'https://672d5d775e81d6982bc414bf--glowing-tiramisu-2436aa.netlify.app',
+	'https://glowing-tiramisu-2436aa.netlify.app'
+  ];
+  
+  const corsOptions = {
+	origin: function (origin, callback) {
+	  if (allowedOrigins.includes(origin) || !origin) {
+		callback(null, true);
+	  } else {
+		callback(new Error('Not allowed by CORS'));
+	  }
+	},
+	credentials: true,
+  };
+  
+  app.use(cors(corsOptions));
+  
 
 /*const allowedOrigins = ['https://uma-test-production.up.railway.app', ];
 
