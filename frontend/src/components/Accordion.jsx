@@ -13,6 +13,7 @@ function Accordion() {
       let response;
       if(exhibit) { 
         if (!isNaN(exhibit)) { // is numeric
+          console.log(`${process.env.REACT_APP_BACKEND_URL}/exhibits/`);
           response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/exhibits/${exhibit}`);
         } else { // name 
           response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/exhibits/name/${exhibit}`);

@@ -3,14 +3,115 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 require("dotenv").config();
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
-const database = require("./functions/database");
+const mysql = require("mysql2");
+const db = require('./functions/database'); 
 
-/*
-const { url, port } = require("../src/config.json");
-const config = require("../src/config.json");
-const environment = process.env.NODE_ENV || 'development';
-const { url, port } = config[process.env.NODE_ENV];
-*/
+// Initialize express
+const app = express();
+
+// Database Connection
+const connection = mysql.createConnection({
+  host: process.env.DB_HOST,
+  port: process.env.DB_PORT,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME
+});
+
+connection.connect((err) => {
+  if (err) {
+    console.error("Failed to connect to the database:", err);
+  } else {
+    console.log("Connected to the database");
+  }
+});
+
+// CORS Configuration
+const allowedOrigins = [
+	'https://uma-test-production.up.railway.app', 
+	'http://localhost:64509',
+	'http://localhost:3000',
+	'http://localhost:3001'
+  ];
+
+  app.use((req, res, next) => {
+	console.log({
+	  receivedOrigin: req.headers.origin,
+	  allowedOrigins: allowedOrigins,
+	  isAllowed: allowedOrigins.includes(req.headers.origin)
+	});
+	next();
+  });
+
+
+
+app.use(cors({
+ origin: (origin, callback) => {
+   if (allowedOrigins.includes(origin) || !origin) {
+     callback(null, true);
+   } else {
+     callback(new Error('Not allowed by CORS'));
+   }
+ }
+}));
+
+const corsOptions = {
+	origin: (origin, callback) => {
+	  // Allow requests with no origin (like curl requests or same-origin requests)
+	  if (!origin || allowedOrigins.includes(origin)) {
+		callback(null, true);
+	  } else {
+		callback(new Error('Not allowed by CORS'));
+	  }
+	}
+  };
+  
+  app.use(cors(corsOptions));
+  
+// Middleware
+// Error-handling middleware
+app.use((err, req, res, next) => {
+    console.error("Error:", err.message);
+    console.error("Stack:", err.stack);
+    res.status(500).json({
+      message: "An error occurred on the server",
+      error: err.message
+    });
+});  
+
+app.use(express.json()); // Handle JSON payloads
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json()); // Handle URL-encoded payloads
+
+// Stripe Payment Route
+app.post("/payment", async (req, res) => {
+  let { amount, id } = req.body;
+  try {
+    const payment = await stripe.paymentIntents.create({
+      amount,
+      currency: "USD",
+      description: "Zoo Donation",
+      payment_method: id,
+      confirm: true,
+      automatic_payment_methods: {
+        enabled: true,
+        allow_redirects: "never"
+      },
+      return_url: `${process.env.REACT_APP_URL}/donations`
+    });
+    console.log("Payment", payment);
+    res.json({
+      message: "Payment successful",
+      success: true
+    });
+  } catch (error) {
+    console.log("Error", error);
+    res.json({
+      message: "Payment failed",
+      success: false
+    });
+  }
+});
 
 // Routes
 const animalRoutes = require("./routes/animals");
@@ -24,53 +125,6 @@ const inventoryRoutes = require("./routes/inventory");
 const donationRoutes = require("./routes/donations");
 const employeeRoutes = require('./routes/employeeRoutes');
 
-// Initialize express
-const app = express();
-
-// Middleware
-app.use(cors({ origin: 'https://672d5d775e81d6982bc414bf--glowing-tiramisu-2436aa.netlify.app' }));
-
-/*app.use(cors({ 
-	origin: [config.development.url, config.production.url, `http://localhost:${Number(config.development.port)+1}`],
-	credentials: true
-}));*/
-
-app.use(express.json()); // Handle JSON payloads
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json()); // Handle URL-encoded payloads
-
-
-// Stripe Payment Route
-app.post("/payment", cors(), async (req, res) => {
-	let { amount, id } = req.body
-	try {
-		const payment = await stripe.paymentIntents.create({
-			amount,
-			currency: "USD",
-			description: "Zoo Donation",
-			payment_method: id,
-			confirm: true,
-			automatic_payment_methods: {
-				enabled: true,
-				allow_redirects: "never"
-			},
-			return_url:`${process.env.REACT_APP_URL}/donations`
-		})
-		console.log("Payment", payment)
-		res.json({
-			message: "Payment successful",
-			success: true
-		})
-	} catch (error) {
-		console.log("Error", error)
-		res.json({
-			message: "Payment failed",
-			success: false
-		})
-	}
-})
-
-// Routes
 app.use("/animals", animalRoutes);
 app.use("/events", eventsRoutes);
 app.use("/exhibits", exhibitsRoutes);
@@ -82,58 +136,13 @@ app.use("/tickets", ticketsRoutes);
 app.use("/inventory", inventoryRoutes);
 app.use("/donations", donationRoutes);
 
-// Start the server
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, async () => {
-    try {
-        // Test database connection on startup
-        await database.checkConnection();
-        console.log(`Server is running on port ${PORT}`);
-    } catch (err) {
-        console.error('Failed to connect to database:', err);
-        // Don't exit the process, as Railway will restart it
-        // Just log the error and continue running the server
-    }
-});
-
-// Graceful shutdown
-process.on('SIGTERM', async () => {
-    console.log('SIGTERM received. Shutting down gracefully...');
-    try {
-        await database.disconnect();
-        process.exit(0);
-    } catch (err) {
-        console.error('Error during shutdown:', err);
-        process.exit(1);
-    }
-});
-
-/*const serverPort = environment === 'production' ? process.env.PORT : port;
-app.listen(serverPort, async () => {
-  console.log(`Server is running on ${url} and port ${serverPort}`);
-});
-
-
-Start the server
+//Start the server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+  console.log(`Server is running on port ${PORT}`);
 });
 
-const mysql = require('mysql2');
-const connection = mysql.createConnection({
-    host: process.env.DB_HOST ,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME
-});
-
-console.log('Attempting to connect to the database with the following configuration:');
-
-connection.connect((err) => {
-    if (err) {
-        console.error('Error connecting to the database:', err);
-        return;
-    }
-    console.log('Connected to the database');
-});*/
+// Database Connection
+db.query('SELECT 1')
+  .then(() => console.log('Database connected successfully'))
+  .catch((error) => console.error('Database connection error:', error.message));

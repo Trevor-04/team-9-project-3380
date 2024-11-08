@@ -1,17 +1,15 @@
 const mysql = require('mysql2/promise');
 require('dotenv').config();
 
-// Railway provides these environment variables automatically
+// Create a connection pool with provided environment variables
 const pool = mysql.createPool({
-    host: process.env.MYSQLHOST || process.env.DB_HOST,
-    user: process.env.MYSQLUSER || process.env.DB_USER,
-    password: process.env.MYSQLPASSWORD || process.env.DB_PASSWORD,
-    database: process.env.MYSQLDATABASE || process.env.DB_NAME,
-    port: process.env.MYSQLPORT || 3306,
-    waitForConnections: true,
-    connectionLimit: 10,
-    queueLimit: 0
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
 });
+
 
 module.exports.query = async function(query, params = []) {
     let connection;
@@ -29,6 +27,7 @@ module.exports.query = async function(query, params = []) {
     }
 }
 
+// Disconnect function for gracefully closing the pool
 module.exports.disconnect = async function () {
     try {
         await pool.end();
@@ -39,15 +38,12 @@ module.exports.disconnect = async function () {
     }
 }
 
+// Connection check function
 module.exports.checkConnection = async function() {
     try {
         const connection = await pool.getConnection();
-        console.log("Successfully connected to the database:");
-        console.log(`Host: ${process.env.MYSQLHOST || process.env.DB_HOST}`);
-        console.log(`Database: ${process.env.MYSQLDATABASE || process.env.DB_NAME}`);
-        console.log(`User: ${process.env.MYSQLUSER || process.env.DB_USER}`);
+        console.log("Successfully connected to the database");
         connection.release();
-        return true;
     } catch (err) {
         console.error("Database connection failed:", err);
         throw err;

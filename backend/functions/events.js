@@ -76,3 +76,15 @@ module.exports.getEventByID = async function (eventData) {
         throw error;
     }
 };
+
+module.exports.listAllEvents = async function () {
+    try {
+        console.log("Starting listAllExhibits function");
+        const results = await query(`SELECT * FROM Events`);
+        console.log("Query results:", results);
+        return results;
+    } catch (err) {
+        console.log("Error in listAllExhibits:", err);
+        throw err;
+    }
+};

@@ -28,12 +28,16 @@ module.exports.deleteAnimal = async function (animalData) {
 
 module.exports.listAllAnimals = async function () {
     try {
-        return query(`SELECT * FROM Animal`); 
+      console.log("Starting listAllAnimals function"); // Debugging line
+      const results = await query(`SELECT * FROM Animals`);
+      console.log("Query results:", results); // Log results for inspection
+      return results;
     } catch (err) {
-        console.log(err);
-        throw err;
+      console.error("Error in listAllAnimals:", err.message);
+      throw err;
     }
-}
+  };
+  
 
 module.exports.getAnimalById = async function (animalData) {
     const {animalID} = animalData;

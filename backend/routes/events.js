@@ -13,9 +13,10 @@ router.get('/upcoming', async (req, res) => {
     }
 });
 
+//List all Events
 router.get('/', async (req, res) => {
     try {
-        const eventsList = await eventsController.getAllEvents();
+        const eventsList = await eventsController.listAllEvents();
         return res.status(201).json(eventsList);
     } catch (err) {
         res.status(500).json({ error: 'Failed to fetch upcoming events' });

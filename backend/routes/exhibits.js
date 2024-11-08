@@ -19,7 +19,7 @@ router.post('/add', async (req, res) => {
 // Delete an exhibit by ID
 router.delete('/:exhibitID', async (req, res) => {
     const { exhibitID } = req.params;
-
+    
     try {
         await exhibitController.deleteExhibit({ exhibitID });
         res.status(200).json({ message: 'Exhibit deleted successfully' });
@@ -29,7 +29,7 @@ router.delete('/:exhibitID', async (req, res) => {
     }
 });
 
-// List all exhibits
+// all exhibits
 router.get('/', async (req, res) => {
     try {
         const exhibits = await exhibitController.listAllExhibits();
