@@ -29,10 +29,7 @@ connection.connect((err) => {
 // CORS Configuration
 const allowedOrigins = [
 	'https://uma-test-production.up.railway.app', 
-	'http://localhost:64509',
-	'http://localhost:3000',
-	'http://localhost:3001'
-  ];
+];
 
   app.use((req, res, next) => {
 	console.log({
