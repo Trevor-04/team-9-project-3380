@@ -16,14 +16,9 @@ router.get('/upcoming', async (req, res) => {
 //List all Events
 router.get('/', async (req, res) => {
     try {
-        // Set CORS headers to allow requests from specific origins
-        res.setHeader('Access-Control-Allow-Origin', req.headers.origin || '*');
-        res.setHeader('Access-Control-Allow-Credentials', 'true');
-
         const eventsList = await eventsController.listAllEvents();
         return res.status(201).json(eventsList);
     } catch (err) {
-        console.error("Error fetching events:", err);
         res.status(500).json({ error: 'Failed to fetch upcoming events' });
     }
 });
