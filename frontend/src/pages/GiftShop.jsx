@@ -10,7 +10,7 @@ function Giftshop({imageUrl, name}) {
 
   async function getProducts() {
     try {
-        const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/inventory/category/0`);
+        const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/inventory`);
         if(response && response.data) {
           setGifts(response.data);
         } else {
