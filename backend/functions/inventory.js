@@ -42,7 +42,9 @@ module.exports.updateItem = async function (itemData) {
 
 module.exports.listItems = async function () {
     try {
-        return await query(`SELECT * FROM Inventory`);
+        return await query(`
+        SELECT * 
+        FROM Inventory`);
     } catch (err) {
         console.log(err);
         throw err;
