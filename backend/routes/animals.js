@@ -92,5 +92,18 @@ router.get('/exhibits/:exhibitName', async (req, res) => {
     }
 });
 
+// Get animals by exhibit name or ID
+router.get('/exhibits', async (req, res) => {
+    const { exhibitID, exhibitName } = req.query; // Accept exhibitID and exhibitName from query params
+
+    try {
+        const animals = await animalController.getAnimalsByExhibit({ exhibitID, exhibitName });
+        res.status(200).json(animals);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Failed to get animals by exhibit' });
+    }
+});
+
 // Export the router
 module.exports = router;
