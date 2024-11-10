@@ -11,6 +11,12 @@ export default function Navbar() {
 
       {/* Buttons Section */}
       <div className="flex items-center">
+      <Link to="MemSignup">
+          <button className="text-[#165e229e] font-bold hover:text-green-900 ml-4 p-1">
+            Member Signup
+          </button>
+        </Link>
+
         <Link to="/Events">
           <button className="text-[#165e229e] font-bold hover:text-green-900 ml-4 p-1">
             Upcoming Events

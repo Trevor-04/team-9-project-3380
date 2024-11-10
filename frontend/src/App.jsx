@@ -14,6 +14,8 @@ import Tickets from "./pages/Tickets";
 import ProductPage from './components/ProductPage';
 import Admin from './pages/AdminPage';
 import Member from './pages/MemberPage';
+import MemberSignup from "./pages/MemberSignup";
+import Checkout from "./pages/checkout";
 import './App.css';
 
 function App() {
@@ -23,6 +25,7 @@ function App() {
                 <Navbar />
                 <Routes>
                     <Route path="/" element={<Home />} />
+                    <Route path="/MemSignup" element={<MemberSignup />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/AdminLogin" element={<AdminLogin />} />
                     <Route path="/animals" element={<Animals />} />
@@ -37,6 +40,7 @@ function App() {
                    <Route path="/donatePage" element={<Navigate to="/donatePage.html" />} />
                    <Route path ="/Admin" element={<Admin />} />
                    <Route path ="/Member" element={<Member />} />
+                   <Route path ="/Checkout" element={<Checkout/>} />
                 </Routes>
             </Router>
         </div>
