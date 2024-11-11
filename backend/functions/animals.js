@@ -117,7 +117,7 @@ module.exports.getAnimalsbyExhibit= async function(animalData) {
 }
 
 module.exports.getAnimalsByExhibit = async function(animalData) {
-    const { exhibitID, exhibitName } = animalData;
+    const { exhibitName } = animalData;
 
     if (!exhibitName && !exhibitID) throw new Error('Either exhibitName or exhibitID must be provided');
     try {
@@ -130,7 +130,7 @@ module.exports.getAnimalsByExhibit = async function(animalData) {
                 JOIN Enclosures AS En ON A.enclosureID = En.enclosureID
                 JOIN Exhibits AS Ex ON En.exhibitID = Ex.exhibitID
             `);
-        } else if (exhibitName) {
+        } else {
             results = await query(`
                 SELECT * 
                 FROM Animals AS A
@@ -138,14 +138,6 @@ module.exports.getAnimalsByExhibit = async function(animalData) {
                 JOIN Exhibits AS Ex ON En.exhibitID = Ex.exhibitID
                 WHERE Ex.exhibitName = ?
             `, [exhibitName]);
-        } else if (exhibitID) {
-            results = await query(`
-                SELECT * 
-                FROM Animals AS A
-                JOIN Enclosures AS En ON A.enclosureID = En.enclosureID
-                JOIN Exhibits AS Ex ON En.exhibitID = Ex.exhibitID
-                WHERE Ex.exhibitID = ?
-            `, [exhibitID]);
         }
 
         return results || [];

@@ -26,12 +26,10 @@ module.exports.deleteExhibit = async function (exhibitData) {
 
 module.exports.listAllExhibits = async function () {
     try {
-        console.log("Starting listAllExhibits function");
         const results = await query(`SELECT * FROM Exhibits`);
-        console.log("Query results:", results);
         return results;
     } catch (err) {
-        console.log("Error in listAllExhibits:", err);
+        console.log(err);
         throw err;
     }
 };

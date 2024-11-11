@@ -47,13 +47,11 @@ module.exports.addEvent = async function (eventData) {
 };
 
 module.exports.deleteEvent = async function (eventData) {
-    const {eventID} = eventData;
+    const { eventID } = eventData;
     try {
-        // delete the event from the database using parameterized query
-        const result = await query(`
-            DELETE FROM Events
-            WHERE eventID=?;
-        `, [eventID]);
+        const result = await query(`DELETE FROM Events WHERE eventID = ?`, [eventID]);
+        
+        console.log("Delete result:", result);  // Debugging line to confirm the operation
         return result;
     } catch (error) {
         console.error("Error deleting event", error);
@@ -78,13 +76,11 @@ module.exports.getEventByID = async function (eventData) {
 };
 
 module.exports.listAllEvents = async function () {
-    try {
-        console.log("Starting listAllExhibits function");
+    try {     
         const results = await query(`SELECT * FROM Events`);
-        console.log("Query results:", results);
         return results;
     } catch (err) {
-        console.log("Error in listAllExhibits:", err);
+        console.log(err);
         throw err;
     }
 };
