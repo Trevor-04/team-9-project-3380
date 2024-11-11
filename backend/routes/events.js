@@ -1,5 +1,6 @@
 const express = require('express');
 const eventsController = require('../functions/events');
+const { verifyEmployeeRole } = require('../middleware/auth');
 
 const router = express.Router();
 
