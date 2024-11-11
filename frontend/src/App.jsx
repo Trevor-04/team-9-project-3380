@@ -16,6 +16,10 @@ import Admin from './pages/AdminPage';
 import Member from './pages/MemberPage';
 import MemberSignup from "./pages/MemberSignup";
 import Checkout from "./pages/checkout";
+import AdminHome from "./adminpages/Home";
+import ExhibitReport from "./adminpages/exhibitReport";
+import TotalReport from "./adminpages/totalReport";
+
 import './App.css';
 
 function App() {
@@ -41,6 +45,9 @@ function App() {
                    <Route path ="/Admin" element={<Admin />} />
                    <Route path ="/Member" element={<Member />} />
                    <Route path ="/Checkout" element={<Checkout/>} />
+                   <Route path ="/AdminHome" element={<AdminHome/>} />
+                   <Route path ="/ExhibitReport" element={<ExhibitReport/>} />
+                   <Route path ="/TotalReport" element={<TotalReport/>} />
                 </Routes>
             </Router>
         </div>

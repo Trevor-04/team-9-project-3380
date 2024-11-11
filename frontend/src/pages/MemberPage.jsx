@@ -1,20 +1,65 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import axios from 'axios';
+const {url} = require('../config.json')[process.env.NODE_ENV];
 
 export default function MemberPage() {
+  const [memberData, setMemberData] = useState(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
   const [showMembershipStatus, setShowMembershipStatus] = useState(false);
   const [showRewardPoints, setShowRewardPoints] = useState(false);
   const [showRecentPurchases, setShowRecentPurchases] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
+  const { memberId } = useParams(); // Get memberId from the route
   const dropdownRef = useRef();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchMemberData = async () => {
+      const token = localStorage.getItem('token');
+      console.log("Token from localStorage:", token); // Log the token
+      if (!token) return navigate('/login'); // Redirect to login if no token
+
+      try {
+        const response = await axios.get(`${url}/members/profile`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setMemberData(response.data); // Store the member data
+      } catch (error) {
+        console.error("Error fetching member data:", error);
+      }
+    };
+
+    fetchMemberData();
+  }, [navigate, memberId]);
 
   const toggleDropdown = () => {
     setIsDropdownOpen((prev) => !prev);
   };
 
+  const goToSettings = () => {
+    if (memberId) {
+        navigate(`/member/${memberId}/settings`);
+    }
+};
+
+  const goToLogout = () =>{
+    navigate(`/`);
+  }
+
+  const goToTickets = () => {
+    if (memberId) {
+      navigate(`/member/${memberId}/tickets`);
+    }
+  };
+
+const formatDate = (isoDate) => {
+  if (!isoDate) return ''; // Handle if no date is available
+  return new Date(isoDate).toISOString().split('T')[0]; // Format to YYYY-MM-DD
+};
   const toggleProfile = () => {
     setShowProfile((prev) => !prev);
   };
@@ -48,13 +93,23 @@ export default function MemberPage() {
   }, []);
 
   const goToEvents = () => {
-    navigate('/events');
-  };
+    const memberId = memberData?.memberID; // Use fetched member ID
+    if (memberId) {
+        navigate(`/member/${memberId}/events`);
+    }
+};
 
   return (
     <div>
-      <header className="bg-white text-[#165e229e] p-5 flex items-center" ref={dropdownRef}>
-        <h1>Member Dashboard</h1>
+
+      <header className="bg-[#faf0e6] text-[#165e229e] p-5 flex items-center justify-between" ref={dropdownRef}>
+        {/* Logo Section */}
+      <Link to="/" className="flex items-center">
+        <img className="h-[70px]" src="/Coog_Zoo.png" alt="logo" />
+      </Link>
+        <div className="flex-grow text-center">
+          <h1 className="font-bold">Member Dashboard</h1>
+        </div>
 
         <button
           onClick={toggleDropdown}
@@ -64,26 +119,27 @@ export default function MemberPage() {
         </button>
 
         {isDropdownOpen && (
-          <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5">
-            <ul className="py-1">
-              <li>
-                <button className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100">
-                  My Profile
-                </button>
-              </li>
-              <li>
-                <button className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100">
-                  Ticket History
-                </button>
-              </li>
-              <li>
-                <button className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100">
-                  Settings
-                </button>
-              </li>
-            </ul>
-          </div>
-        )}
+  <div className="absolute right-0 mt-20 w-48 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5">
+    <ul className="py-1">
+    <li>
+        <button 
+          onClick={goToSettings}
+          className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
+        >
+          Settings
+        </button>
+      </li>
+      <li>
+        <button 
+        onClick={goToLogout}
+        className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100">
+          Logout
+        </button>
+      </li>
+    </ul>
+  </div>
+)}
+
       </header>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 p-4 mt-[20px]">
@@ -96,14 +152,14 @@ export default function MemberPage() {
           </button>
           {showProfile ? (
             <div>
-              <p><strong>Name:</strong> John Doe</p>
-              <p><strong>Email:</strong> johndoe@example.com</p>
-              <p><strong>Phone:</strong> (123) 456-7890</p>
-              <p><strong>Birthday:</strong> January 1, 1990</p>
-              <p><strong>Membership Type:</strong> Gold</p>
-              <p><strong>Subscribed On:</strong> January 1, 2020</p>
-              <p><strong>Membership Term:</strong> Annual</p>
-              <p><strong>Last Billed:</strong> January 1, 2024</p>
+              <p><strong>Name:</strong> {memberData?.memberFName} {memberData?.memberLName}</p>
+              <p><strong>Email:</strong> {memberData?.memberEmail}</p>
+              <p><strong>Phone:</strong> {memberData?.memberPhone}</p>
+              <p><strong>Birthday:</strong> {formatDate(memberData?.memberBirthday)}</p>
+              <p><strong>Membership Type:</strong> {memberData?.memberType}</p>
+              <p><strong>Subscribed On:</strong> {memberData?.subscribed_on}</p>
+              <p><strong>Membership Term:</strong> {memberData?.memberTerm}</p>
+              <p><strong>Last Billed:</strong> {memberData?.last_billed}</p>
             </div>
           ) : (
             <p>Click "My Profile" to view your details.</p>
@@ -124,10 +180,10 @@ export default function MemberPage() {
           <h3 className="font-bold">Membership Status</h3>
           {showMembershipStatus && (
             <div className="mt-2">
-              <p><strong>Type:</strong> Gold</p>
-              <p><strong>Term:</strong> Annual</p>
-              <p><strong>Subscribed On:</strong> January 1, 2020</p>
-              <p><strong>Last Billed:</strong> January 1, 2024</p>
+              <p><strong>Type:</strong> {memberData?.memberType}</p>
+              <p><strong>Term:</strong> {memberData?.memberTerm}</p>
+              <p><strong>Subscribed On:</strong> {memberData?.subscribed_on}</p>
+              <p><strong>Last Billed:</strong> {memberData?.last_billed}</p>
             </div>
           )}
         </div>
@@ -146,20 +202,26 @@ export default function MemberPage() {
         </div>
 
         <div 
-          className="purchases text-[#165e229e] w-full bg-white p-6 rounded-lg shadow-sm flex items-center justify-center text-center cursor-pointer"
-          onClick={toggleRecentPurchases}
-        >
-          <h3 className="font-bold">Recent Purchases</h3>
-          {showRecentPurchases && (
-            <div className="mt-2">
-              <ul className="list-disc list-inside">
-                <li>Item 1 - $10.00 (January 1, 2024)</li>
-                <li>Item 2 - $5.00 (December 25, 2023)</li>
-                <li>Item 3 - $20.00 (November 15, 2023)</li>
-              </ul>
-            </div>
-          )}
+      className="purchases text-[#165e229e] w-full bg-white p-6 rounded-lg shadow-sm flex items-center justify-center text-center cursor-pointer"
+      onClick={toggleRecentPurchases}
+    >
+      <h3 className="font-bold">Recent Purchases</h3>
+      {showRecentPurchases && (
+        <div className="mt-2">
+          <ul className="list-disc list-inside">
+            <li>Item 1 - $10.00 (January 1, 2024)</li>
+            <li>Item 2 - $5.00 (December 25, 2023)</li>
+            <li>Item 3 - $20.00 (November 15, 2023)</li>
+          </ul>
+          <button 
+            onClick={goToTickets} 
+            className="mt-4 bg-[#165e229e] text-white font-bold py-2 px-4 rounded"
+          >
+            Buy Tickets
+          </button>
         </div>
+      )}
+    </div>
 
         <div 
           className="notifications text-[#165e229e] w-full bg-white p-6 rounded-lg shadow-sm flex items-center justify-center text-center cursor-pointer"

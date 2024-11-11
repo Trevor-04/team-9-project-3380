@@ -20,7 +20,7 @@ function Checkout() {
         cvv: ''
     });
 
-    const [isMember, setIsMember] = useState(true); // Replace this with actual membership check logic
+    const [isMember, setIsMember] = useState(false); // Replace this with actual membership check logic
 
     const handleChange = (e) => {
         const { name, value } = e.target;

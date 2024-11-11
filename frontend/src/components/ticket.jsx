@@ -123,7 +123,7 @@ function TicketOptions() {
             time_purchased: `${purchasedFor[0]} ${purchasedFor[1].substring(0, purchasedFor[1].indexOf("."))}`,
           }
           total += calculateTotalPrice(format12Hours(time), ticketTypeMap[i]);
-          await axios.post(`${process.env.REACT_APP_BACKEND_URL}/tickets/add/`, dataObject);
+          await axios.post(`${process.env.REACT_APP_BACKEND_URL}}/tickets/add/`, dataObject);
         }
       }
       setFinalPrice(total);
