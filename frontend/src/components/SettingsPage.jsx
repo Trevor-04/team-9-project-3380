@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 
-//const {url} = require('../config.json')[process.env.NODE_ENV];  
-
 export default function SettingsPage() {
   const [memberData, setMemberData] = useState(null);
   const [editData, setEditData] = useState({});
@@ -50,26 +48,70 @@ export default function SettingsPage() {
     }
   };
 
-  if (!memberData) return <div>Loading...</div>;
+  if (!memberData) return <div className="text-center p-4">Loading...</div>;
 
   return (
-    <div className="p-4">
-      <h2>Edit info</h2>
-      <div>
-        <label>Name:</label>
-        <input name="memberFName" value={editData.memberFName} onChange={handleChange} />
-        <input name="memberLName" value={editData.memberLName} onChange={handleChange} />
+    <div className="max-w-4xl mx-auto p-6 bg-white shadow-md rounded-lg">
+      <h2 className="text-2xl font-bold text-center mb-4">Edit Member Info</h2>
+      
+      <div className="space-y-4">
+        {/* Name */}
+        <div className="flex space-x-4">
+          <div className="w-full">
+            <label className="block text-sm font-medium text-gray-700">First Name</label>
+            <input 
+              name="memberFName" 
+              value={editData.memberFName} 
+              onChange={handleChange} 
+              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+          <div className="w-full">
+            <label className="block text-sm font-medium text-gray-700">Last Name</label>
+            <input 
+              name="memberLName" 
+              value={editData.memberLName} 
+              onChange={handleChange} 
+              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+        </div>
+
+        {/* Email */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Email</label>
+          <input 
+            name="memberEmail" 
+            value={editData.memberEmail} 
+            onChange={handleChange} 
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+
+        {/* Phone */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Phone</label>
+          <input 
+            name="memberPhone" 
+            value={editData.memberPhone} 
+            onChange={handleChange} 
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+
+        {/* Additional Fields */}
+        {/* Add more fields as needed */}
+
+        {/* Save Button */}
+        <div className="text-center">
+          <button 
+            onClick={handleSave} 
+            className="px-6 py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            Save Changes
+          </button>
+        </div>
       </div>
-      <div>
-        <label>Email:</label>
-        <input name="memberEmail" value={editData.memberEmail} onChange={handleChange} />
-      </div>
-      <div>
-        <label>Phone:</label>
-        <input name="memberPhone" value={editData.memberPhone} onChange={handleChange} />
-      </div>
-      {/* Add more fields as needed */}
-      <button onClick={handleSave}>Save Changes</button>
     </div>
   );
 }

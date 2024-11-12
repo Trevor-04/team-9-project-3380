@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
-//const {url} = require('../config.json')[process.env.NODE_ENV];
+//const {process.env.REACT_APP_BACKEND_URL} = require('../config.json')[process.env.NODE_ENV];
 
 export default function MemberPage() {
   const [memberData, setMemberData] = useState(null);

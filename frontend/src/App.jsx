@@ -48,7 +48,7 @@ function App() {
                    <Route path="/Admin/:employeeID" element={<Admin />} />
                    {/* <Route path ="/Member" element={<Member />} /> */}
                     <Route path="/member/:memberId" element={<Member />} /> 
-                   {/* <Route path="/settings" element={<SettingsPage />} />  */}
+                    {/* <Route path="/settings" element={<SettingsPage />} />  */}
                     <Route path="/checkout" element={<Checkout />} />
                     <Route path="/MemSignup" element={<MemSignup />} />
                     <Route path="/member/:memberId/settings" element={<SettingsPage />} />
