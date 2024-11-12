@@ -1,4 +1,4 @@
-const { query } = require('../functions/database');
+const { query } = require('./database');
 const nodemailer = require('nodemailer');
 
 // Configure Nodemailer
