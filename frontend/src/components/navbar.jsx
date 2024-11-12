@@ -13,7 +13,7 @@ export default function Navbar() {
       <div className="flex items-center">
       <Link to="MemSignup">
           <button className="text-[#165e229e] font-bold hover:text-green-900 ml-4 p-1">
-            Member Signup
+            Member Plans
           </button>
         </Link>
 
