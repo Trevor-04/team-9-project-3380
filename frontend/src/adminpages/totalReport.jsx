@@ -6,7 +6,7 @@ import moment from "moment";
 import "../App.css";
 import "../index.css";
 
-const {url} = require('../config.json')[process.env.NODE_ENV];
+//const {process.env.REACT_APP_BACKEND_URL} = require('../config.json')[process.env.NODE_ENV];
 function TotalReport() {
   const [salesData, setSalesData] = useState(null);
   const [filter, setFilter] = useState("totalSales");
@@ -67,7 +67,7 @@ function TotalReport() {
         fetchData = "/reports/restraunt/items";
     }
     try {
-      const response = await axios.get(`${url}${fetchData}`);
+      const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}${fetchData}`);
       if (response.status != 200) {
         throw new Error("Failed to fetch sales data");
       }
