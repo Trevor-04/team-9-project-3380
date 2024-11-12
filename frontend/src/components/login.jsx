@@ -10,15 +10,22 @@ function Login() {
 
   const handleLogin = async (event) => {
     event.preventDefault();
-
+  
+    console.log('Username:', username);  // Check if username is being captured correctly
+    console.log('Password:', password);  // Check if password is being captured correctly
+  
     try {
       const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/login/validate`, {
         employeeEmail: username,
         employeePassword: password,
       });
-
+  
+      console.log('Response:', response);  // Log the response to check the data returned
+  
       if (response.status === 200) {
         const { role } = response.data; // Assuming you get role in the response
+        console.log('Role:', role);  // Log the role to ensure it's being returned correctly
+  
         if (role === 'admin') {
           navigate.push('/admin-dashboard'); // Redirect to admin dashboard
         } else {
@@ -26,6 +33,7 @@ function Login() {
         }
       }
     } catch (e) {
+      console.error('Error during login:', e);  // Log the full error if it occurs
       if (e.response && e.response.status === 401) {
         alert("Invalid Username and Password");
       } else {
@@ -33,6 +41,7 @@ function Login() {
       }
     }
   };
+  
 
   return (
     <main className="flex items-center justify-center h-screen bg-[#165e229e] ">
