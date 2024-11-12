@@ -12,7 +12,7 @@ function AdminLogin() {
     event.preventDefault();
   
     try {
-      const response = await axios.post(`${process.env.REACT_APP_URL}/login/validate`, {
+      const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/login/validate`, {
         email: username,
         password: password,
         loginType: 'employee',
