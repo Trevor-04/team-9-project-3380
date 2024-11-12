@@ -1,7 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 export default function Navbar() {
+  const location = useLocation();
+
+  if (location.pathname.startsWith('/member')) {
+    return null;
+  }
   return (
     <header className="bg-[#faf0e6] h-20 flex items-center justify-between px-4">
       {/* Logo Section */}
