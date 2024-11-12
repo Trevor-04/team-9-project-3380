@@ -15,6 +15,8 @@ import ProductPage from './components/ProductPage';
 import Admin from './pages/AdminPage';
 import Member from './pages/MemberPage';
 import SettingsPage from "./components/SettingsPage";
+import Checkout from "./pages/checkout";
+import MemSignup from "./pages/MemberSignup";
 import './App.css';
 
 function App() {
@@ -44,6 +46,8 @@ function App() {
                    {/* <Route path ="/Member" element={<Member />} /> */}
                      <Route path="/member/:memberId" element={<Member />} /> 
                    {/* <Route path="/settings" element={<SettingsPage />} />  */}
+                    <Route path="/checkout" element={<Checkout />} />
+                    <Route path="/MemSignup" element={<MemSignup />} />
                    <Route path="/member/:memberId/settings" element={<SettingsPage />} />
                 </Routes>
             </Router>

@@ -42,7 +42,8 @@ connection.connect((err) => {
 //app.use(cors({ origin: 'https://672d5d775e81d6982bc414bf--glowing-tiramisu-2436aa.netlify.app' }));
 const allowedOrigins = [
 	'https://672d5d775e81d6982bc414bf--glowing-tiramisu-2436aa.netlify.app',
-	'https://glowing-tiramisu-2436aa.netlify.app'
+	'https://glowing-tiramisu-2436aa.netlify.app',
+  'https://localhost:3000',
   ];
   
   const corsOptions = {
