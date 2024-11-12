@@ -14,10 +14,9 @@ router.get('/upcoming', async (req, res) => {
     }
 });
 
-//List all Events
 router.get('/', async (req, res) => {
     try {
-        const eventsList = await eventsController.listAllEvents();
+        const eventsList = await eventsController.getAllEvents();
         return res.status(201).json(eventsList);
     } catch (err) {
         res.status(500).json({ error: 'Failed to fetch upcoming events' });
@@ -25,11 +24,11 @@ router.get('/', async (req, res) => {
 });
 
 // Add a new event
-router.post('/add', async (req, res) => {
+router.post('/add', verifyEmployeeRole, async (req, res) => {
     try {
         const { eventID, eventName, eventTime, members_only, exhibitID, sponsorID } = req.body;
+        const eventData = { eventID, eventName, eventTime, members_only, exhibitID, sponsorID };
 
-        const eventData = {eventID, eventName, eventTime, members_only, exhibitID, sponsorID}
         const result = await eventsController.addEvent(eventData);
         return res.status(201).json(result);
     } catch (err) {
@@ -37,12 +36,12 @@ router.post('/add', async (req, res) => {
     }
 });
 
-//delete an event (by eventID)
+// delete an event (by eventID)
 router.delete('/:eventID', verifyEmployeeRole, async (req, res) => {
     const { eventID } = req.params;
 
     try {
-        await eventsController.deleteEvent({ eventID });
+        await eventsController.deleteEvent(req.params);
         res.status(200).json({ message: 'Event deleted successfully' });
     } catch (error) {
         res.status(500).json({ error: 'Failed to delete event' });

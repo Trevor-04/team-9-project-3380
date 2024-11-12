@@ -48,6 +48,7 @@ module.exports.addEvent = async function (eventData) {
 
 module.exports.deleteEvent = async function (eventData) {
     const { eventID } = eventData;
+
     try {
         const result = await query(`DELETE FROM Events WHERE eventID = ?`, [eventID]);
         
@@ -72,15 +73,5 @@ module.exports.getEventByID = async function (eventData) {
     } catch (error) {
         console.error("Error getting event", error);
         throw error;
-    }
-};
-
-module.exports.listAllEvents = async function () {
-    try {     
-        const results = await query(`SELECT * FROM Events`);
-        return results;
-    } catch (err) {
-        console.log(err);
-        throw err;
     }
 };
