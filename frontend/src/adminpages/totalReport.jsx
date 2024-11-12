@@ -8,7 +8,7 @@ import { Bar, Line} from "react-chartjs-2"; // Import Bar chart for the chart vi
 import "../App.css";
 import "../index.css";
 
-const { url } = require('../config.json')[process.env.NODE_ENV];
+//const { url } = require('../config.json')[process.env.NODE_ENV];
 
 function TotalReport() {
   const [salesData, setSalesData] = useState(null);
@@ -86,7 +86,7 @@ function TotalReport() {
         fetchData = "/reports/all";
     }
     try {
-      const response = await axios.get(`${url}${fetchData}`, { params: { startDate, endDate } });
+      const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}${fetchData}`, { params: { startDate, endDate } });
       if (response.status !== 200) {
         throw new Error("Failed to fetch sales data");
       }
