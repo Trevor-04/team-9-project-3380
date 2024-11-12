@@ -188,7 +188,7 @@ const filteredData = salesData?.filter((sale) => {
   const numRowsShowing = filteredData ? filteredData.length : 0;
 
   return (
-    <main className="min-h-screen bg-[#EFEDE5] w-screen flex justify-center">
+    <main className="min-h-screen bg-[#fef7e7] w-screen flex justify-center">
       <div className="container mx-auto p-6">
         <Link
           to="/admin"

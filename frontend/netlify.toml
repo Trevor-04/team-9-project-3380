@@ -1,9 +1,0 @@
-[build]
-  publish = "frontend/build"  # This points to the build output directory
-  command = "npm run build --prefix frontend"  # Build the React app from the 'frontend' folder
-
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
-  force = true

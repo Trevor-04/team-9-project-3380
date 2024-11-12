@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import {BarChart, PieChart} from '../charts/barChart';
 import { useNavigate } from 'react-router-dom';
-
+import { Link } from 'react-router-dom';
 //const {url} = require('../config.json')[process.env.NODE_ENV || 'development'];
 
 export default function AdminPage() {
@@ -381,9 +381,10 @@ export default function AdminPage() {
              {/* Link to Total Reports */}
           <Link
             to={`/Admin/${employeeID}/totalReport`}
-            className="ml-8 bg-[#165e229e] text-white font-bold w-[120px] h-[35px] rounded-2xl"
             >
-            View Reports
+              <button className="ml-8 bg-[#165e229e] text-white font-bold w-[120px] h-[35px] rounded-2xl items-center">
+               View Reports
+              </button>
           </Link>
         </header>
   
