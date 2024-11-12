@@ -30,7 +30,7 @@ export default function AdminPage() {
   // Function to fetch all members
   const fetchMembers = async () => {
     try {
-      const response = await axios.get(`${url}/members`);
+      const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/members`);
       if (response.status === 200) {
         setMembers(response.data.members);
       }
@@ -41,7 +41,7 @@ export default function AdminPage() {
   
   const deleteMember = async (memberID) => {
     try {
-      await axios.delete(`${url}/members/${memberID}`);
+      await axios.delete(`${process.env.REACT_APP_BACKEND_URL}/members/${memberID}`);
       setMembers(members.filter((member) => member.memberID !== memberID));
     } catch (error) {
       console.error("Error deleting member:", error);
@@ -51,7 +51,7 @@ export default function AdminPage() {
   
   const getVisitors = async (startDate, endDate) => {
     try {
-      const response = await axios.get(`${url}/reports/visitorCount/`,{
+      const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/reports/visitorCount/`,{
         params: {startDate, endDate},
       });
       
@@ -66,7 +66,7 @@ export default function AdminPage() {
   
   const getSales = async (startDate, endDate) => {
     try {
-      const response = await axios.get(`${url}/reports/transactionCount/`,{
+      const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/reports/transactionCount/`,{
         params: {startDate, endDate},
       });
       
@@ -85,19 +85,19 @@ export default function AdminPage() {
     let tempRev = 0;
   
       let params = {};
-      const ticketRevenue = await axios.get(`${url}/reports/ticketRevenue/`, {
+      const ticketRevenue = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/reports/ticketRevenue/`, {
         params
       });
   
-      const restaurantRevenue = await axios.get(`${url}/reports/restaurant/total`, {
+      const restaurantRevenue = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/reports/restaurant/total`, {
         params
       });
   
-      const concessionRevenue = await axios.get(`${url}/reports/concession/total`, {
+      const concessionRevenue = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/reports/concession/total`, {
         params
       });
   
-      const giftRevenue = await axios.get(`${url}/reports/giftshop/total`, {
+      const giftRevenue = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/reports/giftshop/total`, {
         params
       });
   
@@ -115,7 +115,7 @@ export default function AdminPage() {
   const getSubcribers = async (startDate, endDate) => {
     try {
       
-      const response = await axios.get(`${url}/reports/subscriberCount`, {
+      const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/reports/subscriberCount`, {
         params: {startDate, endDate}
       });
       if (response.status === 200) {
@@ -129,7 +129,7 @@ export default function AdminPage() {
   
   const getDonations = async (startDate, endDate) => {
     try {
-      const response = await axios.get(`${url}/donations/total/`, {
+      const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/donations/total/`, {
         params: {startDate, endDate},
       });
   
@@ -153,7 +153,7 @@ export default function AdminPage() {
   
   
     try {
-      const res = await axios.get(`${url}/reports/charts/totalSales`, {
+      const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/reports/charts/totalSales`, {
         params: {startDate, endDate}
       });
   
@@ -194,7 +194,7 @@ export default function AdminPage() {
     ];
   
     try {
-      const response = await axios.get(`${url}/reports/charts/topProducts`, {
+      const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/reports/charts/topProducts`, {
         params: { startDate, endDate, limit }
       });
   
@@ -389,7 +389,7 @@ export default function AdminPage() {
   
           <button 
             onClick={() => navigate(`/Admin/${employeeID}/events`, { state: { editMode: true } })}
-            className="ml-8 bg-[#165e229e] text-white font-bold w-[100px] h-[30px] rounded-2xl"
+            className="ml-8 bg-[#165e229e] text-white font-bold w-[120px] h-[35px] rounded-2xl items-center"
           >
             Edit events
           </button>
