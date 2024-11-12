@@ -1,200 +1,129 @@
-const jwt = require('jsonwebtoken');//checking 
-const { query } = require('../functions/database');
-const JWT_SECRET = process.env.JWT_SECRET; // Ensure to replace this in production
+const {query} = require('../functions/database');
 
-// Function to create a new login for an employee
-module.exports.createLogin = async function (loginData) {
-    const { employeePassword, employeeEmail } = loginData;
+module.exports.newMember = async function (memberData) {
+    try {
+        module.exports.validateMemberData(memberData);
+        const {memberType = 0, memberTerm = null, subscribed_on = null, last_billed = null, memberEmail, memberPhone, memberFName, memberLName, memberBirthday} = memberData;
+        
+        return await query(`
+        INSERT INTO Members (memberType, memberTerm, subscribed_on, last_billed, memberEmail, memberPhone, memberFName, memberLName, memberBirthday)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`, 
+        [memberType, memberTerm, subscribed_on, last_billed, memberEmail, memberPhone, memberFName, memberLName, memberBirthday])
+    } catch (err) {
+        console.log(err);
+        throw err;
+    }
+}
 
-    if (!employeePassword || !employeeEmail) {
-        throw new Error("Email and password are required.");
+module.exports.newMemberLogin = async function (memberData) {
+    const {memberEmail, memberPassword, memberID} = memberData;
+    try {
+        return await query(`INSERT INTO Member_logins (memberEmail, memberPassword, memberID)
+        VALUES (?, ?, ?)`,
+        [memberEmail, memberPassword, memberID]);
+    } catch (err) {
+        console.error(err);
+    }
+}
+
+module.exports.getMember = async function(memberData) {
+    const {memberID} = memberData;
+    try {
+        return query(`
+        SELECT * 
+        FROM Members
+        WHERE memberID = ?`,
+        [memberID]);
+    } catch (err) {
+        console.log(err);
+        throw err;
+    }
+}
+
+module.exports.updateMember = async function (memberID, updatedData) {
+    const { memberFName, memberLName, memberEmail, memberPhone, memberBirthday } = updatedData;
+    const formattedBirthday = memberBirthday ? new Date(memberBirthday).toISOString().split('T')[0] : null;
+    try {
+        return await query(`
+        UPDATE Members 
+        SET memberFName = ?, memberLName = ?, memberEmail = ?, memberPhone = ?, memberBirthday = ?
+        WHERE memberID = ?`,
+        [memberFName, memberLName, memberEmail, memberPhone, formattedBirthday, memberID]);
+    } catch (err) {
+        console.log(err);
+        throw err;
+    }
+}
+
+
+module.exports.billed = async function (memberData) {
+    const {memberID} = memberData;
+    try {
+        return await query(`
+        UPDATE Members
+        SET last_billed = NOW(),
+        WHERE memberID  = ?`,
+        [memberID]);
+    } catch (err) {
+        console.log(err);
+        throw err;
+    }
+}
+
+module.exports.getMembersByBirthday = async function (memberData) {
+    const {memberBirthday} = memberData;
+    try {
+        return await query(`SELECT * FROM Members
+        WHERE memberBirthday =?`,
+        [memberBirthday]);
+    } catch (err) {
+        console.log(err);
+        throw err;
+    }
+}
+
+module.exports.validateMemberData = async function (memberData) {
+    const {memberID, memberType, memberEmail, memberFName, memberLName, memberTerm} = memberData;
+
+    if (memberID && (typeof memberID !== 'number')) {
+        throw new Error('Invalid or missing memberID');
     }
 
+    if (memberType &&  typeof memberType !== 'number') {
+        throw new Error('Invalid memberType. Must be a number');
+    }
+
+    if (memberEmail && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(memberEmail)) {
+        throw new Error('Invalid email format');
+    }
+
+    if (memberFName && typeof memberFName !== 'string') {
+        throw new Error('First name is required and should be a string');
+    }
+
+    if (memberLName && typeof memberLName !== 'string') {
+        throw new Error('Last name is required and should be a string');
+    }
+
+    if (memberTerm && typeof memberTerm !== 'number') {
+        throw new Error('Invalid or missing memberTerm. It must be a number');
+    }
+}
+
+module.exports.deleteMember = async function (memberID) {
     try {
-        await query(
-            `INSERT INTO Employee_logins (employeePassword, employeeEmail) VALUES (?, ?)`,
-            [employeePassword, employeeEmail]
-        );
-    } catch (error) {
-        console.error('Error in createLogin:', error);
-        throw error;
+        return await query(`DELETE FROM Members WHERE memberID = ?`, [memberID]);
+    } catch (err) {
+        console.error("Error deleting member:", err);
+        throw err;
     }
 };
-
-// Function to validate login credentials and generate a JWT token based on role
-module.exports.validateLogin = async function (loginData) {
+module.exports.getAllMembers = async function () {
     try {
-        const { employeePassword, employeeEmail } = loginData;
-
-        if (!employeeEmail || !employeePassword) {
-            throw new Error("Email and password are required.");
-        }
-
-        let returnData = {
-            role: null,
-            ID: "",
-            loggedIn: false,
-            token: null // Field for JWT token
-        };
-
-        // Check if login is for an employee
-        const employeeResults = await query(
-            `SELECT employeeID FROM Employee_logins WHERE employeeEmail = ? AND employeePassword = ?`,
-            [employeeEmail, employeePassword]
-        );
-
-        if (employeeResults.length > 0) {
-            // Update employee last login and generate employee token
-            await query(
-                `UPDATE Employee_logins SET last_login = NOW() WHERE employeeEmail = ? AND employeePassword = ?`,
-                [employeeEmail, employeePassword]
-            );
-
-            returnData = {
-                role: "employee",
-                ID: employeeResults[0].employeeID,
-                loggedIn: true,
-                token: jwt.sign(
-                    { ID: employeeResults[0].employeeID, role: "employee" },
-                    JWT_SECRET,
-                    { expiresIn: "1h" }
-                )
-            };
-        } else {
-            // If not an employee, check if login is for a member
-            const membersResults = await query(
-                `SELECT loginID, memberID FROM Member_logins WHERE memberEmail = ? AND memberPassword = ?`,
-                [employeeEmail, employeePassword]
-            );
-
-            if (membersResults.length > 0) {
-                returnData = {
-                    role: "member",
-                    ID: membersResults[0].memberID,
-                    loggedIn: true,
-                    token: jwt.sign(
-                        { ID: membersResults[0].memberID, role: "member" },
-                        JWT_SECRET,
-                        { expiresIn: "1h" }
-                    )
-                };
-            }
-        }
-
-        return returnData;
-    } catch (error) {
-        console.error('Error in validateLogin:', error);
-        throw error;
-    }
-};
-
-module.exports.validateEmployeeLogin = async function ({ email, password }) {
-    try {
-        //console.log("Email:", email, "Password:", password);
-        const results = await query(
-            `SELECT employeeID, role FROM Employee_logins WHERE employeeEmail = ? AND employeePassword = ?`,
-            [email, password]
-        );
-        //console.log(results);
-        if (results.length > 0) {
-            const employee = results[0];
-            const token = jwt.sign(
-                { ID: employee.employeeID, role: employee.role },
-                JWT_SECRET,
-                { expiresIn: '1h' }
-            );
-            //console.log("Generated Token for Employee:", token);
-            return {
-                role: employee.role === 'admin' ? 'admin' : 'employee',
-                ID: employee.employeeID,
-                loggedIn: true,
-                token,
-            };
-        }
-
-        return { loggedIn: false };
-    } catch (error) {
-        console.error('Error validating employee login:', error);
-        throw error;
-    }
-};
-
-module.exports.validateMemberLogin = async function ({ email, password }) {
-    try {
-        const results = await query(
-            `SELECT loginID, memberID FROM Member_logins WHERE memberEmail = ? AND memberPassword = ?`,
-            [email, password]
-        );
-
-        if (results.length > 0) {
-            const member = results[0];
-            const token = jwt.sign(
-                { ID: member.memberID, role: 'member' },
-                JWT_SECRET,
-                { expiresIn: '1h' }
-            );
-
-            return {
-                role: 'member',
-                ID: member.memberID,
-                loggedIn: true,
-                token,
-            };
-        }
-
-        return { loggedIn: false };
-    } catch (error) {
-        console.error('Error validating member login:', error);
-        throw error;
-    }
-};
-
-// Function to change an employee's password
-module.exports.changePassword = async function (passwordData) {
-    const { employeeID, employeePassword } = passwordData;
-
-    if (!employeeID || !employeePassword) {
-        throw new Error("Employee ID and new password are required.");
-    }
-
-    try {
-        await query(
-            `UPDATE Employee_logins SET employeePassword = ? WHERE employeeID = ?`,
-            [employeePassword, employeeID]
-        );
-        console.log("Password changed successfully");
-    } catch (error) {
-        console.error('Error in changePassword:', error);
-        throw error;
-    }
-};
-
-// Function to retrieve employee details by ID
-module.exports.getEmployeeByID = async function (employeeData) {
-    const { employeeID } = employeeData;
-
-    if (!employeeID) {
-        throw new Error("Employee ID is required.");
-    }
-
-    try {
-        const result = await query(
-            `SELECT * FROM Employee_logins WHERE employeeID = ?`,
-            [employeeID]
-        );
-        return result[0];
-    } catch (error) {
-        console.error('Error in getEmployeeByID:', error);
-        throw error;
-    }
-};
-
-// Function to retrieve all employees
-module.exports.getAllEmployees = async function () {
-    try {
-        return await query(`SELECT * FROM Employee_logins`);
-    } catch (error) {
-        console.error('Error in getAllEmployees:', error);
-        throw error;
+        const result = await query(`SELECT * FROM Members`);
+        return result;
+    } catch (err) {
+        console.error("Error fetching members:", err);
+        throw err;
     }
 };

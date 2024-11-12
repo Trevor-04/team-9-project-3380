@@ -90,26 +90,20 @@ module.exports.validateLogin = async function (loginData) {
 
 module.exports.validateEmployeeLogin = async function ({ email, password }) {
     try {
-        // Log the email and password for debugging
-        // console.log("Email:", email, "Password:", password);
-
-        // Log the JWT_SECRET to check if it's being loaded correctly
-        console.log('JWT_SECRET:', process.env.JWT_SECRET);
-
+        //console.log("Email:", email, "Password:", password);
         const results = await query(
             `SELECT employeeID, role FROM Employee_logins WHERE employeeEmail = ? AND employeePassword = ?`,
             [email, password]
         );
-        console.log(results);
-
+        //console.log(results);
         if (results.length > 0) {
             const employee = results[0];
             const token = jwt.sign(
                 { ID: employee.employeeID, role: employee.role },
-                process.env.JWT_SECRET, // Make sure this is referencing the environment variable correctly
+                JWT_SECRET,
                 { expiresIn: '1h' }
             );
-            console.log("Generated Token for Employee:", token);
+            //console.log("Generated Token for Employee:", token);
             return {
                 role: employee.role === 'admin' ? 'admin' : 'employee',
                 ID: employee.employeeID,
@@ -124,7 +118,6 @@ module.exports.validateEmployeeLogin = async function ({ email, password }) {
         throw error;
     }
 };
-
 
 module.exports.validateMemberLogin = async function ({ email, password }) {
     try {
