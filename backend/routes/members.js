@@ -1,129 +1,99 @@
-const {query} = require('../functions/database');
+const express = require('express');
+const membersController = require('../functions/members'); 
+const { verifyToken } = require('../middleware/auth'); // Import the verifyToken function
 
-module.exports.newMember = async function (memberData) {
+const router = express.Router();
+
+// Route to create a new member
+
+router.post('/new/login', async (req, res) => {
     try {
-        module.exports.validateMemberData(memberData);
-        const {memberType = 0, memberTerm = null, subscribed_on = null, last_billed = null, memberEmail, memberPhone, memberFName, memberLName, memberBirthday} = memberData;
-        
-        return await query(`
-        INSERT INTO Members (memberType, memberTerm, subscribed_on, last_billed, memberEmail, memberPhone, memberFName, memberLName, memberBirthday)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`, 
-        [memberType, memberTerm, subscribed_on, last_billed, memberEmail, memberPhone, memberFName, memberLName, memberBirthday])
-    } catch (err) {
-        console.log(err);
-        throw err;
+        const memberData = req.body;
+        const result = await membersController.newMemberLogin(memberData);
+        res.status(201).json(result);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
     }
-}
+});
 
-module.exports.newMemberLogin = async function (memberData) {
-    const {memberEmail, memberPassword, memberID} = memberData;
+router.post('/new/member', async (req, res) => {
     try {
-        return await query(`INSERT INTO Member_logins (memberEmail, memberPassword, memberID)
-        VALUES (?, ?, ?)`,
-        [memberEmail, memberPassword, memberID]);
-    } catch (err) {
-        console.error(err);
+        const memberData = req.body;
+        const result = await membersController.newMember(memberData);
+        res.status(201).json(result);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
     }
-}
+});
 
-module.exports.getMember = async function(memberData) {
-    const {memberID} = memberData;
+
+// Route to get the member profile based on token
+router.get('/profile', verifyToken, async (req, res) => {
+    console.log("Decoded user from token:", req.user); // Log to check the payload
     try {
-        return query(`
-        SELECT * 
-        FROM Members
-        WHERE memberID = ?`,
-        [memberID]);
-    } catch (err) {
-        console.log(err);
-        throw err;
-    }
-}
+        const memberID = req.user.ID; // Assuming the token payload has memberID
+        const memberResult = await membersController.getMember({ memberID });
 
-module.exports.updateMember = async function (memberID, updatedData) {
-    const { memberFName, memberLName, memberEmail, memberPhone, memberBirthday } = updatedData;
-    const formattedBirthday = memberBirthday ? new Date(memberBirthday).toISOString().split('T')[0] : null;
+        if (memberResult && memberResult.length > 0) {
+            const member = memberResult[0]; // Get the first row (expected only one since memberID is unique)
+            const formattedMember = {
+                memberID: member.memberID,
+                memberType: member.memberType,
+                memberTerm: member.memberTerm,
+                subscribed_on: member.subscribed_on,
+                last_billed: member.last_billed,
+                memberEmail: member.memberEmail,
+                memberPhone: member.memberPhone,
+                memberFName: member.memberFName,
+                memberLName: member.memberLName,
+                memberBirthday: member.memberBirthday
+            };
+            res.status(200).json(formattedMember);
+        } else {
+            res.status(404).json({ message: 'Member not found' });
+        }
+    } catch (error) {
+        console.error("Error fetching member data:", error);
+        res.status(500).json({ error: 'Failed to get member' });
+    }
+});
+
+router.put('/update', verifyToken, async (req, res) => {
     try {
-        return await query(`
-        UPDATE Members 
-        SET memberFName = ?, memberLName = ?, memberEmail = ?, memberPhone = ?, memberBirthday = ?
-        WHERE memberID = ?`,
-        [memberFName, memberLName, memberEmail, memberPhone, formattedBirthday, memberID]);
-    } catch (err) {
-        console.log(err);
-        throw err;
+        const memberID = req.user.ID;
+        const updatedData = req.body;
+        await membersController.updateMember(memberID, updatedData);
+        res.status(200).json({ message: 'Member profile updated successfully' });
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to update member profile' });
     }
-}
+});
 
 
-module.exports.billed = async function (memberData) {
-    const {memberID} = memberData;
+// Route to get a member by ID
+router.get('/:id', async (req, res) => {
     try {
-        return await query(`
-        UPDATE Members
-        SET last_billed = NOW(),
-        WHERE memberID  = ?`,
-        [memberID]);
-    } catch (err) {
-        console.log(err);
-        throw err;
+        const memberID = req.params.id;
+        const member = await membersController.getMember({ memberID: parseInt(memberID) });
+        if (member) {
+            res.status(200).json(member);
+        } else {
+            res.status(404).json({ message: 'Member not found' });
+        }
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to get member' });
     }
-}
+});
 
-module.exports.getMembersByBirthday = async function (memberData) {
-    const {memberBirthday} = memberData;
+// Route to update billing information for a member
+router.post('/billed', async (req, res) => {
     try {
-        return await query(`SELECT * FROM Members
-        WHERE memberBirthday =?`,
-        [memberBirthday]);
-    } catch (err) {
-        console.log(err);
-        throw err;
+        const memberData = req.body;
+        await membersController.billed(memberData);
+        res.status(200).json({ message: 'Billing information updated.' });
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to update billing information' });
     }
-}
+});
 
-module.exports.validateMemberData = async function (memberData) {
-    const {memberID, memberType, memberEmail, memberFName, memberLName, memberTerm} = memberData;
-
-    if (memberID && (typeof memberID !== 'number')) {
-        throw new Error('Invalid or missing memberID');
-    }
-
-    if (memberType &&  typeof memberType !== 'number') {
-        throw new Error('Invalid memberType. Must be a number');
-    }
-
-    if (memberEmail && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(memberEmail)) {
-        throw new Error('Invalid email format');
-    }
-
-    if (memberFName && typeof memberFName !== 'string') {
-        throw new Error('First name is required and should be a string');
-    }
-
-    if (memberLName && typeof memberLName !== 'string') {
-        throw new Error('Last name is required and should be a string');
-    }
-
-    if (memberTerm && typeof memberTerm !== 'number') {
-        throw new Error('Invalid or missing memberTerm. It must be a number');
-    }
-}
-
-module.exports.deleteMember = async function (memberID) {
-    try {
-        return await query(`DELETE FROM Members WHERE memberID = ?`, [memberID]);
-    } catch (err) {
-        console.error("Error deleting member:", err);
-        throw err;
-    }
-};
-module.exports.getAllMembers = async function () {
-    try {
-        const result = await query(`SELECT * FROM Members`);
-        return result;
-    } catch (err) {
-        console.error("Error fetching members:", err);
-        throw err;
-    }
-};
+module.exports = router;
