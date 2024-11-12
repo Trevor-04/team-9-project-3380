@@ -49,7 +49,7 @@ function App() {
                    {/* <Route path="/settings" element={<SettingsPage />} />  */}
                     <Route path="/checkout" element={<Checkout />} />
                     <Route path="/MemSignup" element={<MemSignup />} />
-                   <Route path="/member/:memberId/settings" element={<SettingsPage />} />
+                    <Route path="/member/:memberId/settings" element={<SettingsPage />} />
                     <Route path="Admin/:employeeID/totalReport" element={<TotalReport />} />
                 </Routes>
             </Router>

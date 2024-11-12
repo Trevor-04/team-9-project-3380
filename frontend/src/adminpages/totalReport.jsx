@@ -119,8 +119,12 @@ function TotalReport() {
 
   const fields = reportFieldMappings[reportType];
 
+  if (!salesData) {
+    return <div>Loading...</div>; // Or whatever loading state you prefer
+  }
+
 // Modify your filter function to filter by itemName and date
-const filteredData = salesData?.filter((sale) => {
+  const filteredData = salesData.filter((sale) => {
   // Check item name match
   const itemBoughtMatches = sale?.[fields.itemName] !== undefined &&
     sale[fields.itemName]
