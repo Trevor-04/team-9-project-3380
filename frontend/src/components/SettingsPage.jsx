@@ -51,7 +51,7 @@ export default function SettingsPage() {
   if (!memberData) return <div className="text-center p-4">Loading...</div>;
 
   return (
-    <div className="max-w-4xl mx-auto p-6 bg-white shadow-md rounded-lg">
+    <div className="max-w-4xl mx-auto p-6 bg-white shadow-md rounded-lg mt-[50px]">
       <h2 className="text-2xl font-bold text-center mb-4">Edit Member Info</h2>
       
       <div className="space-y-4">
