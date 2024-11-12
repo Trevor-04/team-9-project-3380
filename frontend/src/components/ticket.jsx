@@ -3,6 +3,7 @@ import './tickets.css';
 import { Link } from 'react-router-dom';
 //import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import { useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import axios from 'axios';
 //const {url} = require('../config.json')[process.env.NODE_ENV];
 
