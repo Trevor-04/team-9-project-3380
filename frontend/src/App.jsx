@@ -14,12 +14,7 @@ import Tickets from "./pages/Tickets";
 import ProductPage from './components/ProductPage';
 import Admin from './pages/AdminPage';
 import Member from './pages/MemberPage';
-import MemberSignup from "./pages/MemberSignup";
-import Checkout from "./pages/checkout";
-import AdminHome from "./adminpages/Home";
-import ExhibitReport from "./adminpages/exhibitReport";
-import TotalReport from "./adminpages/totalReport";
-
+import SettingsPage from "./components/SettingsPage";
 import './App.css';
 
 function App() {
@@ -29,25 +24,27 @@ function App() {
                 <Navbar />
                 <Routes>
                     <Route path="/" element={<Home />} />
-                    <Route path="/MemSignup" element={<MemberSignup />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/AdminLogin" element={<AdminLogin />} />
                     <Route path="/animals" element={<Animals />} />
                     <Route path="/giftshop" element={<GiftShop />} />
                     <Route path="/product/:name" element={<ProductPage />} />
                     <Route path="/events" element={<Events />} />
+                    <Route path="/member/:memberId/events" element={<Events />} /> 
                     <Route path="/signup" element={<Signup/>} />
                     <Route path="/tickets" element={<Tickets />} />
+                    <Route path="member/:memberId/tickets" element={<Tickets />} />
                     <Route path="/payment" element={<Payment />} /> 
+                    <Route path="/member/:memberId/payment" element={<Payment />} />
                    {/* <Route path="/Donate" element={<Donate />} /> */}
                    {/* <Route path="/DonatePage" element={<DonatePage/>} />  */}
                    <Route path="/donatePage" element={<Navigate to="/donatePage.html" />} />
                    <Route path ="/Admin" element={<Admin />} />
-                   <Route path ="/Member" element={<Member />} />
-                   <Route path ="/Checkout" element={<Checkout/>} />
-                   <Route path ="/AdminHome" element={<AdminHome/>} />
-                   <Route path ="/ExhibitReport" element={<ExhibitReport/>} />
-                   <Route path ="/TotalReport" element={<TotalReport/>} />
+                   <Route path="/Admin/:employeeID" element={<Admin />} />
+                   {/* <Route path ="/Member" element={<Member />} /> */}
+                     <Route path="/member/:memberId" element={<Member />} /> 
+                   {/* <Route path="/settings" element={<SettingsPage />} />  */}
+                   <Route path="/member/:memberId/settings" element={<SettingsPage />} />
                 </Routes>
             </Router>
         </div>
