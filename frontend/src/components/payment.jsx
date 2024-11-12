@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import './payment.css'; // Optional if you want to add custom styles beyond Tailwind
+//import './payment.css'; // Optional if you want to add custom styles beyond Tailwind
 
 const Payment = () => {
   const location = useLocation();
