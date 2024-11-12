@@ -2,7 +2,7 @@ import React from 'react';
 import { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import {BarChart, LineChart, PieChart} from '../components/charts/barChart'
+import { BarChart, PieChart } from '../charts/barChart';
 
 //const {url} = require('../config.json')[process.env.NODE_ENV];
 
@@ -447,7 +447,7 @@ const getTopProductsChart = async (startDate, endDate, limit) => {
         </div>  }
 
         <div className='bg-white p-6 rounded-lg shadow-sm h-[400px] w-full'>
-          <BarChart chartData={topProductsData} />
+            <BarChart chartData = {topProductsData}></BarChart>
         </div>  
       </div>
 
