@@ -13,18 +13,40 @@ function Login() {
 
     try {
       const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/login/validate`, {
-        employeeEmail: username,
-        employeePassword: password,
+        email: username,
+        password: password,
+        loginType: 'member',
       });
 
+
+      // if (response.status === 200) {
+      //   const { token, role } = response.data; // Destructure token and role from response
+
+      //   // Store JWT token in localStorage
+      //   localStorage.setItem('token', token);
+
+      //   if (role === 'admin' || role === 'employee') {
+      //     navigate('/Admin'); // Redirect to admin dashboard
+      //   } else {
+      //     navigate('/Member'); // Redirect to member dashboard
+      //   }
+      // }
       if (response.status === 200) {
-        const { role } = response.data; // Assuming you get role in the response
-        if (role === 'admin') {
-          navigate.push('/admin-dashboard'); // Redirect to admin dashboard
+        const { token, role, ID } = response.data; // Destructure memberID from response
+  
+        // Store JWT token in localStorage
+        localStorage.setItem('token', token);
+  
+        if (role === 'admin' || role === 'employee') {
+          navigate('/Admin'); // Redirect to admin dashboard
+        } else if (role === 'member') {
+          // Use backticks for the template literal, and check memberID value
+          navigate(`/member/${ID}`); 
         } else {
-          navigate.push('/routes/members'); // Redirect to member dashboard
+          console.error("No memberID provided for member role");
         }
       }
+
     } catch (e) {
       if (e.response && e.response.status === 401) {
         alert("Invalid Username and Password");
