@@ -17,6 +17,7 @@ import Member from './pages/MemberPage';
 import SettingsPage from "./components/SettingsPage";
 import Checkout from "./pages/checkout";
 import MemSignup from "./pages/MemberSignup";
+import TotalReport from "./adminpages/totalReport";
 import './App.css';
 
 function App() {
@@ -44,11 +45,12 @@ function App() {
                    <Route path ="/Admin" element={<Admin />} />
                    <Route path="/Admin/:employeeID" element={<Admin />} />
                    {/* <Route path ="/Member" element={<Member />} /> */}
-                     <Route path="/member/:memberId" element={<Member />} /> 
+                    <Route path="/member/:memberId" element={<Member />} /> 
                    {/* <Route path="/settings" element={<SettingsPage />} />  */}
                     <Route path="/checkout" element={<Checkout />} />
                     <Route path="/MemSignup" element={<MemSignup />} />
                    <Route path="/member/:memberId/settings" element={<SettingsPage />} />
+                    <Route path="Admin/:employeeID/totalReport" element={<TotalReport />} />
                 </Routes>
             </Router>
         </div>

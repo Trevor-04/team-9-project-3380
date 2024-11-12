@@ -2,10 +2,9 @@ import React from 'react';
 import { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import {BarChart, PieChart} from '../charts/barChart';
+import {BarChart,LineChart, PieChart} from '../charts/barChart';
 
 //const {url} = require('../config.json')[process.env.NODE_ENV || 'development'];
-
 
 export default function AdminPage() {
   const [isDropdownOpen, setIsDropdownOpen]  = useState(false);
@@ -22,7 +21,7 @@ export default function AdminPage() {
   const [revenueWeeklyChartData, setRevenueWeeklyChartData] = useState([])
   
   const [members, setMembers] = useState([]);
-  
+  const navigate = useNavigate(); // Initialize useNavigate
   const toggleDropdown = () => {
       setIsDropdownOpen((prev) => !prev);
   };
@@ -101,11 +100,12 @@ export default function AdminPage() {
         params
       });
   
-      if (ticketRevenue.status === 200) tempRev += Number(ticketRevenue.data.ticketProfit) || 0;
+      if (ticketRevenue.status === 200) tempRev += ticketRevenue.data.reduce((sum, ticket) => {
+        return sum + parseFloat(ticket.total_sales_revenue);
+      }, 0);
       if (restaurantRevenue.status === 200) tempRev += Number(restaurantRevenue.data.total_sales_revenue || 0);
       if (concessionRevenue.status === 200) tempRev += Number(concessionRevenue.data.total_sales_revenue || 0);
       if (giftRevenue.status === 200) tempRev += Number(giftRevenue.data.total_sales_revenue || 0);
-  
       tempRev += Number(donations);
   
       (startDate && endDate) ? setWeeklyRevenue(tempRev) : setRevenue(tempRev);
@@ -184,6 +184,14 @@ export default function AdminPage() {
       startDateFormatted = new Date(startDate).toISOString().split("T")[0];
     }
   
+    const backgroundColors = [
+      "#6A9E73", // Restaurant Sales color
+      "#8BB174", // Concession Sales color
+      "#A1C181", // Gift Shop Sales color
+      "#B6CF9E", // Ticket Sales color
+      "#D1E2C4"  // Donations color
+    ];
+  
     try {
       const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/reports/charts/topProducts`, {
         params: { startDate, endDate, limit }
@@ -199,7 +207,7 @@ export default function AdminPage() {
             datasets: [{
               label: "Top Products by Revenue",
               data: topProducts.flatMap(productType => productType.products.map(p => p.total_revenue)),
-              backgroundColor: topProducts.flatMap((_, idx) => `rgba(75, 192, 192, 0.${idx + 3})`),
+              backgroundColor: backgroundColors,
               borderColor: topProducts.flatMap(() => 'rgba(75, 192, 192, 1)'),
               borderWidth: 1
             }]
@@ -211,7 +219,7 @@ export default function AdminPage() {
             datasets: [{
               label: "Top Products by Revenue (Weekly)",
               data: topProducts.flatMap(productType => productType.products.map(p => p.total_revenue)),
-              backgroundColor: topProducts.flatMap((_, idx) => `rgba(75, 192, 192, 0.${idx + 3})`),
+              backgroundColor: backgroundColors,
               borderColor: topProducts.flatMap(() => 'rgba(75, 192, 192, 1)'),
               borderWidth: 1
             }]
@@ -368,6 +376,22 @@ export default function AdminPage() {
       <div>
         <header className="bg-white text-[#165e229e] p-5 flex items-cente" ref={dropdownRef}>
           <h1>Admin Page</h1>
+  
+          {/* Button to redirect to Total Reports */}
+          <button
+            onClick={() => navigate(`/Admin/${employeeID}/totalReport`)}
+            className="ml-8 bg-[#165e229e] text-white font-bold w-[120px] h-[35px] rounded-2xl"
+          >
+            View Reports
+          </button>
+  
+          <button 
+            onClick={toggleDropdown}
+            className="ml-8 bg-[#165e229e] text-white font-bold w-[100px] h-[30px] rounded-2xl"
+          >
+            Button 2
+          </button>
+  
             {/* Dropdown Menu */}
             {isDropdownOpen && (
               <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5">
@@ -458,7 +482,7 @@ export default function AdminPage() {
   
           <div className='text-[#165e229e] bg-white p-6 rounded-lg shadow-sm h-[500px] w-full'>
             Total Revenue by Week Pie Chart
-            {/* <PieChart chartData = {weeklyRevenueData}></PieChart>  */}
+            <PieChart chartData = {weeklyRevenueData}></PieChart> 
           </div> 
   
           <div className='text-[#165e229e] bg-white p-6 rounded-lg shadow-sm h-[500px] w-full'>
