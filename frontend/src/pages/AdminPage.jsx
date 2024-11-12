@@ -378,52 +378,13 @@ export default function AdminPage() {
         <header className="bg-white text-[#165e229e] p-5 flex items-cente" ref={dropdownRef}>
           <h1>Admin Page</h1>
   
-          {/* Button to redirect to Total Reports */}
-          <button
-            onClick={() => navigate(`/Admin/${employeeID}/totalReport`)}
+             {/* Link to Total Reports */}
+          <Link
+            to={`/Admin/${employeeID}/totalReport`}
             className="ml-8 bg-[#165e229e] text-white font-bold w-[120px] h-[35px] rounded-2xl"
-          >
+            >
             View Reports
-          </button>
-  
-          <button 
-            onClick={toggleDropdown}
-            className="ml-8 bg-[#165e229e] text-white font-bold w-[100px] h-[30px] rounded-2xl"
-          >
-            Button 2
-          </button>
-  
-            {/* Dropdown Menu */}
-            {isDropdownOpen && (
-              <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5">
-                <ul className="py-1">
-                  <li>
-                    <button
-                      className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
-                      onClick={() => alert('Action clicked!')}
-                    >
-                      Action
-                    </button>
-                  </li>
-                  <li>
-                    <button
-                      className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
-                      onClick={() => alert('Another action clicked!')}
-                    >
-                      Another action
-                    </button>
-                  </li>
-                  <li>
-                    <button
-                      className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
-                      onClick={() => alert('Something else clicked!')}
-                    >
-                      Something else here
-                    </button>
-                  </li>
-                </ul>
-              </div>
-            )}
+          </Link>
         </header>
   
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 p-4 mt-[20px]">
