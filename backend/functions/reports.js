@@ -16,13 +16,15 @@ const pricing = {
 
   module.exports.restaurantItemReports = async function (reportData) {
     const { startDate, endDate } = reportData;
+    console.log(startDate, endDate);
     try {
         const baseQuery = `
             SELECT 
-                I.itemName, 
-                I.itemID, 
+                I.itemName AS itemName, 
+                I.itemID AS itemID, 
                 SUM(R.quantity) AS total_quantity_sold,
-                (I.itemPrice * SUM(R.quantity)) AS total_sales_revenue 
+                SUM(I.itemPrice * R.quantity) AS total_sales_revenue,
+                MAX(R.purchased_at) as purchase_date
             FROM Inventory I
             JOIN Restaurant_sales R ON I.itemID = R.itemID
         `;
@@ -50,15 +52,10 @@ module.exports.restaurantTotalReport = async function (reportData) {
         SELECT 
           SUM(I.itemPrice * R.quantity) AS total_sales_revenue
         FROM Inventory I
-        JOIN Restaurant_sales R ON I.itemID = R.itemID
-      `;
+        JOIN Restaurant_sales R ON I.itemID = R.itemID`;
       let whereClause = startDate && endDate ? `WHERE R.purchased_at BETWEEN ? AND ?` : ``;
-      let groupByAndOrder = `
-        GROUP BY I.itemID, I.itemName, I.itemPrice
-        ORDER BY total_sales_revenue DESC
-      `;
   
-      const fullQuery = `${baseQuery} ${whereClause} ${groupByAndOrder}`;
+      const fullQuery = `${baseQuery} ${whereClause}`;
       
       return startDate && endDate 
         ? await query(fullQuery, [startDate, endDate]) 
@@ -74,10 +71,11 @@ module.exports.restaurantTotalReport = async function (reportData) {
     try {
         const baseQuery = `
             SELECT 
-                I.itemName,
-                I.itemID, 
+                I.itemName as itemName,
+                I.itemID as itemID, 
                 SUM(C.quantity) AS total_quantity_sold,
-                (I.itemPrice * SUM(C.quantity)) AS total_sales_revenue
+                SUM(I.itemPrice * C.quantity) AS total_sales_revenue,
+                MAX(C.purchased_at) as purchase_date
             FROM Inventory I
             JOIN Concession_sales C ON I.itemID = C.itemID
         `;
@@ -108,12 +106,8 @@ module.exports.concessionTotalReport = async function (reportData) {
             JOIN Concession_sales C ON I.itemID = C.itemID
         `;
         const whereClause = startDate && endDate ? `WHERE C.purchased_at BETWEEN ? AND ?` : ``;
-        const groupByAndOrder = `
-            GROUP BY I.itemID, I.itemName, I.itemPrice
-            ORDER BY total_sales_revenue DESC
-        `;
 
-        const fullQuery = `${baseQuery} ${whereClause} ${groupByAndOrder}`;
+        const fullQuery = `${baseQuery} ${whereClause}`;
         
         return startDate && endDate 
             ? await query(fullQuery, [startDate, endDate]) 
@@ -129,10 +123,11 @@ module.exports.giftShopItemReport = async function (reportData) {
     try {
         const baseQuery = `
             SELECT 
-                I.itemName,
-                I.itemID, 
+                I.itemName as itemName,
+                I.itemID as itemID, 
                 SUM(G.quantity) AS total_quantity_sold,
-                (I.itemPrice * SUM(G.quantity)) AS total_sales_revenue
+                SUM(I.itemPrice * G.quantity) AS total_sales_revenue,
+                MAX(G.purchased_at) as purchase_date
             FROM Inventory I
             JOIN Gift_shop_sales G ON I.itemID = G.itemID
         `;
@@ -160,15 +155,10 @@ module.exports.giftShopTotalReport = async function (reportData) {
             SELECT 
                 SUM(I.itemPrice * G.quantity) AS total_sales_revenue
             FROM Inventory I
-            JOIN Gift_shop_sales G ON I.itemID = G.itemID
-        `;
+            JOIN Gift_shop_sales G ON I.itemID = G.itemID`;
         const whereClause = startDate && endDate ? `WHERE G.purchased_at BETWEEN ? AND ?` : ``;
-        const groupByAndOrder = `
-            GROUP BY I.itemID, I.itemName, I.itemPrice
-            ORDER BY total_sales_revenue DESC
-        `;
 
-        const fullQuery = `${baseQuery} ${whereClause} ${groupByAndOrder}`;
+        const fullQuery = `${baseQuery} ${whereClause}`;
         
         return startDate && endDate 
             ? await query(fullQuery, [startDate, endDate]) 
@@ -194,6 +184,14 @@ module.exports.listSubscribers = async function (memberData) {
     }
 }
 
+module.exports.getTicketQuantity = function (tickets) {
+    const  ticketTypeMap = ["adult", "child", "senior", "infant"];
+    const timeBought = `${tickets.time_purchased}`.split(" ");
+    const ticketPriceNum = Number(tickets.ticketPrice) || 0;
+    const price = pricing[format12Hours(timeBought[4].split(":")[0])][ticketTypeMap[tickets.ticketType]];
+    return price === 0 ? 1 : Math.floor(ticketPriceNum / price);
+}
+
 module.exports.getVisitors = async function (memberData) {
     let {startDate, endDate} = memberData;
 
@@ -207,13 +205,8 @@ module.exports.getVisitors = async function (memberData) {
         [startDate, endDate]);
 
         let visitors = 0;
-        const  ticketTypeMap = ["adult", "child", "senior", "infant"];
-
         for (let tickets of results) {
-            const timeBought = `${tickets.time_purchased}`.split(" ");
-            const ticketPriceNum = Number(tickets.ticketPrice) || 0;
-            const price = pricing[format12Hours(timeBought[4].split(":")[0])][ticketTypeMap[tickets.ticketType]];
-            visitors += price === 0 ? 1 : Math.floor(ticketPriceNum / price);
+            visitors += module.exports.getTicketQuantity(tickets);
         }
 
         return visitors;
@@ -230,12 +223,16 @@ module.exports.calculateTicketSales = async function (ticketData) {
     endDate = endDate ? endDate + " 23:59:59" : undefined;
     try {
         let code = `
-        SELECT SUM(ticketPrice) AS ticketProfit 
+        SELECT ticketType,
+        SUM(ticketPrice) AS total_sales_revenue,
+        MAX(date_purchased) AS purchase_date,
+        COUNT(*) as ticketCount
         FROM Ticket_sales`;
         
+        const groupby = `GROUP BY ticketType ORDER BY ticketType`;
         return startDate && endDate ? 
-        await query(code+` WHERE date_purchased BETWEEN ? AND ?`, [startDate, endDate]) :
-        await query(code);
+        await query(code+ ` WHERE date_purchased BETWEEN ? AND ? ` + groupby, [startDate, endDate]) :
+        await query(code + " "+groupby);
 
     } catch (err) {
         console.log(err);
@@ -255,25 +252,27 @@ module.exports.calculateAllSales = async function (salesData) {
     return [
         {
             type: "restaurant",
-            revenue: restaurant.total_sales_revenue || 0 ,
+            revenue: restaurant[0].total_sales_revenue || 0 ,
             label: "Restaurant Sales",
             color: "#6A9E73" // example color
         },
         {
             type: "concession",
-            revenue: concession.total_sales_revenue || 0,
+            revenue: concession[0].total_sales_revenue || 0,
             label: "Concession Sales",
             color: "#8BB174"
         },
         {
             type: "giftShop",
-            revenue: giftShop.total_sales_revenue || 0,
+            revenue: giftShop[0].total_sales_revenue || 0,
             label: "Gift Shop Sales",
             color: "#A1C181"
         },
         {
             type: "tickets",
-            revenue: tickets[0].ticketProfit || 0,
+            revenue: tickets.reduce((sum, ticket) => {
+                return sum + parseFloat(ticket.total_sales_revenue || 0);
+              }, 0),
             label: "Ticket Sales",
             color: "#B6CF9E"
         },
@@ -292,8 +291,6 @@ module.exports.calculateAllSales = async function (salesData) {
 
 module.exports.getTopProducts = async function (salesData) {
     try {
-        const { startDate, endDate, limit = 5 } = salesData;
-        
         // Fetch top products for each category with sales details
         const restaurantTop = await module.exports.restaurantItemReports(salesData); 
         const concessionTop = await module.exports.concessionItemReport(salesData);
@@ -345,3 +342,63 @@ function format12Hours(time) {
     const hour = time % 12 || 12;             // Convert 0 or 13-23 to 12-hour format
     return `${hour}${period}`;
 }
+
+
+
+// reports pages 
+
+
+module.exports.combinedItemReport = async function (reportData) {
+    const { startDate, endDate } = reportData;
+    try {
+        // Fetch data from individual report functions
+        const restaurantData = await module.exports.restaurantItemReports(reportData);
+        const concessionData = await module.exports.concessionItemReport(reportData);
+        const giftShopData = await module.exports.giftShopItemReport(reportData);
+        const ticketData = await module.exports.calculateTicketSales(reportData);
+
+        // Aggregate all item data into a single structure
+        const combinedData = [...restaurantData, ...concessionData, ...giftShopData];
+
+        // Map ticket data to combinedData format
+        ticketData.forEach(ticket => {
+            combinedData.push({
+                itemName: ticket.ticketType,
+                itemID: null,  // Assuming ticket types don’t have item IDs
+                total_quantity_sold: ticket.ticketCount || 0,
+                total_sales_revenue: parseFloat(ticket.total_sales_revenue) || 0,
+                purchase_date: ticket.purchase_date || null
+            });
+        });
+
+        // Sum quantities, revenues, and identify latest purchase dates by item
+        const finalReport = combinedData.reduce((acc, item) => {
+            const existingItem = acc.find(i => i.itemName === item.itemName);
+
+            if (existingItem) {
+                existingItem.total_quantity_sold += item.total_quantity_sold;
+                existingItem.total_sales_revenue += item.total_sales_revenue;
+                existingItem.purchase_date = 
+                    new Date(item.purchase_date) > new Date(existingItem.purchase_date)
+                    ? item.purchase_date : existingItem.purchase_date;
+            } else {
+                acc.push(item);
+            }
+
+            return acc;
+        }, []);
+
+        // Format final report data
+        return finalReport.map(item => ({
+            itemName: item.itemName,
+            itemID: item.itemID,
+            total_quantity_sold: Number(item.total_quantity_sold) || 0,
+            total_sales_revenue: parseFloat(item.total_sales_revenue).toFixed(2) || 0,
+            purchase_date: item.purchase_date || null
+        }));
+
+    } catch (err) {
+        console.error("Error fetching combined item report:", err);
+        throw err;
+    }
+};
