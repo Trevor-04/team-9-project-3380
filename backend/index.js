@@ -142,6 +142,11 @@ app.post("/payment", async (req, res) => {
   }
 });
 
+// Grab functions
+const notifications = require('./functions/notifications');
+
+// Start polling for unsent notifications every 5 minutes
+setInterval(notifications.sendNotifications, 300000); // 5 minutes
 
 app.use("/animals", animalRoutes);
 app.use("/events", eventsRoutes);
