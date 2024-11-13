@@ -6,7 +6,7 @@ module.exports.addDonation = async function(donationData) {
     try {
         const result = await query(`
         INSERT INTO donations (email, firstName, lastName, address, city, state, zip, country, phone, amount)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, 
         [email, firstName, lastName, address, city, state, zip, country, phone, amount]);
         return result;
     
