@@ -10,7 +10,7 @@ import Signup from './components/signup';
 import Payment from "./components/payment";
 import Tickets from "./pages/Tickets";
 //import Donate from "./pages/Donate"
-//import DonatePage from "./pages/donatePage";
+import DonatePage from "./pages/donatePage";
 import ProductPage from './components/ProductPage';
 import Admin from './pages/AdminPage';
 import Member from './pages/MemberPage';
@@ -42,8 +42,7 @@ function App() {
                     <Route path="/payment" element={<Payment />} /> 
                     <Route path="/member/:memberId/payment" element={<Payment />} />
                    {/* <Route path="/Donate" element={<Donate />} /> */}
-                   {/* <Route path="/DonatePage" element={<DonatePage/>} />  */}
-                   <Route path="/donatePage" element={<Navigate to="/donatePage.html" />} />
+                   <Route path="/DonatePage" element={<DonatePage/>} /> 
                    <Route path ="/Admin" element={<Admin />} />
                    <Route path="/Admin/:employeeID" element={<Admin />} />
                    {/* <Route path ="/Member" element={<Member />} /> */}

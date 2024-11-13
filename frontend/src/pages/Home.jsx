@@ -53,7 +53,7 @@ const Home = () => {
        </section>
 
     {/*Donate link possibly a joke*/}
-    <a href="/donatePage.html" target="_blank" rel="noreferrer">
+    <Link to="/DonatePage" >
       <section className='overflow-y-scroll relative '>
         <div className='text-bold text-white  bg-[#faf0e6] h-[200px] m-4 p-6 relative'>
         <p className='font-bold text-2xl text-[#165e229e]'>Donate Today</p>
@@ -63,7 +63,7 @@ const Home = () => {
         </button>
         </div>
       </section>
-     </a>
+     </Link>
     </div>
   );
 }

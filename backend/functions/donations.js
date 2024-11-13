@@ -1,13 +1,13 @@
 const {query} = require('../functions/database.js');
 
 module.exports.addDonation = async function(donationData) {
-    const {email, firstName, lastName,address1, address2, city, state, zip, country, phone, amount, donationType} = donationData;
+    const {email, firstName, lastName,address, city, state, zip, country, phone, amount} = donationData;
 
     try {
         const result = await query(`
-        INSERT INTO donations (email, firstName, lastName, address1, address2, city, state, zip, country, phone, amount, donationType)
+        INSERT INTO donations (email, firstName, lastName, address, city, state, zip, country, phone, amount)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, 
-        [email, firstName, lastName, address1, address2, city, state, zip, country, phone, amount, donationType]);
+        [email, firstName, lastName, address, city, state, zip, country, phone, amount]);
         return result;
     
     } catch (error) {
