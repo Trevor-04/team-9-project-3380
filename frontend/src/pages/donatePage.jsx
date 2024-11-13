@@ -28,15 +28,16 @@ function DonatePage() {
     };
 
     const handleSubmitForm = async (formData) => {  
-        try 
-          {
-            await axios.post(`${process.env.REACT_APP_BACKEND_URL}/donations/add`, formData);
+        try {
+            const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/donations/add`, formData);
+            console.log('Response from backend:', response);
             alert("Donation successful!");
         } catch (error) {
-            console.error("Error during checkout:", error);
+            console.error("Error during checkout:", error.response ? error.response.data : error);
             alert("An error occurred. Please try again.");
         }
     };
+    
 
     const handleSubmit = (e) => {
         e.preventDefault();
