@@ -27,9 +27,21 @@ function DonatePage() {
         });
     };
 
-    const handleSubmitForm = async (formData) => {  
+    const handleSubmitForm = async (formData) => { 
+        const newDonation ={
+           amount: formData.donationAmount,
+           firstName: formData.firstName,
+           lastName: formData.lastName,
+           address: formData.address,
+           city: formData.city,
+           state: formData.state,
+           zip: formData.zip,
+           email: formData.email,
+           phone: formData.phone,
+          } 
+
         try {
-            const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/donations/add`, formData);
+            const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/donations/add`, newDonation);
             console.log('Response from backend:', response);
             alert("Donation successful!");
         } catch (error) {
