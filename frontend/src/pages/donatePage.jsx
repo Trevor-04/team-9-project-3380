@@ -30,7 +30,7 @@ function DonatePage() {
     const handleSubmitForm = async (formData) => {  
         try 
           {
-            await axios.post(`${process.env.REACT_APP_BACKEND_URL}/donate/add`, formData);
+            await axios.post(`${process.env.REACT_APP_BACKEND_URL}/donations/add`, formData);
             alert("Donation successful!");
         } catch (error) {
             console.error("Error during checkout:", error);
