@@ -44,6 +44,8 @@ function DonatePage() {
             const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/donations/add`, newDonation);
             console.log('Response from backend:', response);
             alert("Donation successful!");
+
+            reset();
         } catch (error) {
             console.error("Error during checkout:", error.response ? error.response.data : error);
             alert("An error occurred. Please try again.");
