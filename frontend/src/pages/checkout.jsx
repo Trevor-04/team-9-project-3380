@@ -44,8 +44,8 @@ function Checkout() {
             city: formData.city,
             state: formData.state,
             country: formData.country,
-            zipCode: formData.zip,
-            phoneNumber: formData.phone,
+            zip: formData.zip,
+            phone: formData.phone,
             email: formData.email,
         };
 
