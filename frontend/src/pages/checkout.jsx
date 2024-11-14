@@ -7,6 +7,7 @@ function Checkout() {
     const membershipType = location.state?.membershipType || "No membership selected";
 
     const [formData, setFormData] = useState({
+        membershipType: membershipType,
         firstName: '',
         lastName: '',
         address: '',
@@ -38,6 +39,7 @@ function Checkout() {
         }
 
         const newPlan = {
+            membershipType: formData.membershipType,
             firstName: formData.firstName,
             lastName: formData.lastName,
             address: formData.address,
@@ -55,6 +57,7 @@ function Checkout() {
             alert("Membership successful!");
 
             setFormData({
+                membershipType: '',
                 firstName: '',
                 lastName: '',
                 address: '',
