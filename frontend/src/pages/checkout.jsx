@@ -5,9 +5,11 @@ import axios from 'axios';
 function Checkout() {
     const location = useLocation();
     const membershipType = location.state?.membershipType || "No membership selected";
-
+    const amount = location.state?.amount || "No amount selected";
+    
     const [formData, setFormData] = useState({
         membershipType: membershipType,
+        amount: amount, 
         firstName: '',
         lastName: '',
         address: '',
@@ -40,6 +42,7 @@ function Checkout() {
 
         const newPlan = {
             membershipType: formData.membershipType,
+            amount: formData.amount,
             firstName: formData.firstName,
             lastName: formData.lastName,
             address: formData.address,
