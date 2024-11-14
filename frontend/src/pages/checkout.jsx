@@ -13,8 +13,8 @@ function Checkout() {
         city: '',
         state: '',
         country: '',
-        zipCode: '',
-        phoneNumber: '',
+        zip: '',
+        phone: '',
         email: '',
         ccNumber: '',
         expDate: '',
@@ -29,7 +29,7 @@ function Checkout() {
     };
 
     const handleSubmitForm = async (formData) => {
-        e.preventDefault();
+        //e.preventDefault();
         
         // Here, you would perform form validation and membership status check
         if (!isMember) {
@@ -44,8 +44,8 @@ function Checkout() {
             city: formData.city,
             state: formData.state,
             country: formData.country,
-            zipCode: formData.zipCode,
-            phoneNumber: formData.phoneNumber,
+            zipCode: formData.zip,
+            phoneNumber: formData.phone,
             email: formData.email,
         };
 
