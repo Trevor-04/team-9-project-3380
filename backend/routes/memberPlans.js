@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const memberPlansController = require('../functions/memberPlans');
 
+// Change this from GET to POST to handle POST requests
 router.post('/add', async (req, res) => {
     try {
         const planData = req.body; // Get data from request body
