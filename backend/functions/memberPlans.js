@@ -1,4 +1,4 @@
-const {query} = require('../functions/database.js');
+const {query} = require('./database.js');
 
 module.exports.addPlan = async function(planData) {
     const {amount, firstName, lastName,address, city, state, zip,email, phone} = planData;

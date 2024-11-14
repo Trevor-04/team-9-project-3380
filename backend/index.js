@@ -158,7 +158,7 @@ app.use("/reports", reportsRoutes);
 app.use("/tickets", ticketsRoutes);
 app.use("/inventory", inventoryRoutes);
 app.use("/donations", donationRoutes);
-app.use("/memPlans",memberPlansRoutes);
+app.use("/memberPlans", memberPlansRoutes);
 
 // Start the server
 const PORT = process.env.PORT || 3000;
