@@ -34,8 +34,8 @@ function Checkout() {
         }
       }, []);
       
-
-      console.log("Role:", role); // Check if the role is being set correctly
+      console.log("Role:", role); // Moved inside useEffect after state update
+      
 
     const [formData, setFormData] = useState({
         membershipType: membershipType,
