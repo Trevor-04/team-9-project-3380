@@ -57,7 +57,6 @@ function Checkout() {
             alert("Membership successful!");
 
             setFormData({
-                membershipType: '',
                 firstName: '',
                 lastName: '',
                 address: '',
