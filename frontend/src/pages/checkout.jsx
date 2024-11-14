@@ -12,23 +12,28 @@ function Checkout() {
     useEffect(() => {
         const token = localStorage.getItem('token');
         console.log("Retrieved Token:", token); // Log the token itself
-    
+      
         if (token) {
           try {
             const decodedToken = jwtDecode(token);
             console.log("Decoded Token:", decodedToken); // Log the entire decoded token
-            setRole(decodedToken.role); // Set role from the token
-            if (decodedToken.role === "member") {
-                setIsMember(true);
-            }
-            else{
-                setIsMember(false);
+      
+            if (decodedToken && decodedToken.role) {
+              setRole(decodedToken.role); // Set role from the token
+              setIsMember(decodedToken.role === "member");
+            } else {
+              console.error("Role not found in decoded token");
+              setIsMember(false); // Set false if role is not present
             }
           } catch (error) {
             console.error("Failed to decode token:", error);
+            setIsMember(false); // Set false if there's a decoding error
           }
+        } else {
+          setIsMember(false); // Set false if no token is found
         }
       }, []);
+      
 
       console.log("Role:", role); // Check if the role is being set correctly
 
