@@ -50,9 +50,9 @@ function Checkout() {
         };
 
         try {
-            const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/memPlans/add`, newPlan);
+            const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/memberPlans/add`, newPlan);
             console.log('Response from backend:', response);
-            alert("Donation successful!");
+            alert("Membership successful!");
 
             setFormData({
                 donationAmount: "",
@@ -75,6 +75,11 @@ function Checkout() {
         }
     };
 
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        handleSubmitForm(formData);
+    };
+
     return (
         <div className="bg-[#fef7e7] min-h-screen flex items-center justify-center">
             <div className="w-full max-w-md bg-white p-8 rounded shadow-md">
@@ -86,7 +91,7 @@ function Checkout() {
                         You need to <a href="/signup" className="text-blue-500 underline">sign up</a> to proceed with checkout.
                     </p>
                 ) : (
-                    <form onSubmit={handleSubmitForm} className="flex flex-col space-y-4">
+                    <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
                         <input 
                             type="text" 
                             name="firstName"
