@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
+import { set } from 'mongoose';
 
 function Checkout() {
     const location = useLocation();
@@ -21,7 +22,9 @@ function Checkout() {
 
                 if (decodedToken && decodedToken.role) {
                     setRole(decodedToken.role); // Set role from the token
-                    setIsMember(decodedToken.role === "member"); // Set isMember to true if role is 'member'
+                    if(setRole === "member") {
+                        setIsMember(true); // Set isMember to true if role is 'member'
+                    }
                 } else {
                     console.error("Role not found in decoded token");
                     setIsMember(false); // Set false if role is not present
