@@ -1,9 +1,11 @@
 import React, { useState, useEffect} from 'react';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
+import jwtDecode from 'jwt-decode';
 
 function Checkout() {
     const location = useLocation();
+    const [role, setRole] = useState(null);
     const membershipType = location.state?.membershipType || "No membership selected";
     const amount = location.state?.amount || "No amount selected";
 
@@ -27,6 +29,8 @@ function Checkout() {
           }
         }
       }, []);
+
+      console.log("Role:", role); // Check if the role is being set correctly
 
     const [formData, setFormData] = useState({
         membershipType: membershipType,
