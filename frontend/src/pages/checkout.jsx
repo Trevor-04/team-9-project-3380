@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect} from 'react';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 
@@ -6,7 +6,28 @@ function Checkout() {
     const location = useLocation();
     const membershipType = location.state?.membershipType || "No membership selected";
     const amount = location.state?.amount || "No amount selected";
+
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        console.log("Retrieved Token:", token); // Log the token itself
     
+        if (token) {
+          try {
+            const decodedToken = jwtDecode(token);
+            console.log("Decoded Token:", decodedToken); // Log the entire decoded token
+            setRole(decodedToken.role); // Set role from the token
+            if (decodedToken.role === "member") {
+                setIsMember(true);
+            }
+            else{
+                setIsMember(false);
+            }
+          } catch (error) {
+            console.error("Failed to decode token:", error);
+          }
+        }
+      }, []);
+
     const [formData, setFormData] = useState({
         membershipType: membershipType,
         amount: amount, 
