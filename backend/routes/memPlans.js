@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const donationsController = require('../functions/memPlans');
 
-
 router.get('/add', async (req, res) => {
     try {
         const planData = req.body; // Get data from request body

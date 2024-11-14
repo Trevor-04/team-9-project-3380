@@ -17,6 +17,7 @@ const ticketsRoutes = require("./routes/tickets");
 const inventoryRoutes = require("./routes/inventory");
 const donationRoutes = require("./routes/donations");
 const employeeRoutes = require('./routes/employeeRoutes');
+const memberPlansRoutes = require('./routes/memPlans');
 
 // Initialize express
 const app = express();
@@ -157,6 +158,7 @@ app.use("/reports", reportsRoutes);
 app.use("/tickets", ticketsRoutes);
 app.use("/inventory", inventoryRoutes);
 app.use("/donations", donationRoutes);
+app.use('/memPlans', memberPlansRoutes);
 
 // Start the server
 const PORT = process.env.PORT || 3000;
