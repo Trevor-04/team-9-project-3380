@@ -9,11 +9,21 @@ export default function Navbar() {
     return null;
   }
   return (
+
     <header className="bg-[#faf0e6] h-20 flex items-center justify-between px-4">
       {/* Logo Section */}
+     <div className="flex items-center">
       <Link to="/" className="flex items-center">
         <img className="h-[70px]" src="Coog_Zoo.png" alt="logo" />
       </Link>
+
+      <Link to="/AdminLogin"> {/* Link to Admin Login */}
+            <button className="text-[#165e229e] ml-4 font-bold hover:text-green-800 ">
+              Admin Login
+            </button>
+      </Link>
+    </div>
+      
 
       {/* Buttons Section */}
       <div className="flex items-center">
