@@ -1,45 +1,45 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
-import {jwtDecode} from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 
 function Checkout() {
     const location = useLocation();
-    //const [role, setRole] = useState(null);
+    const [role, setRole] = useState(null);
+    const [isMember, setIsMember] = useState(false); // Initialize as false initially
     const membershipType = location.state?.membershipType || "No membership selected";
     const amount = location.state?.amount || "No amount selected";
 
-    // useEffect(() => {
-    //     const token = localStorage.getItem('token');
-    //     console.log("Retrieved Token:", token); // Log the token itself
-      
-    //     if (token) {
-    //       try {
-    //         const decodedToken = jwtDecode(token);
-    //         console.log("Decoded Token:", decodedToken); // Log the entire decoded token
-      
-    //         if (decodedToken && decodedToken.role) {
-    //           setRole(decodedToken.role); // Set role from the token
-    //           setIsMember(decodedToken.role === "member");
-    //         } else {
-    //           console.error("Role not found in decoded token");
-    //           setIsMember(false); // Set false if role is not present
-    //         }
-    //       } catch (error) {
-    //         console.error("Failed to decode token:", error);
-    //         setIsMember(false); // Set false if there's a decoding error
-    //       }
-    //     } else {
-    //       setIsMember(false); // Set false if no token is found
-    //     }
-    //   }, []);
-      
-    //   console.log("Role:", role); // Moved inside useEffect after state update
-      
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        console.log("Retrieved Token:", token); // Log the token itself
+
+        if (token) {
+            try {
+                const decodedToken = jwtDecode(token);
+                console.log("Decoded Token:", decodedToken); // Log the entire decoded token
+
+                if (decodedToken && decodedToken.role) {
+                    setRole(decodedToken.role); // Set role from the token
+                    setIsMember(decodedToken.role === "member"); // Set isMember to true if role is 'member'
+                } else {
+                    console.error("Role not found in decoded token");
+                    setIsMember(false); // Set false if role is not present
+                }
+            } catch (error) {
+                console.error("Failed to decode token:", error);
+                setIsMember(false); // Set false if there's a decoding error
+            }
+        } else {
+            setIsMember(false); // Set false if no token is found
+        }
+    }, []); // Empty dependency array ensures this effect runs once when component mounts
+
+    console.log("Role:", role); // Moved inside useEffect after state update
 
     const [formData, setFormData] = useState({
         membershipType: membershipType,
-        amount: amount, 
+        amount: amount,
         firstName: '',
         lastName: '',
         address: '',
@@ -54,16 +54,12 @@ function Checkout() {
         cvv: ''
     });
 
-    const [isMember, setIsMember] = useState(true); // Replace this with actual membership check logic
-
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
     };
 
     const handleSubmitForm = async (formData) => {
-        //e.preventDefault();
-        
         // Here, you would perform form validation and membership status check
         if (!isMember) {
             alert("Please sign up for a membership to proceed.");
