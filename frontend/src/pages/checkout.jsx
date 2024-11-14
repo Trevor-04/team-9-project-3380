@@ -148,7 +148,7 @@ function Checkout() {
                         />
                         <input 
                             type="text" 
-                            name="zipCode"
+                            name="zip"
                             placeholder="Zip Code"
                             value={formData.zipCode}
                             onChange={handleChange}
@@ -191,7 +191,7 @@ function Checkout() {
 
                         <input 
                             type="tel" 
-                            name="phoneNumber"
+                            name="phone"
                             placeholder="Phone Number"
                             value={formData.phoneNumber}
                             onChange={handleChange}
