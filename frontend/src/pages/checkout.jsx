@@ -150,7 +150,7 @@ function Checkout() {
                             type="text" 
                             name="zip"
                             placeholder="Zip Code"
-                            value={formData.zipCode}
+                            value={formData.zip}
                             onChange={handleChange}
                             className="p-2 border border-[#165e229e] rounded"
                             required
@@ -193,7 +193,7 @@ function Checkout() {
                             type="tel" 
                             name="phone"
                             placeholder="Phone Number"
-                            value={formData.phoneNumber}
+                            value={formData.phone}
                             onChange={handleChange}
                             className="p-2 border border-[#165e229e] rounded"
                             required
