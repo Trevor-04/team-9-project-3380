@@ -14,19 +14,3 @@ module.exports.addPlan = async function(planData) {
    }
 };
 
-module.exports.addDonation = async function(donationData) {
-    const {amount, firstName, lastName,address, city, state, zip,email, phone} = donationData;
-
-    try {
-        const result = await query(`
-        INSERT INTO donations (amount, firstName, lastName, address, city, state, zip, email, phone)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`, 
-        [amount, firstName, lastName, address, city, state, zip, email, phone]);
-        return result;
-    
-    } catch (error) {
-        console.error("Error in addDonation function:", error);
-        throw error;
-        
-    }
-}
