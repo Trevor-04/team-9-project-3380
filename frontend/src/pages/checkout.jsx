@@ -1,7 +1,7 @@
 import React, { useState, useEffect} from 'react';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
-import jwtDecode from 'jwt-decode';
+import {jwtDecode} from 'jwt-decode';
 
 function Checkout() {
     const location = useLocation();
