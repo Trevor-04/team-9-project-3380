@@ -5,7 +5,7 @@ module.exports.addPlan = async function(planData) {
    try {
     const result = await query(`
     INSERT INTO member_plans (membershipType, amount, firstName, lastName, address, city, state, zip, email, phone)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`, 
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, 
     [membershipType, amount,  firstName, lastName,address, city, state, zip,email, phone]);
     return result;
    } catch (error) {
