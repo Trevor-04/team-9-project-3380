@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import axios from 'axios';
 
 function Checkout() {
     const location = useLocation();
@@ -36,19 +37,38 @@ function Checkout() {
             return;
         }
 
+        const newPlan = {
+            firstName: formData.firstName,
+            lastName: formData.lastName,
+            address: formData.address,
+            city: formData.city,
+            state: formData.state,
+            country: formData.country,
+            zipCode: formData.zipCode,
+            phoneNumber: formData.phoneNumber,
+            email: formData.email,
+        };
+
         try {
-            const response = await fetch('/api/checkout', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(formData),
+            const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}`, newPlan);
+            console.log('Response from backend:', response);
+            alert("Donation successful!");
+
+            setFormData({
+                donationAmount: "",
+                firstName: "",
+                lastName: "",
+                address: "",
+                city: "",
+                state: "",
+                zip: "",
+                email: "",
+                phone: "",
+                cardNumber: "",
+                expDate: "",
+                cvv: "",
             });
 
-            if (response.ok) {
-                alert("Checkout successful!");
-                // Redirect to confirmation page or reset form
-            } else {
-                alert("Checkout failed. Please try again.");
-            }
         } catch (error) {
             console.error("Error during checkout:", error);
             alert("An error occurred. Please try again.");
@@ -73,7 +93,7 @@ function Checkout() {
                             placeholder="First Name"
                             value={formData.firstName}
                             onChange={handleChange}
-                            className="p-2 border border-gray-300 rounded"
+                            className="p-2 border border-[#165e229e] rounded"
                             required
                         />
                         <input 
@@ -82,7 +102,7 @@ function Checkout() {
                             placeholder="Last Name"
                             value={formData.lastName}
                             onChange={handleChange}
-                            className="p-2 border border-gray-300 rounded"
+                            className="p-2 border border-[#165e229e] rounded"
                             required
                         />
                         <input 
@@ -91,7 +111,7 @@ function Checkout() {
                             placeholder="Address"
                             value={formData.address}
                             onChange={handleChange}
-                            className="p-2 border border-gray-300 rounded"
+                            className="p-2 border border-[#165e229e] rounded"
                             required
                         />
                         <input 
@@ -100,7 +120,7 @@ function Checkout() {
                             placeholder="City"
                             value={formData.city}
                             onChange={handleChange}
-                            className="p-2 border border-gray-300 rounded"
+                            className="p-2 border border-[#165e229e] rounded"
                             required
                         />
                         <input 
@@ -109,7 +129,7 @@ function Checkout() {
                             placeholder="State"
                             value={formData.state}
                             onChange={handleChange}
-                            className="p-2 border border-gray-300 rounded"
+                            className="p-2 border border-[#165e229e] rounded"
                             required
                         />
                         <input 
@@ -118,7 +138,7 @@ function Checkout() {
                             placeholder="Country"
                             value={formData.country}
                             onChange={handleChange}
-                            className="p-2 border border-gray-300 rounded"
+                            className="p-2 border border-[#165e229e] rounded"
                             required
                         />
                         <input 
@@ -127,7 +147,7 @@ function Checkout() {
                             placeholder="Zip Code"
                             value={formData.zipCode}
                             onChange={handleChange}
-                            className="p-2 border border-gray-300 rounded"
+                            className="p-2 border border-[#165e229e] rounded"
                             required
                         />
                         {/* Credit Card Information */}
@@ -137,7 +157,7 @@ function Checkout() {
                             placeholder="Credit Card Number"
                             value={formData.ccNumber}
                             onChange={handleChange}
-                            className="p-2 border border-gray-300 rounded"
+                            className="p-2 border border-[#165e229e] rounded"
                             maxLength="16"
                             required
                         />
@@ -148,7 +168,7 @@ function Checkout() {
                                 placeholder="MM/YY"
                                 value={formData.expDate}
                                 onChange={handleChange}
-                                className="p-2 border border-gray-300 rounded w-1/2"
+                                className="p-2 border border-[#165e229e] rounded w-1/2"
                                 maxLength="5"
                                 required
                             />
@@ -158,7 +178,7 @@ function Checkout() {
                                 placeholder="CVV"
                                 value={formData.cvv}
                                 onChange={handleChange}
-                                className="p-2 border border-gray-300 rounded w-1/2"
+                                className="p-2 border border-[#165e229e] rounded w-1/2"
                                 maxLength="3"
                                 required
                             />
@@ -170,7 +190,7 @@ function Checkout() {
                             placeholder="Phone Number"
                             value={formData.phoneNumber}
                             onChange={handleChange}
-                            className="p-2 border border-gray-300 rounded"
+                            className="p-2 border border-[#165e229e] rounded"
                             required
                         />
                         <input 
@@ -179,13 +199,13 @@ function Checkout() {
                             placeholder="Email"
                             value={formData.email}
                             onChange={handleChange}
-                            className="p-2 border border-gray-300 rounded"
+                            className="p-2 border border-[#165e229e] rounded"
                             required
                         />
 
                         <button 
                             type="submit"
-                            className="bg-gray-400 text-white p-2 rounded font-bold mt-4"
+                            className="bg-[#165e229e] text-white p-2 rounded font-bold mt-4"
                         >
                             Submit
                         </button>

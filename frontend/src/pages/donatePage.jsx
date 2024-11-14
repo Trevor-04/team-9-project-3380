@@ -45,7 +45,21 @@ function DonatePage() {
             console.log('Response from backend:', response);
             alert("Donation successful!");
 
-            reset();
+            setFormData({
+                donationAmount: "",
+                firstName: "",
+                lastName: "",
+                address: "",
+                city: "",
+                state: "",
+                zip: "",
+                email: "",
+                phone: "",
+                cardNumber: "",
+                expDate: "",
+                cvv: "",
+            });
+                
         } catch (error) {
             console.error("Error during checkout:", error.response ? error.response.data : error);
             alert("An error occurred. Please try again.");
