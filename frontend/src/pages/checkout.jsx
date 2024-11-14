@@ -55,18 +55,18 @@ function Checkout() {
             alert("Membership successful!");
 
             setFormData({
-                donationAmount: "",
-                firstName: "",
-                lastName: "",
-                address: "",
-                city: "",
-                state: "",
-                zip: "",
-                email: "",
-                phone: "",
-                cardNumber: "",
-                expDate: "",
-                cvv: "",
+                firstName: '',
+                lastName: '',
+                address: '',
+                city: '',
+                state: '',
+                country: '',
+                zip: '',
+                phone: '',
+                email: '',
+                ccNumber: '',
+                expDate: '',
+                cvv: ''
             });
 
         } catch (error) {
