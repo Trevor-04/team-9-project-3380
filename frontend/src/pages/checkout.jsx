@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
-import { set } from 'mongoose';
 
 function Checkout() {
     const location = useLocation();
@@ -121,9 +120,11 @@ function Checkout() {
                 <p className="text-center text-lg font-semibold mb-4">{membershipType} Selected</p>
 
                 {!isMember ? (
+                    <Link to="/signup">
                     <p className="text-red-500 text-center mb-4">
-                        You need to <a href="/signup" className="text-blue-500 underline">sign up</a> to proceed with checkout.
+                        You need to <a className="text-blue-500 underline">sign up</a> to proceed with checkout.
                     </p>
+                    </Link>
                 ) : (
                     <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
                         <input 
