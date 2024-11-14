@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const memberPlansController = require('../functions/memberPlans');
 
-router.get('/add', async (req, res) => {
+router.post('/add', async (req, res) => {
     try {
         const planData = req.body; // Get data from request body
         const result = await memberPlansController.addPlan(planData);
