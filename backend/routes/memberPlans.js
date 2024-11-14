@@ -12,3 +12,5 @@ router.get('/add', async (req, res) => {
         res.status(500).json({ error: 'Failed to add plan.' });
     }
 });
+
+module.exports = router;
