@@ -50,7 +50,7 @@ function Checkout() {
         };
 
         try {
-            const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/memPlan/add`, newPlan);
+            const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/memPlans/add`, newPlan);
             console.log('Response from backend:', response);
             alert("Donation successful!");
 
