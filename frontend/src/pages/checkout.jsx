@@ -28,7 +28,7 @@ function Checkout() {
         setFormData({ ...formData, [name]: value });
     };
 
-    const handleSubmitForm = async (e) => {
+    const handleSubmitForm = async (formData) => {
         e.preventDefault();
         
         // Here, you would perform form validation and membership status check
