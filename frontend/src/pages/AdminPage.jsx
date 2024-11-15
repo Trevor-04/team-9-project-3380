@@ -4,7 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import {BarChart, LineChart, PieChart} from '../components/charts/BarChart';
 
-const {url} = require('../config.json')[process.env.NODE_ENV];
+//const {url} = require('../config.json')[process.env.NODE_ENV];
 
 
 export default function AdminPage() {
@@ -41,7 +41,7 @@ const fetchMembers = async () => {
 
 const deleteMember = async (memberID) => {
   try {
-    await axios.delete(`${url}/members/${memberID}`);
+    await axios.delete(`${process.env.REACT_APP_BACKEND_URL}/members/${memberID}`);
     setMembers(members.filter((member) => member.memberID !== memberID));
   } catch (error) {
     console.error("Error deleting member:", error);
@@ -51,7 +51,7 @@ const deleteMember = async (memberID) => {
 
 const getVisitors = async (startDate, endDate) => {
   try {
-    const response = await axios.get(`${url}/reports/visitorCount/`,{
+    const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/reports/visitorCount/`,{
       params: {startDate, endDate},
     });
     
@@ -66,7 +66,7 @@ const getVisitors = async (startDate, endDate) => {
 
 const getSales = async (startDate, endDate) => {
   try {
-    const response = await axios.get(`${url}/reports/transactionCount/`,{
+    const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/reports/transactionCount/`,{
       params: {startDate, endDate},
     });
     
@@ -85,19 +85,19 @@ const getRevenue = async (startDate, endDate) => {
   let tempRev = 0;
 
     let params = {};
-    const ticketRevenue = await axios.get(`${url}/reports/ticketRevenue/`, {
+    const ticketRevenue = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/reports/ticketRevenue/`, {
       params
     });
 
-    const restaurantRevenue = await axios.get(`${url}/reports/restaurant/total`, {
+    const restaurantRevenue = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/reports/restaurant/total`, {
       params
     });
 
-    const concessionRevenue = await axios.get(`${url}/reports/concession/total`, {
+    const concessionRevenue = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/reports/concession/total`, {
       params
     });
 
-    const giftRevenue = await axios.get(`${url}/reports/giftshop/total`, {
+    const giftRevenue = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/reports/giftshop/total`, {
       params
     });
 
@@ -115,7 +115,7 @@ const getRevenue = async (startDate, endDate) => {
 const getSubcribers = async (startDate, endDate) => {
   try {
     
-    const response = await axios.get(`${url}/reports/subscriberCount`, {
+    const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/reports/subscriberCount`, {
       params: {startDate, endDate}
     });
     if (response.status === 200) {
@@ -129,7 +129,7 @@ const getSubcribers = async (startDate, endDate) => {
 
 const getDonations = async (startDate, endDate) => {
   try {
-    const response = await axios.get(`${url}/donations/total/`, {
+    const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/donations/total/`, {
       params: {startDate, endDate},
     });
 
@@ -153,7 +153,7 @@ const getSalesCharts = async (startDate, endDate) => {
 
 
   try {
-    const res = await axios.get(`${url}/reports/charts/totalSales`, {
+    const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/reports/charts/totalSales`, {
       params: {startDate, endDate}
     });
 
@@ -194,7 +194,7 @@ const getTopProductsChart = async (startDate, endDate, limit) => {
   ];
 
   try {
-    const response = await axios.get(`${url}/reports/charts/topProducts`, {
+    const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/reports/charts/topProducts`, {
       params: { startDate, endDate, limit }
     });
 
