@@ -30,7 +30,7 @@ const toggleDropdown = () => {
 // Function to fetch all members
 const fetchMembers = async () => {
   try {
-    const response = await axios.get(`${url}/members`);
+    const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/members`);
     if (response.status === 200) {
       setMembers(response.data.members);
     }
