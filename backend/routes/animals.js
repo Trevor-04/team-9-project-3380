@@ -92,18 +92,18 @@ router.get('/exhibits/:exhibitName', async (req, res) => {
     }
 });
 
-// Get animals by exhibit name or ID
-router.get('/exhibits', async (req, res) => {
-    const { exhibitID, exhibitName } = req.query; // Accept exhibitID and exhibitName from query params
+router.put('/edit', async (req, res) => {
+    const animalData = req.body;
 
     try {
-        const animals = await animalController.getAnimalsByExhibit({ exhibitID, exhibitName });
-        res.status(200).json(animals);
+        const result = await animalController.editAnimal(animalData);
+        res.status(200).json({ message: 'Animal updated successfully', result });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ error: 'Failed to get animals by exhibit' });
+        console.error('Error editing animal:', err);
+        res.status(500).json({ error: 'Failed to edit animal' });
     }
 });
+
 
 // Export the router
 module.exports = router;

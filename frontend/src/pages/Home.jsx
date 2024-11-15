@@ -7,30 +7,57 @@ const Home = () => {
   return (
     <div>
       <header>
-        <Carousel className=''
-        showThumbs={false} 
-        autoPlay={true} 
-        interval={10000} 
-        infiniteLoop={true}>
+        <Carousel
+          className=''
+          showThumbs={false}
+          autoPlay={true}
+          interval={10000}
+          infiniteLoop={true}
+        >
           <div className="relative h-[400px] w-full overflow-clip">
-            <img src="cougar.jpg" alt="Cougar" />
+            <img src="cougar.jpg" alt="Cougar" className="object-cover w-full h-full" />
             <p className="font-mono whitespace-nowrap absolute text-2xl font-semibold right-[70%] left-0 top-[40%] text-white p-2 ml-3">Welcome to the Coog Zoo!</p>
             <div className='absolute border-t-2 border-white right-7 left-0 bottom-8 top-[53%] w-4/5 ml-5'></div>
             <Link to="/tickets">
               <button className='absolute right-7 left-0 bottom-28 font-semibold bg-white p-1 rounded-full w-[150px] h-[40px] ml-4'> Plan Your Visit </button>
             </Link>
           </div>
+
           <div className="relative h-[400px] w-full overflow-clip">
-            <img src="cougar.jpg" alt="Another" />
+            <img src="cougar.jpg" alt="Another" className="object-cover w-full h-full" />
             <p className="font-mono whitespace-nowrap absolute text-2xl font-semibold right-[70%] left-0 top-[40%] text-white p-2 ml-3">See what exciting animals and attractions we have to offer!</p>
-            <div className='absolute border-t-2 border-white right-7 left-0 bottom-8 top-[53%] w-4/5 ml-5'></div>
             <div className='absolute border-t-2 border-white right-7 left-0 bottom-8 top-[53%] w-4/5 ml-5'></div>
             <Link to="/tickets">
               <button className='absolute right-7 left-0 bottom-28 font-semibold bg-white p-1 rounded-full w-[150px] h-[40px] ml-4'> Reserve tickets </button>
             </Link>
           </div>
+
+          <div className="relative h-[400px] w-full overflow-clip">
+            <img src="animal_banner.webp" alt="Another" className="object-cover w-full h-full" />
+          </div>
+
+          <div className="relative h-[400px] w-full overflow-clip">
+            <img src="https://tinyurl.com/3psv8tek" alt="Another" className="object-cover w-full h-full" />
+          </div>
+
+          <div className="relative h-[400px] w-full overflow-clip">
+            <img src="https://tinyurl.com/bdzh3kc7" alt="Another" className="object-cover w-full h-full" />
+          </div>
+
+          <div className="relative h-[400px] w-full overflow-clip">
+            <img src="https://tinyurl.com/2ht8ye8k" alt="Another" className="object-cover w-full h-full" />
+          </div>
+
+          <div className="relative h-[400px] w-full overflow-clip">
+            <img src="https://tinyurl.com/ykr8xnu5" alt="Another" className="object-cover w-full h-full" />
+          </div>
+
+          <div className="relative h-[400px] w-full overflow-clip">
+            <img src="https://tinyurl.com/bdk4hcpv" alt="Another" className="object-cover w-full h-full" />
+          </div>
         </Carousel>
       </header>
+
 
        {/* Add more images here */}
 

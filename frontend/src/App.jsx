@@ -19,6 +19,8 @@ import Checkout from "./pages/checkout";
 import MemSignup from "./pages/MemberSignup";
 import TotalReport from "./adminpages/totalReport";
 import AnimalPage from "./components/AnimalPage";
+import EmployeeTable from "./components/employeeTable";
+import AnimalTable from "./components/animalTables"
 import './App.css';
 
 function App() {
@@ -54,6 +56,8 @@ function App() {
                     <Route path="/member/:memberId/settings" element={<SettingsPage />} />
                     <Route path="Admin/:employeeID/totalReport" element={<TotalReport />} />
                     <Route path="/animal/:name" element={<AnimalPage />} />
+                    <Route path="Admin/:employeeID/employeeTable" element={<EmployeeTable />} />
+                    <Route path="Admin/:employeeID/animalTable" element={<AnimalTable />} />
                 </Routes>
             </Router>
         </div>
