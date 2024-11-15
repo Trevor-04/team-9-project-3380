@@ -206,48 +206,59 @@ const formatDate = (isoDate) => {
           )}
         </div>
 
-        <div 
-      className="purchases text-[#165e229e] w-full bg-white p-6 rounded-lg shadow-sm flex items-center justify-center text-center cursor-pointer"
-      onClick={toggleRecentPurchases}
-    >
-      <h3 className="font-bold text-xl mb-2">Recent Purchases</h3>
-      {showRecentPurchases && (
-        <div className="flex flex-col space-y-2">
-          <ul className="list-disc list-inside">
-            <li>Item 1 - $10.00 (January 1, 2024)</li>
-            <li>Item 2 - $5.00 (December 25, 2023)</li>
-            <li>Item 3 - $20.00 (November 15, 2023)</li>
-          </ul>
-          <button 
-            onClick={goToTickets} 
-            className="mt-4 bg-[#165e229e] text-white font-bold py-2 px-4 rounded"
-          >
-            Buy Tickets
-          </button>
-        </div>
+        <div className="reward-points text-[#165e229e] w-full bg-white p-6 rounded-lg shadow-sm flex items-center justify-center text-center cursor-pointer"
+  onClick={toggleRewardPoints}
+>
+  <h3 className="font-bold text-xl mb-2">Reward Points</h3>
+  {showRewardPoints && (
+    <div className="flex flex-col space-y-2 mt-4"> {/* Added mt-4 for spacing */}
+      <p><strong>Current Points:</strong> 150</p>
+      <p><strong>Status:</strong> Active</p>
+    </div>
+  )}
+</div>
+
+<div 
+  className="purchases text-[#165e229e] w-full bg-white p-6 rounded-lg shadow-sm flex items-center justify-center text-center cursor-pointer"
+  onClick={toggleRecentPurchases}
+>
+  <h3 className="font-bold text-xl mb-2">Recent Purchases</h3>
+  {showRecentPurchases && (
+    <div className="flex flex-col space-y-2 mt-4"> {/* Added mt-4 for spacing */}
+      <ul className="list-disc list-inside">
+        <li>Item 1 - $10.00 (January 1, 2024)</li>
+        <li>Item 2 - $5.00 (December 25, 2023)</li>
+        <li>Item 3 - $20.00 (November 15, 2023)</li>
+      </ul>
+      <button 
+        onClick={goToTickets} 
+        className="mt-4 bg-[#165e229e] text-white font-bold py-2 px-4 rounded"
+      >
+        Buy Tickets
+      </button>
+    </div>
+  )}
+</div>
+
+<div 
+  className="notifications text-[#165e229e] w-full bg-white p-6 rounded-lg shadow-sm flex items-center justify-center text-center cursor-pointer"
+  onClick={toggleNotifications}
+>
+  <h3 className="font-bold text-xl mb-2">Notifications</h3>
+  {showNotifications && (
+    <div className="flex flex-col space-y-2 mt-4"> {/* Added mt-4 for spacing */}
+      {memberData?.expiry_notification ? (
+        <p>{memberData.expiry_notification}</p>
+      ) : (
+        <ul className="list-disc list-inside">
+          <li>Reminder: Membership renewal on {memberData?.subscribed_on}</li>
+          <li>New events available for members!</li>
+          <li>Check out our new exhibits this month!</li>
+        </ul>
       )}
     </div>
-
-    <div 
-    className="notifications text-[#165e229e] w-full bg-white p-6 rounded-lg shadow-sm flex items-center justify-center text-center cursor-pointer"
-    onClick={toggleNotifications}
->
-    <h3 className="font-bold text-xl mb-2">Notifications</h3>
-    {showNotifications && (
-        <div className="flex flex-col space-y-2">
-            {memberData?.expiry_notification ? (
-                <p>{memberData.expiry_notification}</p>
-            ) : (
-                <ul className="list-disc list-inside ">
-                    <li>Reminder: Membership renewal on {memberData?.subscribed_on}</li>
-                    <li>New events available for members!</li>
-                    <li>Check out our new exhibits this month!</li>
-                </ul>
-            )}
-        </div>
-    )}
-  </div>
-
+  )}
+</div>
       </div>
     </div>
   );
