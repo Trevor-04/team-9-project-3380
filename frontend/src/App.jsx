@@ -18,6 +18,7 @@ import SettingsPage from "./components/SettingsPage";
 import Checkout from "./pages/checkout";
 import MemSignup from "./pages/MemberSignup";
 import TotalReport from "./adminpages/totalReport";
+import AnimalPage from "./components/AnimalPage";
 import './App.css';
 
 function App() {
@@ -52,6 +53,7 @@ function App() {
                     <Route path="/MemSignup" element={<MemSignup />} />
                     <Route path="/member/:memberId/settings" element={<SettingsPage />} />
                     <Route path="Admin/:employeeID/totalReport" element={<TotalReport />} />
+                    <Route path="/animal/:name" element={<AnimalPage />} />
                 </Routes>
             </Router>
         </div>
