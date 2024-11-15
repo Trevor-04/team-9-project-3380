@@ -192,20 +192,6 @@ const formatDate = (isoDate) => {
             </div>
           )} */}
         </div>
-
-        <div 
-          className="reward-points text-[#165e229e] w-full bg-white p-6 rounded-lg shadow-sm flex items-center justify-center text-center cursor-pointer"
-          onClick={toggleRewardPoints}
-        >
-          <h3 className="font-bold text-xl mb-2">Reward Points</h3>
-          {showRewardPoints && (
-            <div className="flex flex-col space-y-2">
-              <p><strong>Current Points:</strong> 150</p>
-              <p><strong>Status:</strong> Active</p>
-            </div>
-          )}
-        </div>
-
         <div className="reward-points text-[#165e229e] w-full bg-white p-6 rounded-lg shadow-sm flex items-center justify-center text-center cursor-pointer"
   onClick={toggleRewardPoints}
 >
@@ -259,6 +245,7 @@ const formatDate = (isoDate) => {
     </div>
   )}
 </div>
+
       </div>
     </div>
   );
