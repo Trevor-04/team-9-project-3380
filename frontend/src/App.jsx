@@ -56,8 +56,8 @@ function App() {
                     <Route path="/member/:memberId/settings" element={<SettingsPage />} />
                     <Route path="Admin/:employeeID/totalReport" element={<TotalReport />} />
                     <Route path="/animal/:name" element={<AnimalPage />} />
-                    <Route path="Admin/:employeeID/employeeTable" element={<EmployeeTable />} />
-                    <Route path="Admin/:employeeID/animalTable" element={<AnimalTable />} />
+                    <Route path="Admin/:employeeID/employeeTable" element={<EmployeeTable />} />  
+                    <Route path="Admin/:employeeID/animalTable" element={<AnimalTable />} /> 
                 </Routes>
             </Router>
         </div>

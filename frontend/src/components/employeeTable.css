@@ -16,18 +16,18 @@
     padding: 20px;
     font-family: 'Segoe UI', 'Tahoma', 'Geneva', 'Verdana', sans-serif;
   }
-  h1 {
+  /* h1 {
     color: var(--text-color);
-    text-align: left; /* Align header to the left */
+    text-align: left; 
     font-size: 2rem;
     margin-bottom: 20px;
-  }
+  } */
   .employee-table-container {
     background-color: var(--modal-bg-color);
     border-radius: 10px;
     padding: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    text-align: left; /* Align text to the left */
+    text-align: left; 
   }
   table {
     width: 100%;
@@ -38,14 +38,14 @@
   th, td {
     padding: 10px;
     border: 1px solid var(--table-border-color);
-    text-align: left; /* Align content inside cells to the left */
+    text-align: left;
     color: var(--text-color);
   }
   th {
     background-color: #f3f3f3;
     cursor: pointer;
     font-weight: bold;
-    text-align: left; /* Ensure header cells are aligned left */
+    text-align: left;
   }
   tbody tr:nth-child(even) {
     background-color: #fafafa;
@@ -55,7 +55,7 @@
   }
   .pagination {
     display: flex;
-    justify-content: flex-start; /* Align pagination to the left */
+    justify-content: flex-start; 
     margin-top: 20px;
   }
   .pagination button {
@@ -67,7 +67,7 @@
     margin: 0 5px;
     cursor: pointer;
   }
-  /* Modal styling */
+ 
   .modal {
     display: flex;
     justify-content: center;
