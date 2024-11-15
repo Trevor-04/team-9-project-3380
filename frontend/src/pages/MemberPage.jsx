@@ -6,7 +6,6 @@ export default function MemberPage() {
   const [memberData, setMemberData] = useState(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
-  const [showAnimals, setShowAnimals] = useState(false);
   const [showRewardPoints, setShowRewardPoints] = useState(false);
   const [showRecentPurchases, setShowRecentPurchases] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
@@ -41,7 +40,7 @@ export default function MemberPage() {
 
   const goToSettings = () => {
     if (memberId) {
-        navigate(`/member/${memberId}/settings`);
+      navigate(`/member/${memberId}/settings`);
     }
   };
 
@@ -54,6 +53,7 @@ export default function MemberPage() {
       navigate(`/member/${memberId}/tickets`);
     }
   };
+
   const goToAnimals = () => {
     if (memberId) {
       navigate(`/member/${memberId}/animals`);
@@ -120,30 +120,30 @@ export default function MemberPage() {
         </button>
 
         {isDropdownOpen && (
-  <div className="absolute right-0 mt-20 w-48 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5">
-    <ul className="py-1">
-    <li>
-        <button 
-          onClick={goToSettings}
-          className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
-        >
-          Settings
-        </button>
-      </li>
-      <li>
-        <button 
-        onClick={goToLogout}
-        className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100">
-          Logout
-        </button>
-      </li>
-    </ul>
-  </div>
-)}
-
+          <div className="absolute right-0 mt-20 w-48 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5">
+            <ul className="py-1">
+              <li>
+                <button 
+                  onClick={goToSettings}
+                  className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
+                >
+                  Settings
+                </button>
+              </li>
+              <li>
+                <button 
+                  onClick={goToLogout}
+                  className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
+                >
+                  Logout
+                </button>
+              </li>
+            </ul>
+          </div>
+        )}
       </header>
 
-      <div className="grid grid-cols-1 lg:grid-cols-1 gap-6 p-4 mt-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6 p-4 mt-6">
         <div className="profile-summary text-[#165e229e] w-full bg-white p-6 rounded-lg shadow-sm">
           <button
             onClick={toggleProfile}
