@@ -8,6 +8,13 @@ export default function Navbar() {
   const navigate = useNavigate();
   const isLoggedIn = !!localStorage.getItem("token"); // Check if a token exists
 
+  useEffect(() => {
+    // Clear localStorage if necessary
+    if (!isLoggedIn) {
+      localStorage.removeItem("token");
+    }
+  }, []);
+  
   // Function to handle logout
   const handleLogout = () => {
     localStorage.removeItem("token"); // Remove token from local storage
