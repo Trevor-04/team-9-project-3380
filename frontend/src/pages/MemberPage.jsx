@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
-//const {process.env.REACT_APP_BACKEND_URL} = require('../config.json')[process.env.NODE_ENV];
 
 export default function MemberPage() {
   const [memberData, setMemberData] = useState(null);
@@ -44,7 +43,7 @@ export default function MemberPage() {
     if (memberId) {
         navigate(`/member/${memberId}/settings`);
     }
-};
+  };
 
   const goToLogout = () =>{
     navigate(`/`);
@@ -61,17 +60,14 @@ export default function MemberPage() {
     }
   };
 
-const formatDate = (isoDate) => {
-  if (!isoDate) return ''; // Handle if no date is available
-  return new Date(isoDate).toISOString().split('T')[0]; // Format to YYYY-MM-DD
-};
+  const formatDate = (isoDate) => {
+    if (!isoDate) return ''; // Handle if no date is available
+    return new Date(isoDate).toISOString().split('T')[0]; // Format to YYYY-MM-DD
+  };
+
   const toggleProfile = () => {
     setShowProfile((prev) => !prev);
   };
-
-  // const toggleAnimalStatus = () => {
-  //   setShowAnimals((prev) => !prev);
-  // };
 
   const toggleRewardPoints = () => {
     setShowRewardPoints((prev) => !prev);
@@ -102,7 +98,7 @@ const formatDate = (isoDate) => {
     if (memberId) {
         navigate(`/member/${memberId}/events`);
     }
-};
+  };
 
   return (
     <div>
@@ -147,13 +143,13 @@ const formatDate = (isoDate) => {
 
       </header>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 p-4 mt-[20px]">
-        <div className="profile-summary text-[#165e229e] w-full bg-white p-6 rounded-lg shadow-sm ">
+      <div className="grid grid-cols-1 lg:grid-cols-1 gap-6 p-4 mt-6">
+        <div className="profile-summary text-[#165e229e] w-full bg-white p-6 rounded-lg shadow-sm">
           <button
             onClick={toggleProfile}
             className="font-bold text-lg mb-4 text-[#165e229e]"
           >
-            <h3 className="font-bold ">My Profile</h3>
+            <h3 className="font-bold">My Profile</h3>
           </button>
           {showProfile ? (
             <div>
@@ -178,76 +174,57 @@ const formatDate = (isoDate) => {
           <h3 className="font-bold">Upcoming events</h3>
         </div>
 
-        <div 
-          className="membership-status text-[#165e229e] w-full bg-white p-6 rounded-lg shadow-sm flex items-center justify-center text-center cursor-pointer"
-          onClick={goToAnimals}
-        >
+        <div className="membership-status text-[#165e229e] w-full bg-white p-6 rounded-lg shadow-sm flex items-center justify-center text-center cursor-pointer" onClick={goToAnimals}>
           <h3 className="font-bold">View our animals</h3>
-          {/* {showMembershipStatus && (
-            <div className="mt-2">
-              <p><strong>Type:</strong> {memberData?.memberType}</p>
-              <p><strong>Term:</strong> {memberData?.memberTerm}</p>
-              <p><strong>Subscribed On:</strong> {memberData?.subscribed_on}</p>
-              <p><strong>Last Billed:</strong> {memberData?.last_billed}</p>
-            </div>
-          )} */}
         </div>
-        <div className="reward-points text-[#165e229e] w-full bg-white p-6 rounded-lg shadow-sm flex items-center justify-center text-center cursor-pointer"
-  onClick={toggleRewardPoints}
->
-  <h3 className="font-bold text-xl mb-2">Reward Points</h3>
-  {showRewardPoints && (
-    <div className="flex flex-col space-y-2 mt-4"> {/* Added mt-4 for spacing */}
-      <p><strong>Current Points:</strong> 150</p>
-      <p><strong>Status:</strong> Active</p>
-    </div>
-  )}
-</div>
 
-<div 
-  className="purchases text-[#165e229e] w-full bg-white p-6 rounded-lg shadow-sm flex items-center justify-center text-center cursor-pointer"
-  onClick={toggleRecentPurchases}
->
-  <h3 className="font-bold text-xl mb-2">Recent Purchases</h3>
-  {showRecentPurchases && (
-    <div className="flex flex-col space-y-2 mt-4"> {/* Added mt-4 for spacing */}
-      <ul className="list-disc list-inside">
-        <li>Item 1 - $10.00 (January 1, 2024)</li>
-        <li>Item 2 - $5.00 (December 25, 2023)</li>
-        <li>Item 3 - $20.00 (November 15, 2023)</li>
-      </ul>
-      <button 
-        onClick={goToTickets} 
-        className="mt-4 bg-[#165e229e] text-white font-bold py-2 px-4 rounded"
-      >
-        Buy Tickets
-      </button>
-    </div>
-  )}
-</div>
+        <div className="reward-points text-[#165e229e] w-full bg-white p-6 rounded-lg shadow-sm flex items-center justify-center text-center cursor-pointer" onClick={toggleRewardPoints}>
+          <h3 className="font-bold text-xl mb-2">Reward Points</h3>
+          {showRewardPoints && (
+            <div className="flex flex-col space-y-2 mt-4">
+              <p><strong>Current Points:</strong> 150</p>
+              <p><strong>Status:</strong> Active</p>
+            </div>
+          )}
+        </div>
 
-<div 
-  className="notifications text-[#165e229e] w-full bg-white p-6 rounded-lg shadow-sm flex items-center justify-center text-center cursor-pointer"
-  onClick={toggleNotifications}
->
-  <h3 className="font-bold text-xl mb-2">Notifications</h3>
-  {showNotifications && (
-    <div className="flex flex-col space-y-2 mt-4"> {/* Added mt-4 for spacing */}
-      {memberData?.expiry_notification ? (
-        <p>{memberData.expiry_notification}</p>
-      ) : (
-        <ul className="list-disc list-inside">
-          <li>Reminder: Membership renewal on {memberData?.subscribed_on}</li>
-          <li>New events available for members!</li>
-          <li>Check out our new exhibits this month!</li>
-        </ul>
-      )}
-    </div>
-  )}
-</div>
+        <div className="purchases text-[#165e229e] w-full bg-white p-6 rounded-lg shadow-sm flex items-center justify-center text-center cursor-pointer" onClick={toggleRecentPurchases}>
+          <h3 className="font-bold text-xl mb-2">Recent Purchases</h3>
+          {showRecentPurchases && (
+            <div className="flex flex-col space-y-2 mt-4">
+              <ul className="list-disc list-inside">
+                <li>Item 1 - $10.00 (January 1, 2024)</li>
+                <li>Item 2 - $5.00 (December 25, 2023)</li>
+                <li>Item 3 - $20.00 (November 15, 2023)</li>
+              </ul>
+              <button 
+                onClick={goToTickets} 
+                className="mt-4 bg-[#165e229e] text-white font-bold py-2 px-4 rounded"
+              >
+                Buy Tickets
+              </button>
+            </div>
+          )}
+        </div>
+
+        <div className="notifications text-[#165e229e] w-full bg-white p-6 rounded-lg shadow-sm flex items-center justify-center text-center cursor-pointer" onClick={toggleNotifications}>
+          <h3 className="font-bold text-xl mb-2">Notifications</h3>
+          {showNotifications && (
+            <div className="flex flex-col space-y-2 mt-4">
+              {memberData?.expiry_notification ? (
+                <p>{memberData.expiry_notification}</p>
+              ) : (
+                <ul className="list-disc list-inside">
+                  <li>Reminder: Membership renewal on {memberData?.subscribed_on}</li>
+                  <li>New events available for members!</li>
+                  <li>Check out our new exhibits this month!</li>
+                </ul>
+              )}
+            </div>
+          )}
+        </div>
 
       </div>
     </div>
   );
 }
-
