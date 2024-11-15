@@ -2,7 +2,7 @@ import React from 'react';
 import { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import {BarChart, LineChart, PieChart} from '../components/charts/BarChart';
+import {BarChart, LineChart, PieChart} from '../charts/barChart';
 
 //const {url} = require('../config.json')[process.env.NODE_ENV];
 
