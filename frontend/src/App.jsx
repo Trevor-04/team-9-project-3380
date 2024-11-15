@@ -58,6 +58,7 @@ function App() {
                     <Route path="/animal/:name" element={<AnimalPage />} />
                     <Route path="Admin/:employeeID/employeeTable" element={<EmployeeTable />} />  
                     <Route path="Admin/:employeeID/animalTable" element={<AnimalTable />} /> 
+
                 </Routes>
             </Router>
         </div>
