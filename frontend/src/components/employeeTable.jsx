@@ -4,7 +4,7 @@ import "../App.css";
 import "../index.css";
 import "./employeeTable.css";
 
-const { url } = require('../config.json')[process.env.NODE_ENV];
+//const { url } = require('../config.json')[process.env.NODE_ENV];
 let itemsPerPage = 10;
 
 function EmployeeTable() {
@@ -79,7 +79,7 @@ const handleAddEmployee = async (e) => {
     };
 
     try {
-        await axios.post(`${url}/employees/add`, newEmployee, {
+        await axios.post(`${process.env.REACT_APP_BACKEND_URL}/employees/add`, newEmployee, {
           // headers: { Authorization: `Bearer ${token}` }
         });;
         clearForm();
@@ -110,7 +110,7 @@ const handleEditEmployee = async (e) => {
   };
 
   try {
-      await axios.put(`${url}/employees/edit`, updatedEmployee, {
+      await axios.put(`${process.env.REACT_APP_BACKEND_URL}/employees/edit`, updatedEmployee, {
         // headers: { Authorization: `Bearer ${token}` }
       });;
       clearForm();
@@ -134,7 +134,7 @@ const handleEditEmployee = async (e) => {
 
   const fetchEmployeeData = async () => {
     try {
-        const response = await axios.get(`${url}/employees/`);
+        const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/employees/`);
         if (response.status !== 200) throw new Error("Failed to fetch employee data");
         setEmployeeData(response.data);
       } catch (error) {
@@ -145,7 +145,7 @@ const handleEditEmployee = async (e) => {
   }
 
 const handleEditEmployeeOptions = async (employeeID) => {
-  const emp = await axios.get(`${url}/employees/${employeeID}`);
+  const emp = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/employees/${employeeID}`);
   if (!emp.data) return alert("Error finding that employee");
   setSelectedEmployee(emp.data);
   setIsEditModalOpen(true);
@@ -164,7 +164,7 @@ const closeEditEmployeeOptions = async () => {
   async function deleteEmployee(employeeID) {
     try {
       if (!window.confirm("Are you sure you want to delete this employee?")) return;
-        await axios.delete(`${url}/employees/${employeeID}`);
+        await axios.delete(`${process.env.REACT_APP_BACKEND_URL}/employees/${employeeID}`);
 
         alert(`Successfully deleted employee ${employeeID}`);
         fetchEmployeeData();
@@ -177,7 +177,7 @@ const closeEditEmployeeOptions = async () => {
   
   async function updateEmployee(employeeID) {
     try {
-        await axios.put(`${url}/employees/${employeeID}`, {
+        await axios.put(`${process.env.REACT_APP_BACKEND_URL}/employees/${employeeID}`, {
           fName: newFName,
           mName: newMName || null,
           lName: newLName,

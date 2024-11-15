@@ -3,7 +3,7 @@ import axios from "axios";
 import "../App.css";
 import "../index.css";
 
-const { url } = require('../config.json')[process.env.NODE_ENV];
+//const { process.env.REACT_APP_BACKEND_URL } = require('../config.json')[process.env.NODE_ENV];
 const itemsPerPage = 10;
 
 function AnimalTable() {
@@ -35,7 +35,7 @@ function AnimalTable() {
 
     const fetchAnimalData = async () => {
         try {
-            const response = await axios.get(`${url}/animals/`);
+            const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/animals/`);
             if (response.status !== 200) throw new Error("Failed to fetch animal data");
             setAnimalData(response.data);
         } catch (error) {
@@ -71,7 +71,7 @@ function AnimalTable() {
         };
 
         try {
-            await axios.post(`${url}/animals/add`, newAnimal);
+            await axios.post(`${process.env.REACT_APP_BACKEND_URL}/animals/add`, newAnimal);
             clearForm();
             setIsAddModalOpen(false);
             fetchAnimalData();
@@ -99,7 +99,7 @@ function AnimalTable() {
         if (!window.confirm("Are you sure you want to delete this animal?")) return;
 
         try {
-            await axios.delete(`${url}/animals/${animalID}`);
+            await axios.delete(`${process.env.REACT_APP_BACKEND_URL}/animals/${animalID}`);
             alert("Animal deleted successfully.");
             fetchAnimalData();
         } catch (error) {
@@ -117,7 +117,7 @@ function AnimalTable() {
     // Handle Edit Modal
     const handleEditAnimalOptions = async (animalID) => {
         try {
-            const response = await axios.get(`${url}/animals/${animalID}`);
+            const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/animals/${animalID}`);
             setSelectedAnimal(response.data);
             setIsEditModalOpen(true);
         } catch (error) {
@@ -141,7 +141,7 @@ function AnimalTable() {
         };
     
         try {
-            await axios.put(`${url}/animals/edit`, updatedAnimal);
+            await axios.put(`${process.env.REACT_APP_BACKEND_URL}/animals/edit`, updatedAnimal);
             clearForm();
             setIsEditModalOpen(false);
             fetchAnimalData();
