@@ -3,6 +3,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 
 export default function MemberPage() {
+  const [subedOn, setSubedOn] = useState(null);
   const [memberData, setMemberData] = useState(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
@@ -12,6 +13,20 @@ export default function MemberPage() {
   const { memberId } = useParams(); // Get memberId from the route
   const dropdownRef = useRef();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // Make the axios request inside useEffect
+    const fetchSubedOn = async () => {
+      try {
+        const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/memberPlans/subedOn`);
+        setSubedOn(response.data.subedOn);  // Assuming response.data.subedOn contains the value
+      } catch (error) {
+        console.error("Error fetching subedOn:", error);
+      }
+    };
+
+    fetchSubedOn();  // Call the function to fetch data
+  }, []);  // Empty dependency array to run once when the component mounts
 
   useEffect(() => {
     const fetchMemberData = async () => {
@@ -173,9 +188,9 @@ export default function MemberPage() {
               <p><strong>Phone:</strong> {memberData?.memberPhone}</p>
               <p><strong>Birthday:</strong> {formatDate(memberData?.memberBirthday)}</p>
               <p><strong>Membership Type:</strong> {memberData?.memberType}</p>
-              <p><strong>Subscribed On:</strong> {formatDate(memberData?.subscribed_on)}</p>
-              <p><strong>Membership Term:</strong> {memberData?.memberTerm}</p>
-              <p><strong>Last Billed:</strong> {formatDate(memberData?.last_billed)}</p>
+              <p><strong>Subscribed On:</strong> {subedOn ? formatDate(subedOn) : 'Loading...'}</p>
+              {/* <p><strong>Membership Term:</strong> {memberData?.memberTerm}</p> */}
+              {/* <p><strong>Last Billed:</strong> {formatDate(memberData?.last_billed)}</p> */}
             </div>
           ) : (
             <p>Click "My Profile" to view your details.</p>

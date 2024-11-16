@@ -14,4 +14,15 @@ router.post('/add', async (req, res) => {
     }
 });
 
+router.get('/subedOn', async (req, res) => {
+    try {
+        const subedOn = req.query.subedOn; // Get subedOn from query string
+        const result = await memberPlansController.subedOn(subedOn);
+        res.status(200).json(result);
+    } catch (error) {
+        console.error("Error getting plan:", error);
+        res.status(500).json({ error: 'Failed to get plan.' });
+    }
+});
+
 module.exports = router;
