@@ -6,7 +6,7 @@ import { jwtDecode } from 'jwt-decode';
 function Checkout() {
     const location = useLocation();
     const [role, setRole] = useState(null);
-    const [isMember, setIsMember] = useState(false); // Initialize as false initially
+    const [isMember, setIsMember] = useState(false); // You can keep this, but won't be used for the dropdown
     const membershipType = location.state?.membershipType || "No membership selected";
     const amount = location.state?.amount || "No amount selected";
 
@@ -118,138 +118,145 @@ function Checkout() {
                 <h2 className="text-2xl font-bold mb-6 text-center">Membership Checkout</h2>
                 <p className="text-center text-lg font-semibold mb-4">{membershipType} Selected</p>
 
-                {!isMember ? (
-                    <Link to="/signup">
-                    <p className="text-red-500 text-center mb-4">
-                        You need to <a className="text-blue-500 underline">sign up</a> to proceed with checkout.
-                    </p>
-                    </Link>
-                ) : (
-                    <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
-                        <input 
-                            type="text" 
-                            name="firstName"
-                            placeholder="First Name"
-                            value={formData.firstName}
-                            onChange={handleChange}
-                            className="p-2 border border-[#165e229e] rounded"
-                            required
-                        />
-                        <input 
-                            type="text" 
-                            name="lastName"
-                            placeholder="Last Name"
-                            value={formData.lastName}
-                            onChange={handleChange}
-                            className="p-2 border border-[#165e229e] rounded"
-                            required
-                        />
-                        <input 
-                            type="text" 
-                            name="address"
-                            placeholder="Address"
-                            value={formData.address}
-                            onChange={handleChange}
-                            className="p-2 border border-[#165e229e] rounded"
-                            required
-                        />
-                        <input 
-                            type="text" 
-                            name="city"
-                            placeholder="City"
-                            value={formData.city}
-                            onChange={handleChange}
-                            className="p-2 border border-[#165e229e] rounded"
-                            required
-                        />
-                        <input 
-                            type="text" 
-                            name="state"
-                            placeholder="State"
-                            value={formData.state}
-                            onChange={handleChange}
-                            className="p-2 border border-[#165e229e] rounded"
-                            required
-                        />
-                        <input 
-                            type="text" 
-                            name="country"
-                            placeholder="Country"
-                            value={formData.country}
-                            onChange={handleChange}
-                            className="p-2 border border-[#165e229e] rounded"
-                            required
-                        />
-                        <input 
-                            type="text" 
-                            name="zip"
-                            placeholder="Zip Code"
-                            value={formData.zip}
-                            onChange={handleChange}
-                            className="p-2 border border-[#165e229e] rounded"
-                            required
-                        />
-                        {/* Credit Card Information */}
-                        <input 
-                            type="text" 
-                            name="ccNumber"
-                            placeholder="Credit Card Number"
-                            value={formData.ccNumber}
-                            onChange={handleChange}
-                            className="p-2 border border-[#165e229e] rounded"
-                            maxLength="16"
-                            required
-                        />
-                        <div className="flex space-x-4">
-                            <input 
-                                type="text" 
-                                name="expDate"
-                                placeholder="MM/YY"
-                                value={formData.expDate}
-                                onChange={handleChange}
-                                className="p-2 border border-[#165e229e] rounded w-1/2"
-                                maxLength="5"
-                                required
-                            />
-                            <input 
-                                type="text" 
-                                name="cvv"
-                                placeholder="CVV"
-                                value={formData.cvv}
-                                onChange={handleChange}
-                                className="p-2 border border-[#165e229e] rounded w-1/2"
-                                maxLength="3"
-                                required
-                            />
-                        </div>
+                <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
+                    {/* Always show the dropdown */}
+                    <select
+                        name="membershipType"
+                        value={formData.membershipType}
+                        onChange={handleChange}
+                        className="p-2 border border-[#165e229e] rounded"
+                        required
+                    >
+                        <option value="bronze">Bronze</option>
+                        <option value="silver">Silver</option>
+                        <option value="gold">Gold</option>
+                        <option value="platinum">Platinum</option>
+                        <option value="diamond">Diamond</option>
+                    </select>
 
+                    <input 
+                        type="text" 
+                        name="firstName"
+                        placeholder="First Name"
+                        value={formData.firstName}
+                        onChange={handleChange}
+                        className="p-2 border border-[#165e229e] rounded"
+                        required
+                    />
+                    <input 
+                        type="text" 
+                        name="lastName"
+                        placeholder="Last Name"
+                        value={formData.lastName}
+                        onChange={handleChange}
+                        className="p-2 border border-[#165e229e] rounded"
+                        required
+                    />
+                    <input 
+                        type="text" 
+                        name="address"
+                        placeholder="Address"
+                        value={formData.address}
+                        onChange={handleChange}
+                        className="p-2 border border-[#165e229e] rounded"
+                        required
+                    />
+                    <input 
+                        type="text" 
+                        name="city"
+                        placeholder="City"
+                        value={formData.city}
+                        onChange={handleChange}
+                        className="p-2 border border-[#165e229e] rounded"
+                        required
+                    />
+                    <input 
+                        type="text" 
+                        name="state"
+                        placeholder="State"
+                        value={formData.state}
+                        onChange={handleChange}
+                        className="p-2 border border-[#165e229e] rounded"
+                        required
+                    />
+                    <input 
+                        type="text" 
+                        name="country"
+                        placeholder="Country"
+                        value={formData.country}
+                        onChange={handleChange}
+                        className="p-2 border border-[#165e229e] rounded"
+                        required
+                    />
+                    <input 
+                        type="text" 
+                        name="zip"
+                        placeholder="Zip Code"
+                        value={formData.zip}
+                        onChange={handleChange}
+                        className="p-2 border border-[#165e229e] rounded"
+                        required
+                    />
+                    {/* Credit Card Information */}
+                    <input 
+                        type="text" 
+                        name="ccNumber"
+                        placeholder="Credit Card Number"
+                        value={formData.ccNumber}
+                        onChange={handleChange}
+                        className="p-2 border border-[#165e229e] rounded"
+                        maxLength="16"
+                        required
+                    />
+                    <div className="flex space-x-4">
                         <input 
-                            type="tel" 
-                            name="phone"
-                            placeholder="Phone Number"
-                            value={formData.phone}
+                            type="text" 
+                            name="expDate"
+                            placeholder="MM/YY"
+                            value={formData.expDate}
                             onChange={handleChange}
-                            className="p-2 border border-[#165e229e] rounded"
+                            className="p-2 border border-[#165e229e] rounded w-1/2"
+                            maxLength="5"
                             required
                         />
                         <input 
-                            type="email" 
-                            name="email"
-                            placeholder="Email"
-                            value={formData.email}
+                            type="text" 
+                            name="cvv"
+                            placeholder="CVV"
+                            value={formData.cvv}
                             onChange={handleChange}
-                            className="p-2 border border-[#165e229e] rounded"
+                            className="p-2 border border-[#165e229e] rounded w-1/2"
+                            maxLength="3"
                             required
                         />
+                    </div>
 
-                        <button 
-                            type="submit"
-                            className="bg-[#165e229e] text-white p-2 rounded font-bold mt-4"
-                        >
-                            Submit
-                        </button>
-                    </form>
-                )}
+                    <input 
+                        type="tel" 
+                        name="phone"
+                        placeholder="Phone Number"
+                        value={formData.phone}
+                        onChange={handleChange}
+                        className="p-2 border border-[#165e229e] rounded"
+                        required
+                    />
+                    <input 
+                        type="email" 
+                        name="email"
+                        placeholder="Email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        className="p-2 border border-[#165e229e] rounded"
+                        required
+                    />
+
+                    <button 
+                        type="submit"
+                        className="bg-[#165e229e] text-white p-2 rounded font-bold mt-4"
+                    >
+                        Submit
+                    </button>
+                </form>
             </div>
         </div>
     );
