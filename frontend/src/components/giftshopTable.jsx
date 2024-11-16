@@ -114,8 +114,10 @@ function GiftshopTable() {
 
     const handleEditItem = async (e) => {
         e.preventDefault();
+    
+        // Prepare the updated item object
         const updatedItem = {
-            itemID: selectedItem.itemID,
+            itemID: selectedItem.itemID, // Use selectedItem.itemID here
             itemName: newName,
             itemPrice: newPrice,
             totalQuantity: newTotalQuantity || null,
@@ -124,16 +126,22 @@ function GiftshopTable() {
         };
     
         try {
-            await axios.put(`${process.env.REACT_APP_BACKEND_URL}/inventory/${itemID}`, updatedItem);
+            // Correct the URL by using selectedItem.itemID
+            await axios.put(`${process.env.REACT_APP_BACKEND_URL}/inventory/${selectedItem.itemID}`, updatedItem);
+            
+            // Clear form fields and close modal
             clearForm();
             setIsEditModalOpen(false);
             fetchInventoryData();
+            
+            // Alert success
             alert("Item updated successfully!");
         } catch (error) {
             console.error("Error editing item:", error);
             alert("Failed to edit item.");
         }
     };
+    
 
       // Sorting logic
       const sortedData = React.useMemo(() => {

@@ -122,15 +122,15 @@ module.exports.getItemsByName = async function (itemData) {
 // };
 
 
-module.exports.listSalesWithItems = async function () {
-    try {
-        return query(`
-            SELECT G.receiptID, G.quantity, G.purchased_at, I.itemName, I.itemPrice
-            FROM Gift_shop_sales AS G
-            LEFT JOIN Inventory AS I ON G.itemID = I.itemID
-        `); 
-    } catch (err) {
-        console.error("Error fetching sales with items:", err);
-        throw new Error("Failed to list sales with items");
-    }
-};
+// module.exports.listSalesWithItems = async function () {
+//     try {
+//         return query(`
+//             SELECT G.receiptID, G.quantity, G.purchased_at, I.itemName, I.itemPrice
+//             FROM Gift_shop_sales AS G
+//             LEFT JOIN Inventory AS I ON G.itemID = I.itemID
+//         `); 
+//     } catch (err) {
+//         console.error("Error fetching sales with items:", err);
+//         throw new Error("Failed to list sales with items");
+//     }
+// };
