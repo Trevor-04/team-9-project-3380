@@ -58,7 +58,7 @@ function GiftshopTable() {
             itemPrice: newPrice,
             totalQuantity: newTotalQuantity || null,
             category: newCategory || null,
-            descript: newDescription || null
+            description: newDescription || null
         };
 
         try {
