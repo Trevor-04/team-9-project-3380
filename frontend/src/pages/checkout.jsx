@@ -10,14 +10,20 @@ function Checkout() {
     const membershipType = location.state?.membershipType || "No membership selected";
     const amount = location.state?.amount || "No amount selected";
 
+    const membershipAmounts = {
+        bronze: 99,
+        silver: 149,
+        gold: 199,
+        platinum: 299,
+        diamond: 399
+    };
+
     useEffect(() => {
         const token = localStorage.getItem('token');
-       // console.log("Retrieved Token:", token); // Log the token itself
     
         if (token) {
             try {
                 const decodedToken = jwtDecode(token);
-                //console.log("Decoded Token:", decodedToken); // Log the entire decoded token
     
                 if (decodedToken && decodedToken.role) {
                     setRole(decodedToken.role); // Set role from the token
@@ -36,7 +42,6 @@ function Checkout() {
             setIsMember(false); // Set false if no token is found
         }
     }, []); // Empty dependency array ensures this effect runs once when component mounts
-    
 
     const [formData, setFormData] = useState({
         membershipType: membershipType,
@@ -58,10 +63,18 @@ function Checkout() {
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
+
+        // Update the amount when the membership type changes
+        if (name === 'membershipType') {
+            const updatedAmount = membershipAmounts[value] || 0;
+            setFormData((prevData) => ({
+                ...prevData,
+                amount: updatedAmount
+            }));
+        }
     };
 
     const handleSubmitForm = async (formData) => {
-        // Here, you would perform form validation and membership status check
         if (!isMember) {
             alert("Please sign up for a membership to proceed.");
             return;
@@ -116,13 +129,12 @@ function Checkout() {
         <div className="bg-[#fef7e7] min-h-screen flex items-center justify-center">
             <div className="w-full max-w-md bg-white p-8 rounded shadow-md">
                 <h2 className="text-2xl font-bold mb-6 text-center">Membership Checkout</h2>
-                {/* <p className="text-center text-lg font-semibold mb-4">{membershipType} Selected</p> */}
 
                 {!isMember ? (
                     <Link to="/signup">
-                    <p className="text-red-500 text-center mb-4">
-                        You need to <a className="text-blue-500 underline">sign up</a> to proceed with checkout.
-                    </p>
+                        <p className="text-red-500 text-center mb-4">
+                            You need to <a className="text-blue-500 underline">sign up</a> to proceed with checkout.
+                        </p>
                     </Link>
                 ) : (
                     <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
@@ -133,12 +145,17 @@ function Checkout() {
                             className="p-2 border border-[#165e229e] rounded"
                             required
                         >
-                            <option value="bronze">Bronze</option>
-                            <option value="silver">Silver</option>
-                            <option value="gold">Gold</option>
-                            <option value="platinum">Platinum</option>
-                            <option value="diamond">Diamond</option>
+                            <option value="bronze">Bronze - $99</option>
+                            <option value="silver">Silver - $149</option>
+                            <option value="gold">Gold - $199</option>
+                            <option value="platinum">Platinum - $299</option>
+                            <option value="diamond">Diamond - $399</option>
                         </select>
+
+                        {/* Display the selected membership type and amount */}
+                        <p className="text-center text-lg font-semibold mb-4">
+                            You selected the {formData.membershipType.charAt(0).toUpperCase() + formData.membershipType.slice(1)} membership, priced at ${formData.amount}.
+                        </p>
 
                         <input 
                             type="text" 
