@@ -28,8 +28,7 @@ function GiftshopTable() {
     
     useEffect(() => {
         fetchInventoryData();
-    }, []);
-    
+    }, []);   
 
     const fetchInventoryData = async () => {
         try {
@@ -121,7 +120,7 @@ function GiftshopTable() {
             itemPrice: newPrice,
             totalQuantity: newTotalQuantity || null,
             category: newCategory || null,
-            descript: newDescription || null
+            description: newDescription || null
         };
     
         try {
@@ -193,9 +192,9 @@ return (
             </thead>
             <tbody>
                 {paginatedData.map((item) => (
-                    <tr key={item.ItemID}>
-                        <td>{item.name}</td>
-                        <td>{item.price}</td>
+                    <tr key={item.itemID}>
+                        <td>{item.itemName}</td>
+                        <td>{item.itemPrice}</td>
                         <td>{item.totalQuantity}</td>
                         <td>{item.category}</td>
                         <td>{item.description}</td>
