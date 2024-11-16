@@ -47,7 +47,7 @@ router.put('/:itemID', async (req, res) => {
 router.get('/', async (req, res) => {
     try {
         const items = await inventoryController.listItems();
-        return res.status(201).json(items);
+        return res.status(200).json(items);
     } catch (err) {
         //console.error(err);
         res.status(500).json({ error: 'Failed to list items' });
