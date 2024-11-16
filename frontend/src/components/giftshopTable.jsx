@@ -33,10 +33,10 @@ function giftshopTable() {
     const fetchInventoryData = async () => {
         try {
             const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/inventory/`);
-            if (response.status !== 200) throw new Error("Failed to fetch animal data");
+            if (response.status !== 200) throw new Error("Failed to fetch Item data");
             setInventoryData(response.data);
         } catch (error) {
-            console.error("Error fetching animal data:", error);
+            console.error("Error fetching Item data:", error);
         }
     };
 
@@ -87,11 +87,11 @@ function giftshopTable() {
 
         try {
             await axios.delete(`${process.env.REACT_APP_BACKEND_URL}/inventory/${itemID}`);
-            alert("Animal deleted successfully.");
+            alert("Item deleted successfully.");
             fetchInventoryData();
         } catch (error) {
-            console.error("Error deleting animal:", error);
-            alert("Failed to delete animal.");
+            console.error("Error deleting Item:", error);
+            alert("Failed to delete Item.");
         }
     };
 
@@ -102,13 +102,13 @@ function giftshopTable() {
     };
 
      // Handle Edit Modal
-     const handleEditItemOptions = async (animalID) => {
+     const handleEditItemOptions = async (ItemID) => {
         try {
-            const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/animals/${animalID}`);
+            const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/inventory/${ItemID}`);
             setSelectedItem(response.data);
             setIsEditModalOpen(true);
         } catch (error) {
-            console.error("Error fetching animal details:", error);
+            console.error("Error fetching Item details:", error);
         }
     };
 
@@ -167,7 +167,7 @@ return (
                 className="border-2 border-gray-300 bg-white h-10 px-5 pr-16 rounded-lg text-sm focus:outline-none"
                 value={itemSearchTerm}
                 onChange={(e) => setItemSearchTerm(e.target.value)}
-                placeholder="Search by animal name"
+                placeholder="Search by Item name"
             />
         </div>
             <div className="flex justify-center my-4">
@@ -192,7 +192,7 @@ return (
             </thead>
             <tbody>
                 {paginatedData.map((item) => (
-                    <tr key={item.animalID}>
+                    <tr key={item.ItemID}>
                         <td>{item.name}</td>
                         <td>{item.price}</td>
                         <td>{item.totalQuantity}</td>
@@ -200,11 +200,11 @@ return (
                         <td>{item.description}</td>
                         <td>
                             <button className="bg-[#8AA686] text-white py-2 px-4 rounded mx-1"
-                                onClick={() => handleEditAnimalOptions(item.itemID)}>
+                                onClick={() => handleEditItemOptions(item.itemID)}>
                                 Edit
                             </button>
                             <button className="bg-[#8AA686] text-white py-2 px-4 rounded mx-1"
-                                onClick={() => deleteAnimal(item.itemID)}>
+                                onClick={() => deleteItem(item.itemID)}>
                                 Delete
                             </button>
                         </td>
@@ -355,7 +355,7 @@ return (
             <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
                 <div className="bg-white p-6 rounded-lg w-96">
                     <h2 className="text-2xl font-semibold mb-4">Edit Item</h2>
-                    <form onSubmit={handleEditAnimal}>
+                    <form onSubmit={handleEditItem}>
                         <div className="mb-4">
                             <label className="block text-sm font-medium">Name</label>
                             <input
