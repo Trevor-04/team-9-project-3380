@@ -7,7 +7,7 @@ module.exports.addItem = async function (itemData) {
         return await query(`
             INSERT INTO Inventory (itemName, itemPrice, totalQuantity, category, descript)
             VALUES (?, ?, ?, ?, ?)`,
-        [itemName, itemPrice, totalQuantity, category])
+        [itemName, itemPrice, totalQuantity, category, descript])
     } catch (error) {
         console.log(error);
         throw error;
