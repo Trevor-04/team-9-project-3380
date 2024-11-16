@@ -94,17 +94,17 @@ router.get('/name/:itemName', async (req, res) => {
 });
 
 
-router.put('/edit', async(req, res) => {
-    const itemData = req.body;
+// router.put('/edit', async(req, res) => {
+//     const itemData = req.body;
 
-    try {
-        const result = await inventoryController.editItems(itemData);
-        res.status(200).json({message: 'Item updated successfully', result});
-    } catch (err) {
-        console.error("Error editing inventory:", err);
-        res.status(500).json({error: 'Failed to update item'});
-    }
-});
+//     try {
+//         const result = await inventoryController.editItems(itemData);
+//         res.status(200).json({message: 'Item updated successfully', result});
+//     } catch (err) {
+//         console.error("Error editing inventory:", err);
+//         res.status(500).json({error: 'Failed to update item'});
+//     }
+// });
 
 router.get('/sales-with-items', async (req, res) => {
     try {

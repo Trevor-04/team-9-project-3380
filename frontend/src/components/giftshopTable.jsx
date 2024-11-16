@@ -124,7 +124,7 @@ function GiftshopTable() {
         };
     
         try {
-            await axios.put(`${process.env.REACT_APP_BACKEND_URL}/inventory/edit`, updatedItem);
+            await axios.put(`${process.env.REACT_APP_BACKEND_URL}/inventory/${itemID}`, updatedItem);
             clearForm();
             setIsEditModalOpen(false);
             fetchInventoryData();

@@ -85,41 +85,41 @@ module.exports.getItemsByName = async function (itemData) {
     }
 };
 
-module.exports.editItems = async function (itemData) {
-    const {itemID, itemName, itemPrice, totalQuantity, category, descript} = itemData;
+// module.exports.editItems = async function (itemData) {
+//     const {itemID, itemName, itemPrice, totalQuantity, category, descript} = itemData;
 
-    if (!itemID) {
-        throw new Error("Item ID is required to edit an animal.");
-    }
+//     if (!itemID) {
+//         throw new Error("Item ID is required to edit an animal.");
+//     }
 
-    try {
-        const result = await query(`
-        UPDATE Inventory
-        SET itemName = ?,
-            itemPrice = ?, 
-            totalQuantity = ?, 
-            category = ?, 
-            descript = ?
-        WHERE itemID = ?`,
-        [
-            itemName,
-            itemPrice,
-            totalQuantity,
-            category,
-            descript,
-            itemID
-        ]);
+//     try {
+//         const result = await query(`
+//         UPDATE Inventory
+//         SET itemName = ?,
+//             itemPrice = ?, 
+//             totalQuantity = ?, 
+//             category = ?, 
+//             descript = ?
+//         WHERE itemID = ?`,
+//         [
+//             itemName,
+//             itemPrice,
+//             totalQuantity,
+//             category,
+//             descript,
+//             itemID
+//         ]);
 
-        if (result.affectedRows === 0) {
-            throw new Error(`Item with ID ${itemID} not found.`);
-        }
+//         if (result.affectedRows === 0) {
+//             throw new Error(`Item with ID ${itemID} not found.`);
+//         }
 
-        return result;
-    } catch (error) {
-        console.error("Error in editItems function", error);
-        throw error;
-    }
-};
+//         return result;
+//     } catch (error) {
+//         console.error("Error in editItems function", error);
+//         throw error;
+//     }
+// };
 
 
 module.exports.listSalesWithItems = async function () {
