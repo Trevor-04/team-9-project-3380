@@ -32,10 +32,10 @@ router.delete('/:itemID', async (req, res) => {
 // Update an item by ID
 router.put('/:itemID', async (req, res) => {
     const { itemID } = req.params;
-    const { itemName, itemPrice, totalQuantity, category } = req.body;
+    const { itemName, itemPrice, totalQuantity, category, descript } = req.body;
 
     try {
-        await inventoryController.updateItem({ itemID, itemName, itemPrice, totalQuantity, category });
+        await inventoryController.updateItem({ itemID, itemName, itemPrice, totalQuantity, category, descript});
         res.status(200).json({ message: 'Item updated successfully' });
     } catch (err) {
         console.error(err);
