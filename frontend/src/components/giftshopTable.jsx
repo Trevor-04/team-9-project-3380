@@ -7,7 +7,7 @@ import "../index.css";
 
 const itemsPerPage = 10;
 
-function giftshopTable() {
+function GiftshopTable() {
     const [inventoryData, setInventoryData] = useState([]);
     const [sortField, setSortField] = useState(null);
     const [sortDirection, setSortDirection] = useState("asc");
@@ -458,4 +458,4 @@ return (
   );
 }
 
-export default giftshopTable
+export default GiftshopTable
