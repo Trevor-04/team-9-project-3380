@@ -88,21 +88,8 @@ module.exports.getItemsByName = async function (itemData) {
 module.exports.editItems = async function (itemData) {
     const {itemID, itemName, itemPrice, totalQuantity, category, descript} = itemData;
 
-    // Log the inputs to check the values
-    console.log('itemData:', itemData);
-    console.log('itemPrice:', itemPrice);
-    console.log('totalQuantity:', totalQuantity);
-    console.log('category:', category);
-
-    // Validate the input types
-    if (isNaN(itemPrice) || typeof itemPrice !== 'number') {
-        throw new Error('itemPrice must be a valid number');
-    }
-    if (totalQuantity && !Number.isInteger(totalQuantity)) {
-        throw new Error('totalQuantity must be a valid integer');
-    }
-    if (category && !Number.isInteger(category)) {
-        throw new Error('category must be a valid integer');
+    if (!itemID) {
+        throw new Error("Item ID is required to edit an animal.");
     }
 
     try {
@@ -127,7 +114,7 @@ module.exports.editItems = async function (itemData) {
             throw new Error(`Item with ID ${itemID} not found.`);
         }
 
-        console.log(`Item with ID ${itemID} updated successfully.`);
+        return result;
     } catch (error) {
         console.error("Error in editItems function", error);
         throw error;
