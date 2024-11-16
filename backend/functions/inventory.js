@@ -26,14 +26,14 @@ module.exports.deleteItem = async function (itemData) {
 };
 
 module.exports.updateItem = async function (itemData) {
-    const { itemID, itemName, itemPrice, totalQuantity, category } = itemData;
+    const { itemID, itemName, itemPrice, totalQuantity, category, descript } = itemData;
 
     try {
         return await query(`
             UPDATE Inventory
-            SET itemName = ?, itemPrice = ?, totalQuantity = ?, category = ?
+            SET itemName = ?, itemPrice = ?, totalQuantity = ?, category = ?, descript = ?
             WHERE itemID = ?`,
-            [itemName, itemPrice, totalQuantity, category, itemID]);
+            [itemName, itemPrice, totalQuantity, category, descript, itemID]);
     } catch (err) {
         console.log(err);
         throw err;

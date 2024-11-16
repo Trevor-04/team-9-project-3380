@@ -5,10 +5,10 @@ const router = express.Router();
 
 // Add a new item to inventory
 router.post('/add', async (req, res) => {
-    const { itemName, itemPrice, totalQuantity, category } = req.body;
+    const { itemName, itemPrice, totalQuantity, category, descript } = req.body;
 
     try {
-        await inventoryController.addItem({ itemName, itemPrice, totalQuantity, category });
+        await inventoryController.addItem({ itemName, itemPrice, totalQuantity, category, descript });
         res.status(201).json({ message: 'Item added successfully' });
     } catch (err) {
         console.error(err);
