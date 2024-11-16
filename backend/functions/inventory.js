@@ -1,12 +1,12 @@
 const {query} = require('../functions/database');
 
 module.exports.addItem = async function (itemData) {
-    const {itemName, itemPrice, totalQuantity, category} = itemData;
+    const {itemName, itemPrice, totalQuantity, category, descript} = itemData;
 
     try {
         return await query(`
-            INSERT INTO Inventory (itemName, itemPrice, totalQuantity, category)
-            VALUES (? ? ? ? )`,
+            INSERT INTO Inventory (itemName, itemPrice, totalQuantity, category, descript)
+            VALUES (?, ?, ?, ?, ?)`,
         [itemName, itemPrice, totalQuantity, category])
     } catch (error) {
         console.log(error);

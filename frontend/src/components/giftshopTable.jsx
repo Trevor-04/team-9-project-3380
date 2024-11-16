@@ -276,7 +276,6 @@ return (
             <label className="block text-sm font-medium">Price</label>
             <input
                 type="number"
-                step="0.01" // Add this for decimal prices
                 value={newPrice}
                 onChange={(e) => setPrice(Number(e.target.value))} // Convert to number
                 required
@@ -287,7 +286,6 @@ return (
             <label className="block text-sm font-medium">Total Quantity (optional)</label>
             <input
                 type="number"
-                step="1" // Whole numbers for quantity
                 value={newTotalQuantity}
                 onChange={(e) => setTotalQuantity(Number(e.target.value))} // Convert to number
                 required
@@ -297,7 +295,7 @@ return (
         <div className="mb-4">
             <label className="block text-sm font-medium">Category (optional)</label>
             <input
-                type="text" // Changed to text
+                type="number" 
                 value={newCategory}
                 onChange={(e) => setCategory(e.target.value)}
                 className="border w-full px-3 py-2 rounded"
