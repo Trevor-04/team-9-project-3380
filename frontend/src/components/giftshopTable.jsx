@@ -28,7 +28,8 @@ function GiftshopTable() {
     
     useEffect(() => {
         fetchInventoryData();
-    });
+    }, []);
+    
 
     const fetchInventoryData = async () => {
         try {
