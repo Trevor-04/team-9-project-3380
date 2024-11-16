@@ -20,7 +20,8 @@ import MemSignup from "./pages/MemberSignup";
 import TotalReport from "./adminpages/totalReport";
 import AnimalPage from "./components/AnimalPage";
 import EmployeeTable from "./components/employeeTable";
-import AnimalTable from "./components/animalTables"
+import AnimalTable from "./components/animalTable"
+import GiftsTable from "./components/giftshopTable";
 import './App.css';
 
 function App() {
@@ -58,6 +59,7 @@ function App() {
                     <Route path="/animal/:name" element={<AnimalPage />} />
                     <Route path="Admin/:employeeID/employeeTable" element={<EmployeeTable />} />  
                     <Route path="Admin/:employeeID/animalTable" element={<AnimalTable />} /> 
+                    <Route path="Admin/:employeeID/giftsTable" element={<GiftsTable />} />
                     <Route path="member/:memberId/Checkout" element={<Checkout />} />
                 </Routes>
             </Router>
