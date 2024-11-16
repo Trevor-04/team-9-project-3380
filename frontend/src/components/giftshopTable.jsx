@@ -105,7 +105,7 @@ function giftshopTable() {
      const handleEditItemOptions = async (animalID) => {
         try {
             const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/animals/${animalID}`);
-            setSelectedAnimal(response.data);
+            setSelectedItem(response.data);
             setIsEditModalOpen(true);
         } catch (error) {
             console.error("Error fetching animal details:", error);
