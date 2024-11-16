@@ -108,7 +108,7 @@ router.put('/edit', async(req, res) => {
 
 router.get('/sales-with-items', async (req, res) => {
     try {
-        const sales = await memberPlansController.listSalesWithItems();
+        const sales = await inventoryController.listSalesWithItems();
         res.status(200).json(sales);  // Send the fetched data as a JSON response
     } catch (err) {
         console.error("Error fetching sales with items:", err);
