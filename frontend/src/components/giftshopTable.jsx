@@ -24,7 +24,7 @@ function GiftshopTable() {
     const [newPrice, setPrice] = useState('');
     const [newTotalQuantity, setTotalQuantity] = useState('');
     const [newCategory, setCategory] = useState('');
-    const [newDescription, setDescription] = useState('');
+    const [newDescript, setDescript] = useState('');
     
     useEffect(() => {
         fetchInventoryData();
@@ -47,7 +47,7 @@ function GiftshopTable() {
         setPrice('');
         setTotalQuantity('');
         setCategory('');
-        setDescription('');
+        setDescript('');
     };
 
     const handleAddItem = async (e) => {
@@ -58,7 +58,7 @@ function GiftshopTable() {
             itemPrice: newPrice,
             totalQuantity: newTotalQuantity || null,
             category: newCategory || null,
-            description: newDescription || null
+            descript: newDescript || null
         };
 
         try {
@@ -120,7 +120,7 @@ function GiftshopTable() {
             itemPrice: newPrice,
             totalQuantity: newTotalQuantity || null,
             category: newCategory || null,
-            description: newDescription || null
+            descript: newDescript || null
         };
     
         try {
@@ -197,7 +197,7 @@ return (
                         <td>{item.itemPrice}</td>
                         <td>{item.totalQuantity}</td>
                         <td>{item.category}</td>
-                        <td>{item.description}</td>
+                        <td>{item.descript}</td>
                         <td>
                             <button className="bg-[#8AA686] text-white py-2 px-4 rounded mx-1"
                                 onClick={() => handleEditItemOptions(item.itemID)}>
@@ -297,8 +297,8 @@ return (
             <label className="block text-sm font-medium">Description (Optional)</label>
             <input
                 type="text"
-                value={newDescription}
-                onChange={(e) => setDescription(e.target.value)}
+                value={newDescript}
+                onChange={(e) => setDescript(e.target.value)}
                 className="border w-full px-3 py-2 rounded"
             />
         </div>
@@ -399,8 +399,8 @@ return (
                             <label className="block text-sm font-medium">Description (Optional)</label>
                             <input
                                 type="text"
-                                value={newDescription}
-                                onChange={(e) => setDescription(e.target.value)}
+                                value={newDescript}
+                                onChange={(e) => setDescript(e.target.value)}
                                 className="border w-full px-3 py-2 rounded"
                             />
                         </div>
