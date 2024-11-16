@@ -82,7 +82,7 @@ function Checkout() {
         };
 
         try {
-            const response = await axios.post(${process.env.REACT_APP_BACKEND_URL}/memberPlans/add, newPlan);
+            const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/memberPlans/add`, newPlan);
             console.log('Response from backend:', response);
             alert("Membership successful!");
 
