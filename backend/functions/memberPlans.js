@@ -14,13 +14,3 @@ module.exports.addPlan = async function(planData) {
    }
 };
 
-module.exports.subedOn = async function(subedOn) {
-    try {
-        const result = await query(`
-        SELECT * FROM member_plans WHERE subedOn = ?`, [subedOn]);
-        return result;
-    } catch (error) {
-        console.error("Error in subedOn function:", error);
-        throw error;
-    }
-};
