@@ -21,8 +21,8 @@ function GiftshopTable() {
 
      // Form fields
     const [newName, setName] = useState('');
-    const [newPrice, setPrice] = useState('');
-    const [newTotalQuantity, setTotalQuantity] = useState('');
+    const [newPrice, setPrice] = useState(0);
+    const [newTotalQuantity, setTotalQuantity] = useState(0);
     const [newCategory, setCategory] = useState('');
     const [newDescript, setDescript] = useState('');
     
@@ -268,8 +268,9 @@ return (
             <label className="block text-sm font-medium">Price</label>
             <input
                 type="number"
+                step="0.01" // Add this for decimal prices
                 value={newPrice}
-                onChange={(e) => setPrice(e.target.value)}
+                onChange={(e) => setPrice(Number(e.target.value))} // Convert to number
                 required
                 className="border w-full px-3 py-2 rounded"
             />
@@ -278,8 +279,9 @@ return (
             <label className="block text-sm font-medium">Total Quantity (optional)</label>
             <input
                 type="number"
+                step="1" // Whole numbers for quantity
                 value={newTotalQuantity}
-                onChange={(e) => setTotalQuantity(e.target.value)}
+                onChange={(e) => setTotalQuantity(Number(e.target.value))} // Convert to number
                 required
                 className="border w-full px-3 py-2 rounded"
             />
@@ -287,7 +289,7 @@ return (
         <div className="mb-4">
             <label className="block text-sm font-medium">Category (optional)</label>
             <input
-                type="number"
+                type="text" // Changed to text
                 value={newCategory}
                 onChange={(e) => setCategory(e.target.value)}
                 className="border w-full px-3 py-2 rounded"
