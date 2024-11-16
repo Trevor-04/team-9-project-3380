@@ -13,26 +13,26 @@ export default function MemberPage() {
   const dropdownRef = useRef();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchMemberData = async () => {
-      const token = localStorage.getItem('token');
-      console.log("Token from localStorage:", token); // Log the token
-      if (!token) return navigate('/login'); // Redirect to login if no token
+  // useEffect(() => {
+  //   const fetchMemberData = async () => {
+  //     const token = localStorage.getItem('token');
+  //     console.log("Token from localStorage:", token); // Log the token
+  //     if (!token) return navigate('/login'); // Redirect to login if no token
 
-      try {
-        const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/members/profile`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        setMemberData(response.data); // Store the member data
-      } catch (error) {
-        console.error("Error fetching member data:", error);
-      }
-    };
+  //     try {
+  //       const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/members/profile`, {
+  //         headers: {
+  //           Authorization: `Bearer ${token}`,
+  //         },
+  //       });
+  //       setMemberData(response.data); // Store the member data
+  //     } catch (error) {
+  //       console.error("Error fetching member data:", error);
+  //     }
+  //   };
 
-    fetchMemberData();
-  }, [navigate, memberId]);
+  //   fetchMemberData();
+  // }, [navigate, memberId]);
 
   const toggleDropdown = () => {
     setIsDropdownOpen((prev) => !prev);
@@ -53,6 +53,13 @@ export default function MemberPage() {
       navigate(`/member/${memberId}/tickets`);
     }
   };
+
+  const goToPlans = () => {
+    if(memberId){
+      navigate(`/member/${memberId}/Checkout`);
+    }
+  };
+
 
   const goToAnimals = () => {
     if (memberId) {
@@ -109,7 +116,7 @@ export default function MemberPage() {
         <img className="h-[70px]" src="/Coog_Zoo.png" alt="logo" />
       </Link>
         <div className="flex-grow text-center">
-          <h1 className="font-bold">Member Dashboard</h1>
+          <h1 className="font-bold text-2xl">Member Dashboard</h1>
         </div>
 
         <button
@@ -136,6 +143,14 @@ export default function MemberPage() {
                   className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
                 >
                   Logout
+                </button>
+              </li>
+              <li>
+                <button 
+                  onClick={goToPlans}
+                  className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
+                >
+                  Member Plans
                 </button>
               </li>
             </ul>
@@ -175,17 +190,17 @@ export default function MemberPage() {
         </div>
 
         <div className="membership-status text-[#165e229e] w-full bg-white p-6 rounded-lg shadow-sm flex items-center justify-center text-center cursor-pointer" onClick={goToAnimals}>
-          <h3 className="font-bold">View our animals</h3>
+          <h3 className="font-bold text-xl">View our animals</h3>
         </div>
 
       {/* Reward Points */}
 <div 
-  className="reward-points text-[#165e229e] w-full bg-white p-6 rounded-lg shadow-sm flex items-center justify-center text-center cursor-pointer"
+  className="reward-points flex-col text-[#165e229e] w-full bg-white p-6 rounded-lg shadow-sm flex items-center justify-center text-center cursor-pointer"
   onClick={toggleRewardPoints}
 >
   <h3 className="font-bold text-xl mb-2">Reward Points</h3>
   {showRewardPoints && (
-    <div className="flex flex-col space-y-2 mt-4">
+    <div className="flex flex-col space-y-2">
       <p><strong>Current Points:</strong> 150</p>
       <p><strong>Status:</strong> Active</p>
     </div>
@@ -194,13 +209,13 @@ export default function MemberPage() {
 
 {/* Recent Purchases */}
 <div 
-  className="purchases text-[#165e229e] w-full bg-white p-6 rounded-lg shadow-sm flex items-center justify-center text-center cursor-pointer"
+  className="purchases flex-col text-[#165e229e] w-full bg-white p-6 rounded-lg shadow-sm flex items-center justify-center text-center cursor-pointer"
   onClick={toggleRecentPurchases}
 >
   <h3 className="font-bold text-xl mb-2">Recent Purchases</h3>
   {showRecentPurchases && (
     <div className="flex flex-col space-y-2 mt-4">
-      <ul className="list-disc list-inside">
+      <ul className="list-disc pl-4 space-y-2"> {/* Adjusted padding-left and space-y */}
         <li>Item 1 - $10.00 (January 1, 2024)</li>
         <li>Item 2 - $5.00 (December 25, 2023)</li>
         <li>Item 3 - $20.00 (November 15, 2023)</li>
@@ -217,7 +232,7 @@ export default function MemberPage() {
 
 {/* Notifications */}
 <div 
-  className="notifications text-[#165e229e] w-full bg-white p-6 rounded-lg shadow-sm flex items-center justify-center text-center cursor-pointer"
+  className="notifications flex-col text-[#165e229e] w-full bg-white p-6 rounded-lg shadow-sm flex items-center justify-center text-center cursor-pointer"
   onClick={toggleNotifications}
 >
   <h3 className="font-bold text-xl mb-2">Notifications</h3>
@@ -226,7 +241,7 @@ export default function MemberPage() {
       {memberData?.expiry_notification ? (
         <p>{memberData.expiry_notification}</p>
       ) : (
-        <ul className="list-disc list-inside">
+        <ul className="list-disc pl-4 list-inside space-y-2"> {/* Adjusted padding-left */}
           <li>Reminder: Membership renewal on {memberData?.subscribed_on}</li>
           <li>New events available for members!</li>
           <li>Check out our new exhibits this month!</li>
@@ -235,6 +250,7 @@ export default function MemberPage() {
     </div>
   )}
 </div>
+
 
 
       </div>

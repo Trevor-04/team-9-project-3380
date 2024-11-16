@@ -58,7 +58,7 @@ function App() {
                     <Route path="/animal/:name" element={<AnimalPage />} />
                     <Route path="Admin/:employeeID/employeeTable" element={<EmployeeTable />} />  
                     <Route path="Admin/:employeeID/animalTable" element={<AnimalTable />} /> 
-
+                    <Route path="member/:memberId/Checkout" element={<Checkout />} />
                 </Routes>
             </Router>
         </div>

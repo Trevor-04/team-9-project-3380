@@ -6,38 +6,39 @@ import { jwtDecode } from 'jwt-decode';
 function Checkout() {
     const location = useLocation();
     const [role, setRole] = useState(null);
-    const [isMember, setIsMember] = useState(false); // Initialize as false initially
+    const [isMember, setIsMember] = useState(true); // Initialize as false initially
     const membershipType = location.state?.membershipType || "No membership selected";
     const amount = location.state?.amount || "No amount selected";
 
-    useEffect(() => {
-        const token = localStorage.getItem('token');
-        console.log("Retrieved Token:", token); // Log the token itself
+    // useEffect(() => {
+    //     const token = localStorage.getItem('token');
+    //     console.log("Retrieved Token:", token); // Log the token itself
 
-        if (token) {
-            try {
-                const decodedToken = jwtDecode(token);
-                console.log("Decoded Token:", decodedToken); // Log the entire decoded token
+    //     if (token) {
+    //         try {
+    //             const decodedToken = jwtDecode(token);
+    //             console.log("Decoded Token:", decodedToken); // Log the entire decoded token
 
-                if (decodedToken && decodedToken.role) {
-                    setRole(decodedToken.role); // Set role from the token
-                    if(setRole === "member") {
-                        setIsMember(true); // Set isMember to true if role is 'member'
-                    }
-                } else {
-                    console.error("Role not found in decoded token");
-                    setIsMember(false); // Set false if role is not present
-                }
-            } catch (error) {
-                console.error("Failed to decode token:", error);
-                setIsMember(false); // Set false if there's a decoding error
-            }
-        } else {
-            setIsMember(false); // Set false if no token is found
-        }
-    }, []); // Empty dependency array ensures this effect runs once when component mounts
-
-    console.log("Role:", role); // Moved inside useEffect after state update
+    //             if (decodedToken && decodedToken.role) {
+    //                 setRole(decodedToken.role); // Set role from the token
+    //                 if(setRole === "member") {
+    //                     setIsMember(true); // Set isMember to true if role is 'member'
+    //                 }
+    //             } else {
+    //                 console.error("Role not found in decoded token");
+    //                 setIsMember(false); // Set false if role is not present
+    //             }
+    //         } catch (error) {
+    //             console.error("Failed to decode token:", error);
+    //             setIsMember(false); // Set false if there's a decoding error
+    //         }
+    //     } else {
+    //         setIsMember(false); // Set false if no token is found
+    //     }
+    // }, []); // Empty dependency array ensures this effect runs once when component mounts
+    // console.log("Role:", role); // Moved inside useEffect after state update
+    
+    //setIsMember(true); // Set isMember to true for testing purposes
 
     const [formData, setFormData] = useState({
         membershipType: membershipType,
