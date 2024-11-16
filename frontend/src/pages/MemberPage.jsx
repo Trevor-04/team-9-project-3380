@@ -13,26 +13,26 @@ export default function MemberPage() {
   const dropdownRef = useRef();
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   const fetchMemberData = async () => {
-  //     const token = localStorage.getItem('token');
-  //     console.log("Token from localStorage:", token); // Log the token
-  //     if (!token) return navigate('/login'); // Redirect to login if no token
+  useEffect(() => {
+    const fetchMemberData = async () => {
+      const token = localStorage.getItem('token');
+      console.log("Token from localStorage:", token); // Log the token
+      if (!token) return navigate('/login'); // Redirect to login if no token
 
-  //     try {
-  //       const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/members/profile`, {
-  //         headers: {
-  //           Authorization: `Bearer ${token}`,
-  //         },
-  //       });
-  //       setMemberData(response.data); // Store the member data
-  //     } catch (error) {
-  //       console.error("Error fetching member data:", error);
-  //     }
-  //   };
+      try {
+        const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/members/profile`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setMemberData(response.data); // Store the member data
+      } catch (error) {
+        console.error("Error fetching member data:", error);
+      }
+    };
 
-  //   fetchMemberData();
-  // }, [navigate, memberId]);
+    fetchMemberData();
+  }, [navigate, memberId]);
 
   const toggleDropdown = () => {
     setIsDropdownOpen((prev) => !prev);
