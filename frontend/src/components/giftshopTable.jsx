@@ -45,7 +45,7 @@ function GiftshopTable() {
     function clearForm() {
         setName('');
         setPrice('');
-        setQuantity('');
+        setTotalQuantity('');
         setCategory('');
         setDescription('');
     };
