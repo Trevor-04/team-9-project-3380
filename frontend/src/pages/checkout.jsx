@@ -13,15 +13,15 @@ function Checkout() {
     useEffect(() => {
         const token = localStorage.getItem('token');
         console.log("Retrieved Token:", token); // Log the token itself
-
+    
         if (token) {
             try {
                 const decodedToken = jwtDecode(token);
                 console.log("Decoded Token:", decodedToken); // Log the entire decoded token
-
+    
                 if (decodedToken && decodedToken.role) {
                     setRole(decodedToken.role); // Set role from the token
-                    if(setRole === "member") {
+                    if (decodedToken.role === "member") { // Check if the decoded role is 'member'
                         setIsMember(true); // Set isMember to true if role is 'member'
                     }
                 } else {
@@ -36,9 +36,7 @@ function Checkout() {
             setIsMember(false); // Set false if no token is found
         }
     }, []); // Empty dependency array ensures this effect runs once when component mounts
-    console.log("Role:", role); // Moved inside useEffect after state update
     
-    //setIsMember(true); // Set isMember to true for testing purposes
 
     const [formData, setFormData] = useState({
         membershipType: membershipType,
