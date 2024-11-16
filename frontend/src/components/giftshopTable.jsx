@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../App.css";
 import "../index.css";
-import { useNavigate } from "react-router-dom";
-import { set } from "mongoose";
+// import { useNavigate } from "react-router-dom";
+// import { set } from "mongoose";
 
 const itemsPerPage = 10;
 
