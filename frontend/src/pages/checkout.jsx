@@ -6,7 +6,7 @@ import { jwtDecode } from 'jwt-decode';
 function Checkout() {
     const location = useLocation();
     const [role, setRole] = useState(null);
-    const [isMember, setIsMember] = useState(true); // Initialize as false initially
+    const [isMember, setIsMember] = useState(false); // Initialize as false initially
     const membershipType = location.state?.membershipType || "No membership selected";
     const amount = location.state?.amount || "No amount selected";
 
