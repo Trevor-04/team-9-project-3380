@@ -23,7 +23,7 @@ import EmployeeTable from "./components/employeeTable";
 import AnimalTable from "./components/animalTable"
 import GiftsTable from "./components/giftshopTable";
 import FeedingReport from './components/feedingReport';
-import DonationReport from './components/donationReport';
+import DonoationReport from './adminpages/donationReport'
 import './App.css';
 
 function App() {
@@ -64,7 +64,7 @@ function App() {
                     <Route path="Admin/:employeeID/giftshopTable" element={<GiftsTable />} />
                     <Route path="member/:memberId/Checkout" element={<Checkout />} />
                     <Route path="Admin/:employeeID/feedingSchedule" element={<FeedingReport />} />
-                    <Route path="Admin/:employeeID/donationReport" element={<DonationReport />} />
+                    <Route path="Admin/:employeeID/donationReport" element={<DonoationReport />} />
                 </Routes>
             </Router>
         </div>

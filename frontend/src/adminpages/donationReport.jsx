@@ -1,6 +1,6 @@
 import React from 'react'
 
-function DonationReport() {
+function DonationSponsorReport() {
   return (
     <div>
       
@@ -8,4 +8,4 @@ function DonationReport() {
   )
 }
 
-export default DonationReport;
+export default DonationSponsorReport;
