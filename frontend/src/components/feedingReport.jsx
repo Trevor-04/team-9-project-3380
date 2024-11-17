@@ -5,7 +5,7 @@ import { Bar, Line } from "react-chartjs-2";
 import axios from "axios";
 import moment from "moment";
 
-const { url } = require('../config.json')[process.env.NODE_ENV];
+//const { url } = require('../config.json')[process.env.NODE_ENV];
 
 function AnimalFeedingReport() {
   const [feedingData, setFeedingData] = useState([]);
