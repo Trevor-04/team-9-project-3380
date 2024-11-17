@@ -29,8 +29,29 @@ Explain how users can add new data, modify existing data, or delete data in the 
 - [Data Entry Form](#link-to-data-entry-form-section)
 
 ## **Triggers**
-Describe the database triggers used in the project. Include the SQL code or logic that implements the triggers:
-- [MySQL Trigger Documentation](https://dev.mysql.com/doc/refman/8.0/en/triggers.html)
+
+### Event Cancellation Trigger
+This trigger is designed to send an Email notification when an event is deleted
+```sql
+after_event_delete
+CREATE TRIGGER after_event_delete
+AFTER DELETE ON Events
+FOR EACH ROW
+BEGIN
+    DECLARE eventSubject VARCHAR(255);
+    DECLARE eventMessage TEXT;
+
+    SET eventSubject = CONCAT('Notification: Event "', OLD.eventName, '" has been cancelled');
+    SET eventMessage = CONCAT('We regret to inform you that the event "', OLD.eventName, '" scheduled on ', OLD.eventTime, ' has been cancelled.');
+
+    -- Notify Administration Employees
+    INSERT INTO Email_notifications (recipientEmail, subject, message)
+    SELECT email, eventSubject, eventMessage
+    FROM Employees
+    WHERE departmentID = (SELECT departmentID FROM Departments WHERE DepartmentName = 'Administration' LIMIT 1);
+END //  
+```
+
 
 ## **Queries**
 Provide examples of the queries used in the project. You can link to the files or describe how they work:
