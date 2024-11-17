@@ -44,14 +44,16 @@ export default function Navbar() {
             <img className="h-[70px]" src="/Coog_Zoo.png" alt="logo" />
           </button>
         ) : (
+          <>
           <Link to="/" className="flex items-center">
             <img className="h-[70px]" src="/Coog_Zoo.png" alt="logo" />
           </Link>
-        <Link to="/AdminLogin"> 
+          <Link to="/AdminLogin"> 
             <button className="text-[#165e229e] ml-4 font-bold hover:text-green-800 ">
               Admin Login
             </button>
-         </Link>
+           </Link>
+          </>
         )}
        </div>
 
