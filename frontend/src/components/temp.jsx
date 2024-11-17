@@ -1,7 +1,5 @@
 import React from "react";
-import { Link, useNavigate} from "react-router-dom";
-import { useLocation } from "react-router-dom";
-import { useEffect } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 export default function Navbar() {
   const location = useLocation();
@@ -33,10 +31,9 @@ export default function Navbar() {
   }
 
   return (
-
     <header className="bg-[#faf0e6] h-20 flex items-center justify-between px-4">
-       {/* Logo Section */}
-       {employeeID ? (
+      {/* Logo Section */}
+      {employeeID ? (
           <button
             onClick={() =>
               navigate(`/Admin/${employeeID}`)
@@ -50,25 +47,8 @@ export default function Navbar() {
         <img className="h-[70px]" src="/Coog_Zoo.png" alt="logo" />
       </Link>
       )}
-      
-     {/* Buttons Section */}
-     <div className="flex items-center">
-     {employeeID ? (
-          <button
-            onClick={() =>
-              navigate(`/Admin/${employeeID}/MemSignup`, { state: { editMode: true } })
-            }
-            className="text-[#165e229e] font-bold hover:text-green-900 ml-4 p-1"
-          >
-            Members Plans
-          </button>
-        ) : (
-          <Link to="/Events">
-            <button className="text-[#165e229e] font-bold hover:text-green-900 ml-4 p-1">
-              Member Plans
-            </button>
-          </Link>
-        )}
+      {/* Buttons Section */}
+      <div className="flex items-center">
       {employeeID ? (
           <button
             onClick={() =>
@@ -153,5 +133,5 @@ export default function Navbar() {
         )}
       </div>
     </header>
-   );
+  );
 }

@@ -36,8 +36,10 @@ function App() {
                     <Route path="/login" element={<Login />} />
                     <Route path="/AdminLogin" element={<AdminLogin />} />
                     <Route path="/animals" element={<Animals />} />
+                    <Route path="/Admin/:employeeID/animals" element={<Animals />} />
                     <Route path="/member/:memberId/animals" element={<Animals />} />
                     <Route path="/giftshop" element={<GiftShop />} />
+                    <Route path="/Admin/:employeeID/giftshop" element={<GiftShop />} />
                     <Route path="/product/:name" element={<ProductPage />} />
                     <Route path="/events" element={<Events />} />
                     <Route path="/member/:memberId/events" element={<Events />} />
@@ -45,6 +47,7 @@ function App() {
                     <Route path="/signup" element={<Signup/>} />
                     <Route path="/tickets" element={<Tickets />} />
                     <Route path="member/:memberId/tickets" element={<Tickets />} />
+                    <Route path="Admin/:employeeID/tickets" element={<Tickets />} />
                     <Route path="/payment" element={<Payment />} /> 
                     <Route path="/member/:memberId/payment" element={<Payment />} />
                    {/* <Route path="/Donate" element={<Donate />} /> */}
@@ -56,6 +59,7 @@ function App() {
                     {/* <Route path="/settings" element={<SettingsPage />} />  */}
                     <Route path="/checkout" element={<Checkout />} />
                     <Route path="/MemSignup" element={<MemSignup />} />
+                    <Route path="/Admin/:employeeID/MemSignup" element={<MemSignup />} />
                     <Route path="/member/:memberId/settings" element={<SettingsPage />} />
                     <Route path="Admin/:employeeID/totalReport" element={<TotalReport />} />
                     <Route path="/animal/:name" element={<AnimalPage />} />
