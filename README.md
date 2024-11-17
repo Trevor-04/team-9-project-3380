@@ -30,6 +30,27 @@ Explain how users can add new data, modify existing data, or delete data in the 
 
 ## **Triggers**
 
+### Event Creation Trigger
+This trigger is designed to send an Email notification when an event is created
+```sql
+CREATE TRIGGER after_event_insert
+AFTER INSERT ON Events
+FOR EACH ROW
+BEGIN
+    DECLARE eventSubject VARCHAR(255);
+    DECLARE eventMessage TEXT;
+
+    SET eventSubject = CONCAT('Notification: New Event "', NEW.eventName, '" has been scheduled');
+    SET eventMessage = CONCAT('A new event "', NEW.eventName, '" has been scheduled for ', NEW.eventTime, '. Don\'t miss out!');
+
+    -- Notify Marketing Employees
+    INSERT INTO Email_notifications (recipientEmail, subject, message)
+    SELECT email, eventSubject, eventMessage
+    FROM Employees
+    WHERE departmentID = (SELECT departmentID FROM Departments WHERE DepartmentName = 'Marketing' LIMIT 1);
+END //
+```
+
 ### Event Cancellation Trigger
 This trigger is designed to send an Email notification when an event is deleted
 ```sql
@@ -52,6 +73,33 @@ BEGIN
 END //  
 ```
 
+### Membership Expiring Trigger
+This trigger is designed to notify a member that their membership is expiring within 5 days
+```sql
+CREATE TRIGGER check_membership_expiry 
+BEFORE UPDATE ON Members
+FOR EACH ROW
+BEGIN
+    DECLARE end_date DATE;
+
+    -- Calculate membership end date based on memberTerm
+    SET end_date = CASE NEW.memberTerm
+        WHEN 0 THEN DATE_ADD(NEW.subscribed_on, INTERVAL 1 MONTH)
+        WHEN 1 THEN DATE_ADD(NEW.subscribed_on, INTERVAL 6 MONTH)
+        WHEN 2 THEN DATE_ADD(NEW.subscribed_on, INTERVAL 12 MONTH)
+        WHEN 3 THEN DATE_ADD(NEW.subscribed_on, INTERVAL 24 MONTH)
+        ELSE NULL
+    END;
+
+    -- Check if the membership will expire within the next 5 days
+    IF end_date IS NOT NULL AND end_date <= DATE_ADD(CURDATE(), INTERVAL 5 DAY) THEN
+        -- Set expiry notification message
+        SET NEW.expiry_notification = 'Membership ending within 5 days';
+    ELSE
+        SET NEW.expiry_notification = NULL; -- Clear notification if not applicable
+    END IF;
+END //
+```
 
 ## **Queries**
 Provide examples of the queries used in the project. You can link to the files or describe how they work:
