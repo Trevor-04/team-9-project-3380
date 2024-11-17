@@ -23,7 +23,7 @@ function DonationSponsorReport() {
 
   const fetchDonationData = async () => {
     try {
-      const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/reports/donationSponsor`, {
+      const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/reports/donationStats`, {
         params: { startDate: moment(startDate).format("YYYY-MM-DD"), endDate: moment(endDate).format("YYYY-MM-DD") }
       });
       if (response.status !== 200) throw new Error("Failed to fetch donation data");
