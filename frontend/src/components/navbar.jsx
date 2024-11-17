@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useNavigate} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 
@@ -33,24 +33,32 @@ export default function Navbar() {
   }
 
   return (
-
     <header className="bg-[#faf0e6] h-20 flex items-center justify-between px-4">
        {/* Logo Section */}
-       {employeeID ? (
+       <div className="flex items-center">
+        {employeeID ? (
           <button
-            onClick={() =>
-              navigate(`/Admin/${employeeID}`)
-            }
+            onClick={() => navigate(`/Admin/${employeeID}`)}
             className="flex items-center"
           >
             <img className="h-[70px]" src="/Coog_Zoo.png" alt="logo" />
           </button>
         ) : (
-      <Link to="/" className="flex items-center">
-        <img className="h-[70px]" src="/Coog_Zoo.png" alt="logo" />
-      </Link>
-      )}
-      
+          <Link to="/" className="flex items-center">
+            <img className="h-[70px]" src="/Coog_Zoo.png" alt="logo" />
+          </Link>
+        )}
+
+        {/* Admin button */}
+        {employeeID && (
+          <Link to={`/Admin/${employeeID}`}>
+            <button className="text-[#165e229e] ml-4 font-bold hover:text-green-800">
+              Admin Page
+            </button>
+          </Link>
+        )}
+      </div>
+
      {/* Buttons Section */}
      <div className="flex items-center">
      {employeeID ? (
@@ -153,5 +161,5 @@ export default function Navbar() {
         )}
       </div>
     </header>
-   );
+  );
 }
