@@ -22,6 +22,7 @@ import AnimalPage from "./components/AnimalPage";
 import EmployeeTable from "./components/employeeTable";
 import AnimalTable from "./components/animalTable"
 import GiftsTable from "./components/giftshopTable";
+import FeedingReport from './components/feedingReport';
 import './App.css';
 
 function App() {
@@ -61,6 +62,7 @@ function App() {
                     <Route path="Admin/:employeeID/animalTable" element={<AnimalTable />} /> 
                     <Route path="Admin/:employeeID/giftshopTable" element={<GiftsTable />} />
                     <Route path="member/:memberId/Checkout" element={<Checkout />} />
+                    <Route path="Admin/:employeeID/feedingSchedule" element={<FeedingReport />} />
                 </Routes>
             </Router>
         </div>

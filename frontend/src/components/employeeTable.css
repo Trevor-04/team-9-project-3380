@@ -1,4 +1,4 @@
-:root {
+/* :root {
     --main-bg-color: #EFEDE5;
     --header-bg-color: #8AA686;
     --text-color: #313639;
@@ -16,12 +16,12 @@
     padding: 20px;
     font-family: 'Segoe UI', 'Tahoma', 'Geneva', 'Verdana', sans-serif;
   }
-  /* h1 {
+  h1 {
     color: var(--text-color);
     text-align: left; 
     font-size: 2rem;
     margin-bottom: 20px;
-  } */
+  } 
   .employee-table-container {
     background-color: var(--modal-bg-color);
     border-radius: 10px;
@@ -153,4 +153,4 @@
         width: 100%;
         margin-bottom: 10px;
     }
-  }
+  } */

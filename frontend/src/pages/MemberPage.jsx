@@ -45,6 +45,7 @@ export default function MemberPage() {
   };
 
   const goToLogout = () =>{
+    localStorage.removeItem("token"); // Remove token from local storage
     navigate(`/`);
   }
 

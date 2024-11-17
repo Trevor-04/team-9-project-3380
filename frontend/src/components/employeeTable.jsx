@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import axios from 'axios';
 import "../App.css";
 import "../index.css";
-import "./employeeTable.css";
+// import "./employeeTable.css";
 
-//const { url } = require('../config.json')[process.env.NODE_ENV];
+const { url } = require('../config.json')[process.env.NODE_ENV];
 let itemsPerPage = 10;
 
 function EmployeeTable() {
@@ -79,7 +79,7 @@ const handleAddEmployee = async (e) => {
     };
 
     try {
-        await axios.post(`${process.env.REACT_APP_BACKEND_URL}/employees/add`, newEmployee, {
+        await axios.post(`${url}/employees/add`, newEmployee, {
           // headers: { Authorization: `Bearer ${token}` }
         });;
         clearForm();
@@ -110,7 +110,7 @@ const handleEditEmployee = async (e) => {
   };
 
   try {
-      await axios.put(`${process.env.REACT_APP_BACKEND_URL}/employees/edit`, updatedEmployee, {
+      await axios.put(`${url}/employees/edit`, updatedEmployee, {
         // headers: { Authorization: `Bearer ${token}` }
       });;
       clearForm();
@@ -134,7 +134,7 @@ const handleEditEmployee = async (e) => {
 
   const fetchEmployeeData = async () => {
     try {
-        const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/employees/`);
+        const response = await axios.get(`${url}/employees/`);
         if (response.status !== 200) throw new Error("Failed to fetch employee data");
         setEmployeeData(response.data);
       } catch (error) {
@@ -145,7 +145,7 @@ const handleEditEmployee = async (e) => {
   }
 
 const handleEditEmployeeOptions = async (employeeID) => {
-  const emp = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/employees/${employeeID}`);
+  const emp = await axios.get(`${url}/employees/${employeeID}`);
   if (!emp.data) return alert("Error finding that employee");
   setSelectedEmployee(emp.data);
   setIsEditModalOpen(true);
@@ -164,7 +164,7 @@ const closeEditEmployeeOptions = async () => {
   async function deleteEmployee(employeeID) {
     try {
       if (!window.confirm("Are you sure you want to delete this employee?")) return;
-        await axios.delete(`${process.env.REACT_APP_BACKEND_URL}/employees/${employeeID}`);
+        await axios.delete(`${url}/employees/${employeeID}`);
 
         alert(`Successfully deleted employee ${employeeID}`);
         fetchEmployeeData();
@@ -177,7 +177,7 @@ const closeEditEmployeeOptions = async () => {
   
   async function updateEmployee(employeeID) {
     try {
-        await axios.put(`${process.env.REACT_APP_BACKEND_URL}/employees/${employeeID}`, {
+        await axios.put(`${url}/employees/${employeeID}`, {
           fName: newFName,
           mName: newMName || null,
           lName: newLName,
@@ -247,22 +247,22 @@ const handlePageChange = (page) => setCurrentPage(page);
               </button>
             </div>
         {/* Employee Data Table */}
-        <table className="divide-y divide-gray-300 mb-6 w-full text-center bg-white shadow-md rounded-lg overflow-hidden">
+        <table className="divide-y divide-gray-300 w-full text-center bg-white shadow-md rounded-lg overflow-hidden">
           <thead className="bg-gray-50">
-            <tr>
-              <th className="px-4 py-2 font-medium text-xl underline border" onClick={() => handleHeaderClick("fName")}>Employee Name</th>
-              <th className="px-4 py-2 font-medium text-xl underline border" onClick={() => handleHeaderClick("email")}>Email</th >
-              <th className="px-4 py-2 font-medium text-xl underline border" onClick={() => handleHeaderClick("phone")}>Phone Number</th>
-              <th className="px-4 py-2 font-medium text-xl underline border" onClick={() => handleHeaderClick("salary")}>Salary</th>
-              <th className="px-4 py-2 font-medium text-xl underline border" onClick={() => handleHeaderClick("department")}>Department</th>
-              <th className="px-4 py-2 font-medium text-xl underline border" onClick={() => handleHeaderClick("supervisorID")}>Supervisor</th>
-              <th className="px-4 py-2 font-medium text-xl underline border" onClick={() => handleHeaderClick("start_on")}>Start Date</th>
-              <th className="px-4 py-2 font-medium text-xl underline border">Manage Employee</th>
+           <tr>
+              <th onClick={() => handleHeaderClick("fName")}>Employee Name</th>
+              <th onClick={() => handleHeaderClick("email")}>Email</th>
+              <th onClick={() => handleHeaderClick("phone")}>Phone Number</th>
+              <th onClick={() => handleHeaderClick("salary")}>Salary</th>
+              <th onClick={() => handleHeaderClick("department")}>Department</th>
+              <th onClick={() => handleHeaderClick("supervisorID")}>Supervisor</th>
+              <th onClick={() => handleHeaderClick("start_on")}>Start Date</th>
+              <th>Manage Employee</th>
             </tr>
           </thead>
           <tbody>
-            {filteredData.map((employee, index) => (
-              <tr key={index} className="text-gray-700">
+            {paginatedData.map((employee, index) => (
+              <tr key={index} className="text-gray-700 hover:bg-gray-100">
                 <td className="px-4 py-2 border">{formatName(employee)}</td>
                 <td className="px-4 py-2 border">{employee.email}</td>
                 <td className="px-4 py-2 border">{employee.phone}</td>
@@ -272,11 +272,11 @@ const handlePageChange = (page) => setCurrentPage(page);
                 <td className="px-4 py-2 border">{new Date(employee.start_on).toISOString().split("T")[0]}</td>
                 <td className="px-4 py-2 border">
                 <button 
-                  className="bg-[#8AA686] text-white py-2 px-4 rounded"
+                  className="bg-[#8AA686] text-white py-2 px-4 rounded hover:bg-[#6C8A5E]"
                   onClick={() => handleEditEmployeeOptions(employee.employeeID)}>
                     Edit</button>
                   <button 
-                  className="bg-[#8AA686] text-white py-2 px-4 rounded"
+                  className="bg-[#8AA686] text-white py-2 px-4 rounded hover:bg-[#6C8A5E]"
                   onClick={() => deleteEmployee(employee.employeeID)}>
                     Delete</button>
                 </td>
