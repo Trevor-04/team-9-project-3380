@@ -414,6 +414,12 @@ const getTopProductsChart = async (startDate, endDate, limit) => {
           Gift Shop
         </button>
 
+        <button
+          onClick={() => navigate(`/Admin/${employeeID}/feedingSchedule`)}
+          className="ml-8 bg-[#165e229e] text-white font-bold w-[120px] h-[35px] rounded-2xl"
+        >
+          Feeding Report
+        </button>
       </header>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 p-4 mt-[20px]">
