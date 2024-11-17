@@ -39,7 +39,7 @@ function AnimalFeedingReport() {
 
   const fetchFeedingData = async () => {
     try {
-      const response = await axios.get(`${url}/feedingSchedule`, {
+      const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/feedingSchedule`, {
         params: { startDate, endDate }
       });
       if (response.status !== 200) throw new Error("Failed to fetch feeding data");
