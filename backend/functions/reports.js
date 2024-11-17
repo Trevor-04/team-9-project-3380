@@ -465,3 +465,67 @@ module.exports.feedingReport = async function (feedingData) {
         throw err;
     }
 }
+
+module.exports.donationSponsorReport = async function (donationData) {
+    const { startDate, endDate } = donationData;
+    
+    try {
+        // Base query for donations and sponsors
+        let baseQuery = `
+            SELECT DISTINCT
+                d.id AS Donation_ID,
+                CONCAT(d.firstName, ' ', d.lastName) AS Donor_Name,
+                d.amount AS Donation_Amount,
+                d.city AS Donor_City,
+                d.state AS Donor_State,
+                d.email AS Donor_Email,
+                d.phone AS Donor_Phone,
+                d.createdAt AS Donation_Date,
+                s.sponsorName AS Sponsor_Name,
+                s.donationType AS Donation_Type,
+                s.donated_on AS Donation_Date_By_Sponsor
+            FROM donations d
+            LEFT JOIN Sponsors s ON d.id = s.sponsorID
+        `;
+        
+        // Apply date filter if startDate and endDate are provided
+        let whereClause = startDate && endDate 
+            ? `WHERE d.createdAt BETWEEN ? AND ?`
+            : ``;
+
+        // Grouping and ordering for report clarity
+        let groupByAndOrder = `
+        GROUP BY 
+        d.id, d.firstName, d.lastName, d.amount, d.city, d.state, d.email, 
+        d.phone, d.createdAt, s.sponsorName, s.donationType, s.donated_on
+        ORDER BY d.createdAt DESC;
+        `;
+
+        // Combine base query, where clause, and grouping
+        let fullQuery = `${baseQuery} ${whereClause} ${groupByAndOrder}`;
+
+        // Execute query with or without date filters
+        const results = startDate && endDate 
+            ? await query(fullQuery, [startDate, endDate]) 
+            : await query(fullQuery);
+
+        // Format the results for the report
+        return results.map(row => ({
+            donationID: row.Donation_ID,
+            donorName: row.Donor_Name,
+            donationAmount: row.Donation_Amount,
+            donorCity: row.Donor_City,
+            donorState: row.Donor_State,
+            donorEmail: row.Donor_Email,
+            donorPhone: row.Donor_Phone,
+            donationDate: row.Donation_Date,
+            sponsorName: row.Sponsor_Name,
+            donationType: row.Donation_Type,
+            donationDateBySponsor: row.Donation_Date_By_Sponsor
+        }));
+
+    } catch (err) {
+        console.error("Error generating donation and sponsor report:", err);
+        throw err;
+    }
+}

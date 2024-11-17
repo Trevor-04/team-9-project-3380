@@ -153,3 +153,13 @@ router.get("/feedingSchedule/", async (req, res) => {
         res.status(500).json({error: "Failed to fetch feeding schedule"});
     }
 })
+
+router.get("/donationStats", async (req, res) => {
+    try {
+        const donationStats = await reportsController.donationSponsorReport(req.query);
+        res.status(200).json(donationStats);
+    } catch (err) {
+        res.status(500).json({error: "Failed to fetch donation stats"});
+    }
+}
+)
