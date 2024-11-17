@@ -4,41 +4,27 @@ import "jspdf-autotable";
 import { Bar, Line } from "react-chartjs-2";
 import axios from "axios";
 import moment from "moment";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 function DonationSponsorReport() {
   const [donationData, setDonationData] = useState([]);
-  const [startDate, setStartDate] = useState(undefined);
-  const [endDate, setEndDate] = useState(undefined);
-  const [dateFilter, setDateFilter] = useState("all");
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
   const [viewMode, setViewMode] = useState("table");
   const [chartType, setChartType] = useState("Bar");
   const ChartComponent = chartType === "Bar" ? Bar : Line;
 
   useEffect(() => {
-    switch (dateFilter) {
-      case "lastWeek":
-        setStartDate(moment().subtract(1, "weeks").startOf("week").format("YYYY-MM-DD"));
-        setEndDate(moment().subtract(1, "weeks").endOf("week").format("YYYY-MM-DD"));
-        break;
-      case "lastMonth":
-        setStartDate(moment().subtract(1, "months").startOf("month").format("YYYY-MM-DD"));
-        setEndDate(moment().subtract(1, "months").endOf("month").format("YYYY-MM-DD"));
-        break;
-      case "lastYear":
-        setStartDate(moment().subtract(1, "years").startOf("year").format("YYYY-MM-DD"));
-        setEndDate(moment().subtract(1, "years").endOf("year").format("YYYY-MM-DD"));
-        break;
-      default:
-        setStartDate(undefined);
-        setEndDate(undefined);
+    if (startDate && endDate) {
+      fetchDonationData();
     }
-    fetchDonationData();
-  }, [dateFilter, startDate, endDate]);
+  }, [startDate, endDate]);
 
   const fetchDonationData = async () => {
     try {
-      const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/reports/donationStats`, {
-        params: { startDate, endDate }
+      const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/reports/donationSponsor`, {
+        params: { startDate: moment(startDate).format("YYYY-MM-DD"), endDate: moment(endDate).format("YYYY-MM-DD") }
       });
       if (response.status !== 200) throw new Error("Failed to fetch donation data");
       setDonationData(response.data);
@@ -52,7 +38,7 @@ function DonationSponsorReport() {
     doc.setFontSize(18);
     doc.text("Donation and Sponsor Report", 14, 22);
     doc.setFontSize(12);
-    doc.text(`Date Range: ${startDate || "N/A"} to ${endDate || "N/A"}`, 14, 30);
+    doc.text(`Date Range: ${startDate ? moment(startDate).format("YYYY-MM-DD") : "N/A"} to ${endDate ? moment(endDate).format("YYYY-MM-DD") : "N/A"}`, 14, 30);
 
     const tableColumn = [
       "Donor Name",
@@ -101,16 +87,28 @@ function DonationSponsorReport() {
         <h1 className="text-4xl text-center mb-6 mt-24 text-[#313639]">Donation and Sponsor Report</h1>
 
         <div className="mb-4 flex justify-center space-x-4">
-          <select
-            className="border-2 border-gray-300 bg-white h-10 px-5 pr-16 rounded-lg text-sm focus:outline-none"
-            value={dateFilter}
-            onChange={(e) => setDateFilter(e.target.value)}
-          >
-            <option value="all">All dates</option>
-            <option value="lastWeek">Last week</option>
-            <option value="lastMonth">Last month</option>
-            <option value="lastYear">Last year</option>
-          </select>
+          <div className="flex space-x-4">
+            <div>
+              <label className="block text-sm">Start Date</label>
+              <DatePicker
+                selected={startDate}
+                onChange={(date) => setStartDate(date)}
+                dateFormat="yyyy-MM-dd"
+                className="border-2 border-gray-300 h-10 px-4 rounded-lg"
+                placeholderText="Select Start Date"
+              />
+            </div>
+            <div>
+              <label className="block text-sm">End Date</label>
+              <DatePicker
+                selected={endDate}
+                onChange={(date) => setEndDate(date)}
+                dateFormat="yyyy-MM-dd"
+                className="border-2 border-gray-300 h-10 px-4 rounded-lg"
+                placeholderText="Select End Date"
+              />
+            </div>
+          </div>
           <button onClick={downloadPDF} className="bg-[#8AA686] text-white py-2 px-4 rounded">Download PDF</button>
           <button onClick={() => setViewMode(viewMode === "table" ? "chart" : "table")} className="bg-[#8AA686] text-white py-2 px-4 rounded">
             {viewMode === "table" ? "Switch to Chart View" : "Switch to Table View"}
