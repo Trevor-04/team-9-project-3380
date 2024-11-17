@@ -47,14 +47,13 @@ export default function Navbar() {
           <Link to="/" className="flex items-center">
             <img className="h-[70px]" src="/Coog_Zoo.png" alt="logo" />
           </Link>
-        )}
-
-        {/* Admin button */}
+          {/* Admin button */}
         <Link to="/AdminLogin"> {/* Link to Admin Login */}
             <button className="text-[#165e229e] ml-4 font-bold hover:text-green-800 ">
               Admin Login
             </button>
          </Link>
+        )}
        </div>
 
      {/* Buttons Section */}
