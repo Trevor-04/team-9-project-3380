@@ -4,18 +4,24 @@ import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 
 export default function Navbar() {
-
   const location = useLocation();
   const navigate = useNavigate();
   const isLoggedIn = !!localStorage.getItem("token"); // Check if a token exists
+  // Decode token to extract the ID
+  const getIDFromToken = () => {
+    const token = localStorage.getItem("token");
+    if (!token) return null;
 
-  useEffect(() => {
-    // Clear localStorage if necessary
-    if (!isLoggedIn) {
-      localStorage.removeItem("token");
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1])); // Decode payload
+      return payload.ID; // Extract ID
+    } catch (error) {
+      console.error("Error decoding token:", error);
+      return null;
     }
-  }, []);
-  
+  };
+
+  const employeeID = getIDFromToken();
   // Function to handle logout
   const handleLogout = () => {
     localStorage.removeItem("token"); // Remove token from local storage
@@ -53,11 +59,22 @@ export default function Navbar() {
         </Link>
 
       <div className="flex items-center">
-        <Link to="/Events">
-          <button className="text-[#165e229e] font-bold hover:text-green-900 ml-4 p-1">
+      {employeeID ? (
+          <button
+            onClick={() =>
+              navigate(`/Admin/${employeeID}/events`, { state: { editMode: true } })
+            }
+            className="text-[#165e229e] font-bold hover:text-green-900 ml-4 p-1"
+          >
             Upcoming Events
           </button>
-        </Link>
+        ) : (
+          <Link to="/Events">
+            <button className="text-[#165e229e] font-bold hover:text-green-900 ml-4 p-1">
+              Upcoming Events
+            </button>
+          </Link>
+        )}
 
         <Link to="/tickets">
           <button className="text-[#165e229e] font-bold hover:text-green-900 ml-4 p-1">
