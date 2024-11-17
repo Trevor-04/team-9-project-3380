@@ -1,70 +1,41 @@
-# Getting Started with Create React App
+# Project Requirements
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+1. [User Authentication for Different User Roles](#user-authentication-for-different-user-roles)
+2. [Data Entry Forms to Add New Data, Modify Existing Data, and 'Delete' Data](#data-entry-forms-to-add-new-data-modify-existing-data-and-delete-data)
+3. [At Least 2 Triggers](#triggers)
+4. [At Least 3 Queries](#queries)
+5. [At Least 3 Reports](#reports)
 
-## Available Scripts
+## **Technologies**
 
-In the project directory, you can run:
+- **Frontend**: ![React Badge](https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black) ![Tailwind CSS Badge](https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=for-the-badge&logo=tailwind-css&logoColor=white)
+- **Backend**: ![Node.js Badge](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=node.js&logoColor=white)
+- **Database**: ![MySQL Badge](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
+- **Authentication**: ![JWT Badge](https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=json-web-tokens&logoColor=white)
+- **Deployment**: ![Railway Badge](https://img.shields.io/badge/Railway-2A4D77?style=for-the-badge&logo=railway&logoColor=white) ![Netlify Badge](https://img.shields.io/badge/Netlify-00C7B7?style=for-the-badge&logo=netlify&logoColor=white)
+- **Version Control**: ![GitHub Badge](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white) ![Git Badge](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white)
 
-### `npm start`
+You can also add links to relevant documentation for each technology:
+- [React Documentation](https://reactjs.org/)
+- [Node.js Documentation](https://nodejs.org/)
+- [MySQL Documentation](https://dev.mysql.com/doc/)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## **User Authentication for Different User Roles**
+Here you can describe how user authentication is handled in your project, along with the different user roles (e.g., Admin, Member, Guest). Add any relevant resources or APIs used for authentication:
+- [JWT Authentication Guide](https://jwt.io/introduction/)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## **Data Entry Forms to Add New Data, Modify Existing Data, and 'Delete' Data**
+Explain how users can add new data, modify existing data, or delete data in the application. You can link to related sections or describe the form functionality:
+- [Data Entry Form](#link-to-data-entry-form-section)
 
-### `npm test`
+## **Triggers**
+Describe the database triggers used in the project. Include the SQL code or logic that implements the triggers:
+- [MySQL Trigger Documentation](https://dev.mysql.com/doc/refman/8.0/en/triggers.html)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## **Queries**
+Provide examples of the queries used in the project. You can link to the files or describe how they work:
+- [SQL Queries](#link-to-sql-queries-file)
 
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## **Reports**
+Describe how reports are generated in the project. You can link to any templates or code that generates reports:
+- [Generating Reports](#link-to-reports-section)
