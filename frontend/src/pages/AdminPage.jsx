@@ -416,7 +416,7 @@ const getTopProductsChart = async (startDate, endDate, limit) => {
 
         <button
           onClick={() => navigate(`/Admin/${employeeID}/feedingSchedule`)}
-          className="ml-8 bg-[#165e229e] text-white font-bold w-[120px] h-[35px] rounded-2xl"
+          className="ml-8 bg-[#165e229e] text-sm text-white font-bold w-[120px] h-[35px] rounded-2xl"
         >
           Feeding Report
         </button>
