@@ -5,7 +5,7 @@ import { Bar, Line } from "react-chartjs-2";
 import axios from "axios";
 import moment from "moment";
 
-const { url } = require('../config.json')[process.env.NODE_ENV];
+//const { url } = require('../config.json')[process.env.NODE_ENV];
 
 function AnimalFeedingReport() {
   const [feedingData, setFeedingData] = useState([]);
@@ -39,7 +39,7 @@ function AnimalFeedingReport() {
 
   const fetchFeedingData = async () => {
     try {
-      const response = await axios.get(`${url}/reports/feedingSchedule`, {
+      const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/reports/feedingSchedule`, {
         params: { startDate, endDate }
       });
       if (response.status !== 200) throw new Error("Failed to fetch feeding data");
