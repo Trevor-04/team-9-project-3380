@@ -50,14 +50,12 @@ export default function Navbar() {
         )}
 
         {/* Admin button */}
-        {employeeID && (
-          <Link to={`/Admin/${employeeID}`}>
-            <button className="text-[#165e229e] ml-4 font-bold hover:text-green-800">
-              Admin Page
+        <Link to="/AdminLogin"> {/* Link to Admin Login */}
+            <button className="text-[#165e229e] ml-4 font-bold hover:text-green-800 ">
+              Admin Login
             </button>
-          </Link>
-        )}
-      </div>
+         </Link>
+       </div>
 
      {/* Buttons Section */}
      <div className="flex items-center">
