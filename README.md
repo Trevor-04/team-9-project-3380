@@ -10,6 +10,18 @@
 4. [At Least 3 Queries](#queries)
 5. [At Least 3 Reports](#reports)
 
+## **Hosting locally**
+In regards to locally installing the repository:
+We have found that while the .env file works for production, there seems to be an issue when configuring the variables for local use.
+
+1. First use git clone https://github.com/Trevor-04/zoo-db-2 with this url in your ide
+2. cd zoo-db-2
+3. npm install
+4. Open a new terminal and run the server: 
+- cd backend
+- node server.js
+5. On a separate terminal run: npm start
+
 ## **Technologies**
 
 - **Frontend**: ![React Badge](https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black) ![Tailwind CSS Badge](https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=for-the-badge&logo=tailwind-css&logoColor=white)
