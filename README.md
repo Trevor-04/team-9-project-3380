@@ -1,3 +1,17 @@
+<div>
+  <picture align="center">
+    <source
+      width="100%"
+      media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"
+      srcset="frontend\public\animal_banner.webp"
+    />
+    <img alt="Logo">
+  </picture>
+  <h1 align="center">
+    The COOG Zoo
+  </h1>
+</div>
+
 # Project Requirements
 
 1. [User Authentication for Different User Roles](#user-authentication-for-different-user-roles)
