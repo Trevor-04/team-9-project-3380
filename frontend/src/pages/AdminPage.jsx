@@ -393,12 +393,12 @@ const getTopProductsChart = async (startDate, endDate, limit) => {
           Employees
         </button>
 
-        <button 
+        {/* <button 
           onClick={() => navigate(`/Admin/${employeeID}/events`, { state: { editMode: true } })}
           className="ml-8 bg-[#165e229e] text-white font-bold w-[120px] h-[35px] rounded-2xl"
         >
           Edit Events
-        </button>
+        </button> */}
 
         <button
           onClick={() => navigate(`/Admin/${employeeID}/animalTable`)}
