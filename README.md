@@ -21,12 +21,23 @@ You can also add links to relevant documentation for each technology:
 - [MySQL Documentation](https://dev.mysql.com/doc/)
 
 ## **User Authentication for Different User Roles**
-Here you can describe how user authentication is handled in your project, along with the different user roles (e.g., Admin, Member, Guest). Add any relevant resources or APIs used for authentication:
-- [JWT Authentication Guide](https://jwt.io/introduction/)
-
+We have 2 different user roles implemented. They are the employees and members.
+- Employee: Employee can manage everything like events, animals, and merchandise along with seeing and generating reports about the zoo.
+    - Username: alice.thompson@zoo.com
+    - Password: 123456
+- Member: Members can view events and animals for the zoo along with purchasing tickets.
+    - Username: test1@example.com
+    - Password: 123456
+  
 ## **Data Entry Forms to Add New Data, Modify Existing Data, and 'Delete' Data**
-Explain how users can add new data, modify existing data, or delete data in the application. You can link to related sections or describe the form functionality:
-- [Data Entry Form](#link-to-data-entry-form-section)
+### Members:
+-[Sign Up](https://glowing-tiramisu-2436aa.netlify.app/signup): This page create and sign up as a member of the zoo.
+-[Edit Member Info](https://glowing-tiramisu-2436aa.netlify.app/member/50/settings): This page is for members to be able edit their information
+### Employees
+-[Manage employees](https://glowing-tiramisu-2436aa.netlify.app/Admin/45/employeeTable): This is the page where the user can view/add/edit/delete employees. 
+-[Manage events](https://glowing-tiramisu-2436aa.netlify.app/Admin/45/events): This is the page where the user can add/delete events
+-[Manage Animals](https://glowing-tiramisu-2436aa.netlify.app/Admin/45/animalTable): This is the page where the user can view/add/edit/delete animals.
+-[Manage Merchandise](https://glowing-tiramisu-2436aa.netlify.app/Admin/45/giftshopTable): This is the page where the user can view/add/edit/delete merchandise.
 
 ## **Triggers**
 
