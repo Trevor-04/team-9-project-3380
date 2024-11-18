@@ -31,13 +31,13 @@ We have 2 different user roles implemented. They are the employees and members.
   
 ## **Data Entry Forms to Add New Data, Modify Existing Data, and 'Delete' Data**
 ### Members:
--[Sign Up](https://glowing-tiramisu-2436aa.netlify.app/signup): This page create and sign up as a member of the zoo.
--[Edit Member Info](https://glowing-tiramisu-2436aa.netlify.app/member/50/settings): This page is for members to be able edit their information
+- [Sign Up](https://glowing-tiramisu-2436aa.netlify.app/signup): This page create and sign up as a member of the zoo.
+- [Edit Member Info](https://glowing-tiramisu-2436aa.netlify.app/member/50/settings): This page is for members to be able edit their information
 ### Employees
--[Manage employees](https://glowing-tiramisu-2436aa.netlify.app/Admin/45/employeeTable): This is the page where the user can view/add/edit/delete employees. 
--[Manage events](https://glowing-tiramisu-2436aa.netlify.app/Admin/45/events): This is the page where the user can add/delete events
--[Manage Animals](https://glowing-tiramisu-2436aa.netlify.app/Admin/45/animalTable): This is the page where the user can view/add/edit/delete animals.
--[Manage Merchandise](https://glowing-tiramisu-2436aa.netlify.app/Admin/45/giftshopTable): This is the page where the user can view/add/edit/delete merchandise.
+- [Manage employees](https://glowing-tiramisu-2436aa.netlify.app/Admin/45/employeeTable): This is the page where the user can view/add/edit/delete employees. 
+- [Manage events](https://glowing-tiramisu-2436aa.netlify.app/Admin/45/events): This is the page where the user can add/delete events
+- [Manage Animals](https://glowing-tiramisu-2436aa.netlify.app/Admin/45/animalTable): This is the page where the user can view/add/edit/delete animals.
+- [Manage Merchandise](https://glowing-tiramisu-2436aa.netlify.app/Admin/45/giftshopTable): This is the page where the user can view/add/edit/delete merchandise.
 
 ## **Triggers**
 
@@ -113,9 +113,42 @@ END //
 ```
 
 ## **Queries**
-Provide examples of the queries used in the project. You can link to the files or describe how they work:
-- [SQL Queries](#link-to-sql-queries-file)
+We have several queries that let us view information about the zoo along with queries for reports here are just some of those examples
+### Get All Events Query:
+- This query is from the event calendar to pull all the events from the database to show them on the calendar.
+```sql
+SELECT * 
+FROM Events
+ORDER BY eventTime ASC`
+```
 
+### Add new animals Query:
+-  This query is an insert query to add new animals into the database
+```sql
+INSERT INTO Animals (name, sex, date_acquired, date_died, date_born, species, classification, enclosureID)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)`
+```
+each "?" corresponds with each attribute and is set when the add animals form is populated with the corresponding information
+
+### Feeding Report Query:
+- This query is to see the report of the feeding information of the animals in the zoo along with what enclosure they are in and who is their primary caretaker
+```sql
+SELECT DISTINCT
+en.enclosureID,
+en.enclosureName AS Enclosure_Name,
+a.name AS Animal_Name,
+a.species AS Animal_Species,
+fs.feedingType AS Feeding_Type,
+fs.feedingFreq AS Feeding_Frequency,
+fs.last_fed AS Last_Fed_Time,
+CONCAT(emp.fName, ' ', emp.lName) AS Caretaker_Name
+FROM Enclosures en
+LEFT JOIN Animals a ON en.enclosureID = a.enclosureID
+LEFT JOIN Feeding_schedules fs ON a.animalID = fs.animalID
+LEFT JOIN Employees emp ON fs.caretakerID = emp.employeeID
+```
+
+### 
 ## **Reports**
 Describe how reports are generated in the project. You can link to any templates or code that generates reports:
 - [Generating Reports](#link-to-reports-section)
