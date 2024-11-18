@@ -441,9 +441,6 @@ function TicketOptions() {
           </button>
         </li>
         <li className="ticket-item">
-          <Link to="/discounted-tickets" className="ticket-link">Discounted Tickets</Link>
-        </li>
-        <li className="ticket-item">
           <Link to="/Signup" className="ticket-link">Membership Portal</Link>
         </li>
       </ul>
