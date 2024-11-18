@@ -3,7 +3,7 @@
     <source
       width="100%"
       media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"
-      srcset="frontend\public\animal_banner.webp"
+      srcset="/frontend/public/animal_banner.webp"
     />
     <img alt="Logo">
   </picture>
