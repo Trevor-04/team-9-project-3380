@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-//import './payment.css'; // You can create this CSS file to add styles
 
 const Payment = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { memberId } = useParams(); // Get memberId from the URL
+  const { memberId } = useParams();
   const { employeeID } = useParams();
   const {
     selectedTime,
@@ -22,20 +21,13 @@ const Payment = () => {
   const handleBackToTimeSlot = () => {
     if(location.pathname.startsWith('/member'))
       navigate(`/member/${memberId}/tickets`)
-      else if(location.pathname.startsWith('/Admin'))
+    else if(location.pathname.startsWith('/Admin'))
       navigate(`/Admin/${employeeID}/tickets`)
     else navigate('/tickets');
   };
 
   const handleSubmit = () => {
-    // // Handle payment submission logic here
-    // navigate('/confirmation', { state: { selectedTime, selectedDate, finalPrice, email } });
-    //console.log(memberId);
     alert('Payment successful');
-    // if(memberId === 'undefined')
-    //   navigate(`/`);
-    // else
-    //   navigate(`/member/${memberId}`); // Redirect back to MemberPage with dynamic memberId
     if(location.pathname.startsWith('/member'))
       navigate(`/member/${memberId}`)
     else if(location.pathname.startsWith('/Admin'))
@@ -44,35 +36,40 @@ const Payment = () => {
   };
 
   return (
-    <div className="payment-container">
-      <h2 className="payment-title">Payment Page</h2>
+    <div className="max-w-2xl mx-auto p-8 bg-[#faf0e6] rounded-lg shadow-lg mt-10 ">
+      <h2 className="text-center text-3xl mb-6 text-[#165e22]">Payment Page</h2>
 
-      <div className="payment-info">
-        <p><strong>Selected Time:</strong> {selectedTime}</p>
-        <p><strong>Selected Date:</strong> {selectedDate}</p>
-        <p><strong>Adult Tickets:</strong> {adultTickets}</p>
-        <p><strong>Child Tickets:</strong> {childTickets}</p>
-        <p><strong>Senior Tickets:</strong> {seniorTickets}</p>
-        <p><strong>Infant Tickets:</strong> {infantTickets}</p>
-        <p><strong>Final Price:</strong> ${finalPrice}</p>
+      <div className="mb-6">
+        <p className="text-lg"><strong>Selected Time:</strong> {selectedTime}</p>
+        <p className="text-lg"><strong>Selected Date:</strong> {selectedDate}</p>
+        <p className="text-lg"><strong>Adult Tickets:</strong> {adultTickets}</p>
+        <p className="text-lg"><strong>Child Tickets:</strong> {childTickets}</p>
+        <p className="text-lg"><strong>Senior Tickets:</strong> {seniorTickets}</p>
+        <p className="text-lg"><strong>Infant Tickets:</strong> {infantTickets}</p>
+        <p className="text-lg"><strong>Final Price:</strong> ${finalPrice}</p>
       </div>
 
-      <div className="email-input">
-        <label htmlFor="email">Email Address:</label>
+      <div className="mb-6">
+        <label htmlFor="email" className="block text-lg mb-2">Email Address:</label>
         <input
           type="email"
           id="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="Enter your email"
+          className="w-full p-3 text-lg border border-gray-300 rounded-md"
         />
       </div>
 
-      <div className="button-container">
-        <button className="back-btn" onClick={handleBackToTimeSlot}>
+      <div className="flex justify-between gap-4">
+        <button 
+          className="bg-[#faf0e6] text-[#165e22] px-6 py-3 text-lg border border-[#165e22] rounded-md hover:bg-[#e1f7e7]"
+          onClick={handleBackToTimeSlot}>
           Back to Select Time Slot
         </button>
-        <button className="submit-btn" onClick={handleSubmit}>
+        <button 
+          className="bg-[#165e22] text-white px-6 py-3 text-lg rounded-md hover:bg-[#144e1a]"
+          onClick={handleSubmit}>
           Submit Payment
         </button>
       </div>
