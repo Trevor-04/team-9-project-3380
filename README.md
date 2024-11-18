@@ -1,17 +1,4 @@
-<div>
-  <picture align="center">
-    <source
-      width="100%"
-      media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"
-      srcset="/frontend/public/animal_banner.webp"
-    />
-    <img alt="Logo">
-  </picture>
-  <h1 align="center">
-    The COOG Zoo
-  </h1>
-</div>
-
+![image}(https://github.com/Trevor-04/team-9-project-3380/blob/main/frontend/public/animal_banner.webp)
 # Project Requirements
 
 1. [User Authentication for Different User Roles](#user-authentication-for-different-user-roles)
@@ -164,5 +151,5 @@ LEFT JOIN Employees emp ON fs.caretakerID = emp.employeeID
 
 ### 
 ## **Reports**
-Describe how reports are generated in the project. You can link to any templates or code that generates reports:
-- [Generating Reports](#link-to-reports-section)
+
+
