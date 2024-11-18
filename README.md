@@ -160,12 +160,12 @@ This report shows the item Bought, Amount Earned, Quantity, and Last Purchased a
 ![image](https://github.com/Trevor-04/team-9-project-3380/blob/main/frontend/public/SalesReport.png)
 
 ### Feeding Report:
-This report shows the Enclosure Name, Animal Name, Animal Species, Feeding Type, Feeding Frequency, Feeding Amount, Last Fed, and Caretaker as the columns. It is a report to show the details of a certain animal and its feeding type, how often it needs to be fed along with the amount of food that should be fed each time, and the last time it has been fed along with who is suppose to feed them.
+This report shows the Enclosure Name, Animal Name, Animal Species, Feeding Type, Feeding Frequency, Feeding Amount, Last Fed, and Caretaker as the columns. It is a report to show the details of a certain animal and its feeding type, how often it needs to be fed along with the amount of food that should be fed each time, and the last time it has been fed along with who is suppose to feed them. You can also switch the view of the report to a bar chart.
 
 ![image](https://github.com/Trevor-04/team-9-project-3380/blob/main/frontend/public/feedingReport.png)
 
 ### Donation and Sponsor Report
-This report shows the Donor Name, Donor Amount, Donor City, Doner State, Doner Email, Sponsor Name, Donation Type, and Donation Date as the columns. This report shows us Donation information like who donated, where the donator is from, what organization they donated from, along with the date that the donation happened
+This report shows the Donor Name, Donor Amount, Donor City, Doner State, Doner Email, Sponsor Name, Donation Type, and Donation Date as the columns. This report shows us Donation information like who donated, where the donator is from, what organization they donated from, and the donation type, along with the date that the donation happened. you can also view the report as a bar chart.
 
 ![image](https://github.com/Trevor-04/team-9-project-3380/blob/main/frontend/public/DonationReport.png)
 
