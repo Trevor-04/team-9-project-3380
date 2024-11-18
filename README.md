@@ -27,12 +27,8 @@ You can also add links to relevant documentation for each technology:
 ## **User Authentication for Different User Roles**
 We have 2 different user roles implemented. They are the employees and members.
 - Employee: Employees can manage everything like events, animals, members, and merchandise along with seeing and generating reports about the zoo.
-    - Username: Provided in doc
-    - Password: Provided in doc
 - Member: Members can view events and animals for the zoo along with purchasing tickets.
-    - Username: Provided in doc
-    - Password: Provided in doc
-  
+
 ## **Data Entry Forms to Add New Data, Modify Existing Data, and 'Delete' Data**
 ### Members:
 - [Sign Up](https://glowing-tiramisu-2436aa.netlify.app/signup): This page create and sign up as a member of the zoo.
