@@ -1,4 +1,4 @@
-![image}(https://github.com/Trevor-04/team-9-project-3380/blob/main/frontend/public/animal_banner.webp)
+![image](https://github.com/Trevor-04/team-9-project-3380/blob/main/frontend/public/animal_banner.webp)
 # Project Requirements
 
 1. [User Authentication for Different User Roles](#user-authentication-for-different-user-roles)
