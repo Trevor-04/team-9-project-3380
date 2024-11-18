@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import './payment.css'; // You can create this CSS file to add styles
+//import './payment.css'; // You can create this CSS file to add styles
 
 const Payment = () => {
   const location = useLocation();
