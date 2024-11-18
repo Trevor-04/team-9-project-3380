@@ -87,7 +87,7 @@ END //
 ### Membership Expiring Trigger
 This trigger is designed to notify a member that their membership is expiring within 5 days
 ```sql
-CREATE TRIGGER check_membership_expiry 
+CREATE TRIGGER check_membership_expiry
 BEFORE UPDATE ON Members
 FOR EACH ROW
 BEGIN
@@ -102,12 +102,15 @@ BEGIN
         ELSE NULL
     END;
 
+    -- Check if the membership has already expired
+    IF end_date IS NOT NULL AND end_date < CURDATE() THEN
+        SET NEW.expiry_notification = 'Membership expired!';
     -- Check if the membership will expire within the next 5 days
-    IF end_date IS NOT NULL AND end_date <= DATE_ADD(CURDATE(), INTERVAL 5 DAY) THEN
-        -- Set expiry notification message
+    ELSEIF end_date IS NOT NULL AND end_date <= DATE_ADD(CURDATE(), INTERVAL 5 DAY) THEN
         SET NEW.expiry_notification = 'Membership ending within 5 days';
     ELSE
-        SET NEW.expiry_notification = NULL; -- Clear notification if not applicable
+        -- Clear notification if neither condition applies
+        SET NEW.expiry_notification = NULL;
     END IF;
 END //
 ```
