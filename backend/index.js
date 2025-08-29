@@ -19,28 +19,8 @@ const donationRoutes = require("./routes/donations");
 const employeeRoutes = require('./routes/employeeRoutes');
 const memberPlansRoutes = require('./routes/memberPlans');
 
-// Initialize express
 const app = express();
 
-/*Database Connection
-const connection = mysql.createConnection({
-  host: process.env.DB_HOST,
-  port: process.env.DB_PORT,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME
-});
-
-connection.connect((err) => {
-  if (err) {
-    console.error("Failed to connect to the database:", err);
-  } else {
-    console.log("Connected to the database");
-  }
-});*/
-
-// CORS Configuration
-//app.use(cors({ origin: 'https://672d5d775e81d6982bc414bf--glowing-tiramisu-2436aa.netlify.app' }));
 const allowedOrigins = [
 	'https://672d5d775e81d6982bc414bf--glowing-tiramisu-2436aa.netlify.app',
 	'https://glowing-tiramisu-2436aa.netlify.app',
@@ -59,94 +39,16 @@ const allowedOrigins = [
   };
   
   app.use(cors(corsOptions));
-  
-
-/*const allowedOrigins = ['https://uma-test-production.up.railway.app', ];
-
-  app.use((req, res, next) => {
-	console.log({
-	  receivedOrigin: req.headers.origin,
-	  allowedOrigins: allowedOrigins,
-	  isAllowed: allowedOrigins.includes(req.headers.origin)
-	});
-	next();
-  });
-
-
-
-app.use(cors({
- origin: (origin, callback) => {
-   if (allowedOrigins.includes(origin) || !origin) {
-     callback(null, true);
-   } else {
-     callback(new Error('Not allowed by CORS'));
-   }
- }
-}));
-
-const corsOptions = {
-	origin: (origin, callback) => {
-	  Allow requests with no origin (like curl requests or same-origin requests)
-	  if (!origin || allowedOrigins.includes(origin)) {
-		callback(null, true);
-	  } else {
-		callback(new Error('Not allowed by CORS'));
-	  }
-	}
-  };
-  
-  app.use(cors(corsOptions));
-  
-// Middleware
-// Error-handling middleware
-app.use((err, req, res, next) => {
-    console.error("Error:", err.message);
-    console.error("Stack:", err.stack);
-    res.status(500).json({
-      message: "An error occurred on the server",
-      error: err.message
-    });
-});  */
 
 app.use(express.json()); // Handle JSON payloads
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json()); // Handle URL-encoded payloads
 
-// Stripe Payment Route
-app.post("/payment", async (req, res) => {
-  let { amount, id } = req.body;
-  try {
-    const payment = await stripe.paymentIntents.create({
-      amount,
-      currency: "USD",
-      description: "Zoo Donation",
-      payment_method: id,
-      confirm: true,
-      automatic_payment_methods: {
-        enabled: true,
-        allow_redirects: "never"
-      },
-      return_url: `${process.env.REACT_APP_URL}/donations`
-    });
-    console.log("Payment", payment);
-    res.json({
-      message: "Payment successful",
-      success: true
-    });
-  } catch (error) {
-    console.log("Error", error);
-    res.json({
-      message: "Payment failed",
-      success: false
-    });
-  }
-});
-
 // Grab functions
 const notifications = require('./functions/notifications');
 
 // Start polling for unsent notifications every 5 minutes
-setInterval(notifications.sendNotifications, 60000); // 5 minutes
+setInterval(notifications.sendNotifications, 60000); 
 
 app.use("/animals", animalRoutes);
 app.use("/events", eventsRoutes);

@@ -30,9 +30,7 @@ module.exports.addEvent = async function (eventData) {
     const {eventName, eventTime, members_only, exhibitID, attendeeCount = 0, sponsorID = null} = eventData;
 
     const exhibitExists = await query(`SELECT 1 FROM Exhibits WHERE exhibitID = ?`, [exhibitID]);
-    
-    // if (!exhibitExists.length ) throw new Error('Invalid exhibitID: Exhibit does not exist');
-
+   
     try {
         // Insert the new event into the database
         const result = await query(`

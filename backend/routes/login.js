@@ -1,4 +1,3 @@
-// routes/login.js
 const express = require('express');
 const loginController = require('../functions/login');
 const authenticateToken = require('../middleware/auth');
