@@ -12,12 +12,10 @@ function Checkout() {
 
     useEffect(() => {
         const token = localStorage.getItem('token');
-       // console.log("Retrieved Token:", token); // Log the token itself
     
         if (token) {
             try {
                 const decodedToken = jwtDecode(token);
-                //console.log("Decoded Token:", decodedToken); // Log the entire decoded token
     
                 if (decodedToken && decodedToken.role) {
                     setRole(decodedToken.role); // Set role from the token
@@ -116,7 +114,6 @@ function Checkout() {
         <div className="bg-[#fef7e7] min-h-screen flex items-center justify-center">
             <div className="w-full max-w-md bg-white p-8 rounded shadow-md">
                 <h2 className="text-2xl font-bold mb-6 text-center">Membership Checkout</h2>
-                {/* <p className="text-center text-lg font-semibold mb-4">{membershipType} Selected</p> */}
 
                 {!isMember ? (
                     <Link to="/signup">

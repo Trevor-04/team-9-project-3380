@@ -2,9 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from 'axios';
 import "../App.css";
 import "../index.css";
-// import "./employeeTable.css";
 
-//const { url } = require('../config.json')[process.env.NODE_ENV];
 let itemsPerPage = 10;
 
 function EmployeeTable() {

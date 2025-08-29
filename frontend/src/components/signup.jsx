@@ -1,9 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-//import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-//const {url} = require("../config.json")[process.env.NODE_ENV];
 
 function Signup() {
     const navigate = useNavigate();
@@ -28,14 +26,6 @@ function Signup() {
         state: '',
         zip: ''
     });
-
-    // useEffect(() => {
-    //     const storedToken = Cookies.get('token');
-    //     if (storedToken) {
-    //         console.log("Stored token (test):", storedToken);
-    //         setIsLoggedIn(true);
-    //     }
-    // }, []);
 
     const handleSubmitForm = async (formData) => {
         try {

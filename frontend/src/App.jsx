@@ -9,7 +9,6 @@ import AdminLogin from './components/AdminLogin';
 import Signup from './components/signup';
 import Payment from "./components/payment";
 import Tickets from "./pages/Tickets";
-//import Donate from "./pages/Donate"
 import DonatePage from "./pages/donatePage";
 import ProductPage from './components/ProductPage';
 import Admin from './pages/AdminPage';
@@ -51,13 +50,10 @@ function App() {
                     <Route path="/payment" element={<Payment />} /> 
                     <Route path="/member/:memberId/payment" element={<Payment />} />
                     <Route path="/Admin/:employeeID/payment" element={<Payment />} />
-                   {/* <Route path="/Donate" element={<Donate />} /> */}
                    <Route path="/DonatePage" element={<DonatePage/>} /> 
                    <Route path ="/Admin" element={<Admin />} />
                    <Route path="/Admin/:employeeID" element={<Admin />} />
-                   {/* <Route path ="/Member" element={<Member />} /> */}
                     <Route path="/member/:memberId" element={<Member />} /> 
-                    {/* <Route path="/settings" element={<SettingsPage />} />  */}
                     <Route path="/checkout" element={<Checkout />} />
                     <Route path="/MemSignup" element={<MemSignup />} />
                     <Route path="/Admin/:employeeID/MemSignup" element={<MemSignup />} />

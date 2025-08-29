@@ -5,7 +5,6 @@ import { jwtDecode } from 'jwt-decode';
 
 import "./eventCal.css";
 
-//const { url } = require("../config.json")[process.env.NODE_ENV];
 
 const EventCal = () => {
   const [role, setRole] = useState(null);

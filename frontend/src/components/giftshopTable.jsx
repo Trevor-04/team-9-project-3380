@@ -2,8 +2,6 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../App.css";
 import "../index.css";
-// import { useNavigate } from "react-router-dom";
-// import { set } from "mongoose";
 
 const itemsPerPage = 10;
 
@@ -310,35 +308,7 @@ return (
                 className="border w-full px-3 py-2 rounded"
             />
         </div>
-        {/* <div className="mb-4">
-            <label className="block text-sm font-medium">Species</label>
-            <input
-                type="text"
-                value={newSpecies}
-                onChange={(e) => setSpecies(e.target.value)}
-                required
-                className="border w-full px-3 py-2 rounded"
-            />
-        </div>
-        <div className="mb-4">
-            <label className="block text-sm font-medium">Classification</label>
-            <input
-                type="text"
-                value={newClassification}
-                onChange={(e) => setClassification(e.target.value)}
-                required
-                className="border w-full px-3 py-2 rounded"
-            />
-        </div>
-        <div className="mb-4">
-            <label className="block text-sm font-medium">Enclosure ID </label>
-            <input
-                type="number"
-                value={newEnclosureID}
-                onChange={(e) => setEnclosureID(e.target.value)}
-                className="border w-full px-3 py-2 rounded"
-            />
-        </div> */}
+        
         <div className="flex justify-end space-x-2">
             <button
                 type="button"
@@ -412,35 +382,7 @@ return (
                                 className="border w-full px-3 py-2 rounded"
                             />
                         </div>
-                        {/* <div className="mb-4">
-                            <label className="block text-sm font-medium">Species</label>
-                            <input
-                                type="text"
-                                value={newSpecies}
-                                onChange={(e) => setSpecies(e.target.value)}
-                                required
-                                className="border w-full px-3 py-2 rounded"
-                            />
-                        </div>
-                        <div className="mb-4">
-                            <label className="block text-sm font-medium">Classification</label>
-                            <input
-                                type="text"
-                                value={newClassification}
-                                onChange={(e) => setClassification(e.target.value)}
-                                required
-                                className="border w-full px-3 py-2 rounded"
-                            />
-                        </div>
-                        <div className="mb-4">
-                            <label className="block text-sm font-medium">Enclosure ID (Optional)</label>
-                            <input
-                                type="number"
-                                value={newEnclosureID}
-                                onChange={(e) => setEnclosureID(e.target.value)}
-                                className="border w-full px-3 py-2 rounded"
-                            />
-                        </div> */}
+                        
                         <div className="flex justify-end space-x-2">
                             <button
                                 type="button"

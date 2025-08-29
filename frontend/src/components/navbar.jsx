@@ -1,7 +1,6 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
-//import { useEffect } from "react";
 
 export default function Navbar() {
   const location = useLocation();

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-//const {url} = require("../config.json")[process.env.NODE_ENV];
 
 function Login() {
   const [username, setUsername] = useState('');
@@ -19,18 +18,7 @@ function Login() {
       });
 
 
-      // if (response.status === 200) {
-      //   const { token, role } = response.data; // Destructure token and role from response
-
-      //   // Store JWT token in localStorage
-      //   localStorage.setItem('token', token);
-
-      //   if (role === 'admin' || role === 'employee') {
-      //     navigate('/Admin'); // Redirect to admin dashboard
-      //   } else {
-      //     navigate('/Member'); // Redirect to member dashboard
-      //   }
-      // }
+     
       if (response.status === 200) {
         const { token, role, ID } = response.data; // Destructure memberID from response
   

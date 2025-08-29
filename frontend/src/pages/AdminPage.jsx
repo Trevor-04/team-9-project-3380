@@ -4,9 +4,6 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import {BarChart, LineChart, PieChart} from '../charts/barChart';
 
-//const {url} = require('../config.json')[process.env.NODE_ENV];
-
-
 export default function AdminPage() {
 const [isDropdownOpen, setIsDropdownOpen]  = useState(false);
 const dropdownRef = useRef();
@@ -392,13 +389,6 @@ const getTopProductsChart = async (startDate, endDate, limit) => {
         >
           Employees
         </button>
-
-        {/* <button 
-          onClick={() => navigate(`/Admin/${employeeID}/events`, { state: { editMode: true } })}
-          className="ml-8 bg-[#165e229e] text-white font-bold w-[120px] h-[35px] rounded-2xl"
-        >
-          Edit Events
-        </button> */}
 
         <button
           onClick={() => navigate(`/Admin/${employeeID}/animalTable`)}

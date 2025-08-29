@@ -1,4 +1,3 @@
-// ProductPage.jsx
 import React from 'react';
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import './Giftshop.css'; // Import the CSS file

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-//const { url } = require('../config.json')[process.env.NODE_ENV || 'development']; // This ensures the correct environment is selected
 
 function AdminLogin() {
   const [username, setUsername] = useState('');
@@ -20,9 +19,7 @@ function AdminLogin() {
   
       if (response.status === 200) {
         const { token, role, ID } = response.data; // Assuming token and role are returned in the response
-        //console.log("Response Data:", response.data); // Log full response data
         console.log("Role:", role); // Log role to confirm
-        //console.log("Token:", token); // Log token to confirm
   
         if (token) {
           // Store the token in localStorage

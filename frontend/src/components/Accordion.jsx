@@ -2,7 +2,6 @@ import React, { useEffect } from 'react'
 import {useState} from 'react';
 import axios from 'axios';
 import AnimalCardWrapper from './AnimalCardWrapper';
-//const {url} = require('../config.json')[process.env.NODE_ENV];
 
 function Accordion() {
     const [AccordionOpen, setAccordionOpen] = useState(null);

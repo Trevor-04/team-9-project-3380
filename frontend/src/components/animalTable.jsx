@@ -3,7 +3,6 @@ import axios from "axios";
 import "../App.css";
 import "../index.css";
 
-//const { process.env.REACT_APP_BACKEND_URL } = require('../config.json')[process.env.NODE_ENV];
 const itemsPerPage = 10;
 
 function AnimalTable() {

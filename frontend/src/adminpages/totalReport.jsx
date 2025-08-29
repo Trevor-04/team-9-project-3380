@@ -8,7 +8,6 @@ import { Bar, Line} from "react-chartjs-2"; // Import Bar chart for the chart vi
 import "../App.css";
 import "../index.css";
 
-//const { url } = require('../config.json')[process.env.NODE_ENV];
 
 function TotalReport() {
   const [salesData, setSalesData] = useState(null);

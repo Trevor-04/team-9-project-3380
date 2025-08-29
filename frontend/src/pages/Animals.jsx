@@ -4,13 +4,6 @@ import Accordion from "../components/Accordion";
 import AnimalCardWrapper from "../components/AnimalCardWrapper"; // Import the AnimalCardWrapper component
 
 function Animals() {
-  // const [isOpen, setIsOpen] = useState(false);
-
-  // const toggleIcon = () => {
-  //   setIsOpen(!isOpen);
-  // }
-
-  // Example data for animals
   const animals = [
     // {
     //   id: 1,

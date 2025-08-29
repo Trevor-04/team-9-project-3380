@@ -1,9 +1,7 @@
-// ProductCard.jsx
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import './Giftshop.css'; // Import the CSS file
+import './Giftshop.css'; 
 
-// ProductCard Component (accepting imageUrl, name, price, and description as props)
 const ProductCard = ({ imageUrl, name, price, descript }) => {
   const navigate = useNavigate();
 

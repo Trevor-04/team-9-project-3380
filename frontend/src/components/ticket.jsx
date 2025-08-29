@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './tickets.css';
 import { Link } from 'react-router-dom';
-//import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import axios from 'axios';
-//const {url} = require('../config.json')[process.env.NODE_ENV];
 
 function TicketOptions() {
   const [visibleSection, setVisibleSection] = useState('generalAdmission');
@@ -355,46 +353,7 @@ function TicketOptions() {
         </div>
       </div>
     );
-    // return (
-    //   <div className="general-admission">
-    //     <button 
-    //       className="update-tickets-button"
-    //       onClick={() => setShowTimeSlots(false)} 
-    //     >
-    //       Update Tickets
-    //     </button>
-    //     <h2>{formattedDate}</h2>
-    //     <div className="time-slots-container">
-    //       {/* Time slots generation logic */}
-    //       <div className="time-slot-column">
-    //         {Object.keys(pricing).map((timeSlot) => {
-    //           const hour = parseInt(timeSlot.split('am')[0].split('pm')[0]) || 12;
-    //           const time = format12Hours(hour);
-    //           return (
-    //             <div
-    //               className={`time-slot-box ${isTimeSlotDisabled(time) ? 'disabled' : ''}`}
-    //               onClick={() => handleTimeSlotClick(time)}
-    //               key={time}
-    //             >
-    //               <h4><strong>{time}</strong></h4>
-    //               {isTimeSlotDisabled(time) ? <p>Unavailable</p> : (
-    //                 <>
-    //                   <p>Total Price: <strong>${calculateTotalPrice(time).toFixed(2)}</strong></p>
-    //                   <p>
-    //                     {adultTickets > 0 && `${adultTickets} x Adult, `}
-    //                     {childTickets > 0 && `${childTickets} x Child, `}
-    //                     {seniorTickets > 0 && `${seniorTickets} x Senior, `}
-    //                     {infantTickets > 0 && `${infantTickets} x Infant`}
-    //                   </p>
-    //                 </>
-    //               )}
-    //             </div>
-    //           );
-    //         })}
-    //       </div>
-    //     </div>
-    //   </div>
-    // );
+    
   };
   
   
@@ -469,9 +428,6 @@ function TicketOptions() {
             General Admission
           </button>
         </li>
-        {/* <li className="ticket-item">
-          <Link to="/discounted-tickets" className="ticket-link">Discounted Tickets</Link>
-        </li> */}
         {!location.pathname.startsWith('/member') && !location.pathname.startsWith('/Admin') && (
         <li className="ticket-item">
           <Link to="/Signup" className="ticket-link">Membership Portal</Link>
